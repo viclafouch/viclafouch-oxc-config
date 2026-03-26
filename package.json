@@ -1,0 +1,81 @@
+{
+  "name": "@viclafouch/oxc-config",
+  "version": "1.0.0-alpha.0",
+  "description": "Oxlint and Oxfmt configuration for modern TypeScript, React, Next.js, and React Native projects.",
+  "keywords": [
+    "config",
+    "formatter",
+    "linter",
+    "oxc",
+    "oxfmt",
+    "oxlint",
+    "react",
+    "nextjs",
+    "typescript"
+  ],
+  "homepage": "https://github.com/viclafouch/oxc-config#readme",
+  "bugs": {
+    "url": "https://github.com/viclafouch/oxc-config/issues"
+  },
+  "license": "MIT",
+  "author": "Victor de la Fouchardiere <victor.delafouchardiere@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viclafouch/oxc-config.git"
+  },
+  "files": [
+    "dist/"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./formatting": {
+      "types": "./dist/formatting/index.d.ts",
+      "import": "./dist/formatting/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "lint": "oxlint && oxfmt --check '**/*.{ts,tsx}'",
+    "lint:fix": "oxlint --fix && oxfmt '**/*.{ts,tsx}'",
+    "prepublishOnly": "tsup",
+    "bump": "npm version minor",
+    "release": "npm publish",
+    "bump:beta": "npm version prerelease --preid beta",
+    "release:beta": "npm publish --tag beta"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.42.0",
+    "oxlint": "^1.57.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "eslint-plugin-playwright": ">= 2",
+    "eslint-plugin-react-native": ">= 5",
+    "eslint-plugin-testing-library": ">= 7",
+    "oxfmt": ">= 0.42",
+    "oxlint": ">= 1.57",
+    "typescript": ">= 5"
+  },
+  "peerDependenciesMeta": {
+    "oxfmt": {
+      "optional": true
+    },
+    "eslint-plugin-react-native": {
+      "optional": true
+    },
+    "eslint-plugin-playwright": {
+      "optional": true
+    },
+    "eslint-plugin-testing-library": {
+      "optional": true
+    }
+  }
+}

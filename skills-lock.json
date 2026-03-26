@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "dependency-updater": {
+      "source": "softaworks/agent-toolkit",
+      "sourceType": "github",
+      "computedHash": "dc7f34bfa7a1371852fa6f640e14364c52f11fa8303d301ceeb2920623e92157"
+    }
+  }
+}

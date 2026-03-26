@@ -1,0 +1,11 @@
+export type { OxlintConfig } from 'oxlint'
+
+export { default as typescript } from './configs/typescript'
+export { default as react } from './configs/react'
+export { default as hooks } from './configs/hooks'
+export { default as jsxA11y } from './configs/jsx-a11y'
+export { default as next } from './configs/next'
+export { default as reactNative } from './configs/react-native'
+export { default as imports } from './configs/imports'
+export { default as playwright } from './configs/playwright'
+export { default as testingLibrary } from './configs/testing-library'
