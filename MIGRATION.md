@@ -39,6 +39,8 @@ Create `oxlint.config.ts` at the project root. Keep your old ESLint config file 
 
 > **Requires Node.js >= 22.18** for `.config.ts` support. If you are on an older Node version, use `.oxlintrc.json` instead (see [oxlint docs](https://oxc.rs/docs/guide/usage/linter/config)).
 
+> **Ensure your `package.json` has `"type": "module"`** to avoid `MODULE_TYPELESS_PACKAGE_JSON` warnings when using `.config.ts` files.
+
 ### Config mapping
 
 | ESLint import          | oxlint import                          | Notes                      |
@@ -55,6 +57,13 @@ Create `oxlint.config.ts` at the project root. Keep your old ESLint config file 
 | `testingLibraryConfig` | `testingLibrary`                       |                            |
 
 > **Breaking change:** `nextConfig` in ESLint bundled react + hooks + jsx-a11y automatically. In oxlint, you must list them explicitly.
+
+### `defineConfig`
+
+`defineConfig` is imported from the tool package:
+
+- **Linting:** `import { defineConfig } from 'oxlint'`
+- **Formatting:** `import { defineConfig } from 'oxfmt'`
 
 ### Examples
 
@@ -313,6 +322,62 @@ Some auto-generated files (route trees, Prisma Client, Drizzle migrations, Graph
 ### `interface` → `type` in `declare module`
 
 oxfmt may convert `interface` to `type` inside `declare module` blocks, breaking TypeScript declaration merging. **Workaround:** add `// oxfmt-ignore` before the `declare module` block.
+
+---
+
+## Monorepo setup
+
+In a Turborepo / pnpm workspace / Nx monorepo:
+
+- **oxlint** runs per-workspace — each workspace with source files needs its own `oxlint.config.ts`.
+- **oxfmt** runs at the root — a single `oxfmt.config.ts` at the root is enough (oxfmt walks all files).
+- The `format` / `format:check` scripts belong at the **root** `package.json`, not per-workspace.
+- Each workspace that imports from `@viclafouch/oxc-config` needs it in its `devDependencies` (or use a shared internal config package that re-exports presets).
+
+### Recommended pattern
+
+Create an internal shared config package (e.g., `packages/lint-config`) that re-exports the configs you use:
+
+```typescript
+// packages/lint-config/index.ts
+export { typescript, react, hooks, jsxA11y, next, imports } from '@viclafouch/oxc-config'
+```
+
+Then in each workspace:
+
+```typescript
+// apps/web/oxlint.config.ts
+import { defineConfig } from 'oxlint'
+import { typescript, react, hooks, jsxA11y, next, imports } from '@my-org/lint-config'
+
+export default defineConfig({
+  extends: [typescript, react, hooks, jsxA11y, next, imports]
+})
+```
+
+This avoids every workspace depending directly on `@viclafouch/oxc-config` and centralizes version management.
+
+---
+
+## Troubleshooting
+
+### `MODULE_TYPELESS_PACKAGE_JSON` warning
+
+Your `package.json` is missing `"type": "module"`. Add it — `.config.ts` files require ESM.
+
+### `Cannot find package '@viclafouch/oxc-config'`
+
+The package must be in `devDependencies` of the workspace that imports it. In a monorepo, either add it to each workspace or use a shared internal config package (see [Monorepo setup](#monorepo-setup)).
+
+### `oxfmt` reformats unexpected files
+
+`oxfmt .` formats **everything** (Markdown, JSON, YAML, CSS). Always use explicit globs:
+
+```bash
+oxfmt '**/*.{ts,tsx,js,jsx}'
+```
+
+oxfmt respects `.gitignore` — `node_modules` is always excluded. Config files (`.config.ts`) are included, which is expected.
 
 ---
 

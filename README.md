@@ -212,10 +212,14 @@ If your project also runs `tsc`:
 
 ## Requirements
 
-- `oxlint` >= 1.57
-- `oxfmt` >= 1.0
-- `typescript` >= 5
-- Node.js >= 22.18 (for `.config.ts` support)
+| Dependency   | Minimum version | Notes                       |
+| ------------ | --------------- | --------------------------- |
+| `oxlint`     | >= 1.57         | Flat config, `extends` API  |
+| `oxfmt`      | >= 0.42         | `sortImports` support       |
+| `typescript`  | >= 5            |                             |
+| Node.js      | >= 22.18        | For `.config.ts` support    |
+
+> Ensure your `package.json` has `"type": "module"` to avoid ESM warnings with `.config.ts` files.
 
 ## Gaps
 
