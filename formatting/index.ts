@@ -1,11 +1,7 @@
 import type { OxfmtConfig } from 'oxfmt'
 
 /**
- * Shared oxfmt configuration.
- *
- * Mirrors the Prettier configuration from eslint-plugin-prettier exactly.
- * sortImports and sortPackageJson are disabled by default to keep
- * formatting output stable and predictable.
+ * Shared oxfmt configuration (formatting + import sorting).
  *
  * Usage:
  *
@@ -20,11 +16,7 @@ import type { OxfmtConfig } from 'oxfmt'
  * With overrides:
  *
  * ```ts
- * // oxfmt.config.ts
- * import { defineConfig } from 'oxfmt'
- * import { oxfmtConfig, sortImportsConfig } from '@viclafouch/oxc-config/formatting'
- *
- * export default defineConfig({ ...oxfmtConfig, sortImports: sortImportsConfig })
+ * export default defineConfig({ ...oxfmtConfig, printWidth: 100 })
  * ```
  */
 export const oxfmtConfig = {
@@ -41,63 +33,57 @@ export const oxfmtConfig = {
   arrowParens: 'always',
   quoteProps: 'as-needed',
   insertFinalNewline: true,
-  sortPackageJson: false
+  sortPackageJson: false,
+  sortImports: {
+    newlinesBetween: false,
+    ignoreCase: true,
+    order: 'asc',
+    customGroups: [
+      {
+        groupName: 'react',
+        elementNamePattern: ['react', 'react-**']
+      },
+      {
+        groupName: 'frameworks',
+        elementNamePattern: ['next', 'next/**', '@remix**', 'expo', 'expo-**']
+      },
+      {
+        groupName: 'builtin',
+        elementNamePattern: ['node:*', 'node:**']
+      },
+      // aliases BEFORE unscoped — prevents alias paths from matching [!@]*
+      {
+        groupName: 'aliases',
+        elementNamePattern: ['@/*', '@/**', '~/*', '~**/*', '#/*', '#/**']
+      },
+      {
+        groupName: 'unscoped',
+        selector: 'external',
+        elementNamePattern: ['[!@]*', '[!@]*/**']
+      },
+      {
+        groupName: 'scoped',
+        selector: 'external',
+        elementNamePattern: ['@*/**', '@*']
+      }
+    ],
+    groups: [
+      'react',
+      'frameworks',
+      'builtin',
+      'unscoped',
+      'scoped',
+      'aliases',
+      ['value-internal', 'type-internal'],
+      [
+        'value-parent',
+        'value-sibling',
+        'value-index',
+        'type-parent',
+        'type-sibling',
+        'type-index'
+      ],
+      'unknown'
+    ]
+  }
 } satisfies OxfmtConfig
-
-/**
- * Import sorting configuration (opt-in).
- *
- * Replaces simple-import-sort with oxfmt's built-in sorting.
- * Order: react → frameworks → node: builtins → unscoped external → @scoped external → aliases → relative.
- * No blank lines between groups (matches simple-import-sort behavior).
- *
- * Enable by spreading into the config:
- *
- * ```ts
- * export default defineConfig({ ...oxfmtConfig, sortImports: sortImportsConfig })
- * ```
- */
-export const sortImportsConfig = {
-  newlinesBetween: false,
-  ignoreCase: true,
-  order: 'asc' as const,
-  customGroups: [
-    {
-      groupName: 'react',
-      elementNamePattern: ['react', 'react-**']
-    },
-    {
-      groupName: 'frameworks',
-      elementNamePattern: ['next', 'next/**', '@remix**', 'expo', 'expo-**']
-    },
-    {
-      groupName: 'builtin',
-      elementNamePattern: ['node:*', 'node:**']
-    },
-    {
-      groupName: 'unscoped',
-      selector: 'external',
-      elementNamePattern: ['[!@]*', '[!@]*/**']
-    },
-    {
-      groupName: 'scoped',
-      selector: 'external',
-      elementNamePattern: ['@*/**', '@*']
-    },
-    {
-      groupName: 'aliases',
-      elementNamePattern: ['~/*', '~**/*']
-    }
-  ],
-  groups: [
-    'react',
-    'frameworks',
-    'builtin',
-    'unscoped',
-    'scoped',
-    'aliases',
-    'internal',
-    ['parent', 'sibling', 'index'],
-    'unknown'
-  ]
-}

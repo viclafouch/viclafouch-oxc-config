@@ -1,6 +1,6 @@
 import { defineConfig } from 'oxlint'
-import typescript from './configs/typescript.ts'
 import imports from './configs/imports.ts'
+import typescript from './configs/typescript.ts'
 
 export default defineConfig({
   extends: [typescript, imports],

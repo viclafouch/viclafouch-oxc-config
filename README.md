@@ -163,21 +163,6 @@ export default defineConfig({
 })
 ```
 
-Import sorting is opt-in:
-
-```typescript
-import { defineConfig } from 'oxfmt'
-import {
-  oxfmtConfig,
-  sortImportsConfig
-} from '@viclafouch/oxc-config/formatting'
-
-export default defineConfig({
-  ...oxfmtConfig,
-  sortImports: sortImportsConfig
-})
-```
-
 ## Scripts
 
 ```json
