@@ -133,7 +133,7 @@ The Prettier config used `endOfLine: "auto"`. oxfmt does not support `"auto"` �
 Run oxfmt and **commit the result before continuing the migration**. Import sorting produces large diffs — isolating them keeps the rest reviewable.
 
 ```bash
-npx oxfmt '**/*.{ts,tsx,js,jsx}'
+npx oxfmt .
 git add -A && git commit -m "chore: reformat codebase with oxfmt"
 ```
 
@@ -146,20 +146,20 @@ git add -A && git commit -m "chore: reformat codebase with oxfmt"
 -  "lint": "eslint",
 -  "lint:fix": "eslint --fix",
 +  "lint": "oxlint",
-+  "lint:fix": "oxlint --fix && oxfmt '**/*.{ts,tsx,js,jsx}'",
-+  "format": "oxfmt '**/*.{ts,tsx,js,jsx}'",
-+  "format:check": "oxfmt --check '**/*.{ts,tsx,js,jsx}'"
++  "lint:fix": "oxlint --fix && oxfmt .",
++  "format": "oxfmt .",
++  "format:check": "oxfmt --check ."
  }
 ```
 
-> **Important:** Specify file patterns explicitly. `oxfmt .` formats **everything** (Markdown, JSON, YAML, CSS, etc.). Use globs to match only JS/TS files.
+> `oxfmt .` formats everything (JS, TS, JSON, CSS, MD, etc.). To exclude files, use `ignorePatterns` in `oxfmt.config.ts` — not globs in the CLI.
 
 If your scripts include `tsc`, keep it:
 
 ```diff
 -  "lint": "tsc && eslint",
 +  "lint": "tsc && oxlint",
-+  "lint:fix": "tsc && oxlint --fix && oxfmt '**/*.{ts,tsx,js,jsx}'",
++  "lint:fix": "tsc && oxlint --fix && oxfmt .",
 ```
 
 ---
@@ -371,13 +371,16 @@ The package must be in `devDependencies` of the workspace that imports it. In a 
 
 ### `oxfmt` reformats unexpected files
 
-`oxfmt .` formats **everything** (Markdown, JSON, YAML, CSS). Always use explicit globs:
+`oxfmt .` formats everything (JS, TS, JSON, CSS, MD, etc.). To exclude files, add them to `ignorePatterns` in `oxfmt.config.ts`:
 
-```bash
-oxfmt '**/*.{ts,tsx,js,jsx}'
+```typescript
+export default defineConfig({
+  ...oxfmtConfig,
+  ignorePatterns: ['src/generated/**', '**/*.md']
+})
 ```
 
-oxfmt respects `.gitignore` — `node_modules` is always excluded. Config files (`.config.ts`) are included, which is expected.
+oxfmt respects `.gitignore` — `node_modules` is always excluded.
 
 ---
 

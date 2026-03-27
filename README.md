@@ -170,9 +170,9 @@ export default defineConfig({
   "type": "module",
   "scripts": {
     "lint": "oxlint",
-    "lint:fix": "oxlint --fix && oxfmt '**/*.{ts,tsx,js,jsx}'",
-    "format": "oxfmt '**/*.{ts,tsx,js,jsx}'",
-    "format:check": "oxfmt --check '**/*.{ts,tsx,js,jsx}'"
+    "lint:fix": "oxlint --fix && oxfmt .",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check ."
   }
 }
 ```
@@ -183,10 +183,12 @@ If your project also runs `tsc`:
 {
   "scripts": {
     "lint": "tsc --noEmit && oxlint",
-    "lint:fix": "tsc --noEmit && oxlint --fix && oxfmt '**/*.{ts,tsx,js,jsx}'"
+    "lint:fix": "tsc --noEmit && oxlint --fix && oxfmt ."
   }
 }
 ```
+
+> `oxfmt .` formats everything (JS, TS, JSON, CSS, MD, etc.). To exclude files, use `ignorePatterns` in `oxfmt.config.ts` — not globs in the CLI.
 
 ## VS Code
 
