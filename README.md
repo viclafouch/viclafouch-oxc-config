@@ -89,17 +89,17 @@ export default defineConfig({
 
 ## Available Configurations
 
-| Config           | Description                                      |
-| ---------------- | ------------------------------------------------ |
+| Config           | Description                                             |
+| ---------------- | ------------------------------------------------------- |
 | `typescript`     | **Required base.** TypeScript, core, unicorn, oxc rules |
-| `react`          | React rules (JSX, components, patterns)          |
-| `hooks`          | React Hooks (rules-of-hooks, exhaustive-deps)    |
-| `jsxA11y`        | Web accessibility (jsx-a11y) — for web projects  |
-| `next`           | Next.js specific rules                           |
-| `reactNative`    | React Native rules (via jsPlugins)               |
-| `imports`        | Import rules (no-cycle, no-duplicates, etc.)     |
-| `playwright`     | Playwright e2e testing (via jsPlugins)            |
-| `testingLibrary` | Testing Library rules (via jsPlugins)             |
+| `react`          | React rules (JSX, components, patterns)                 |
+| `hooks`          | React Hooks (rules-of-hooks, exhaustive-deps)           |
+| `jsxA11y`        | Web accessibility (jsx-a11y) — for web projects         |
+| `next`           | Next.js specific rules                                  |
+| `reactNative`    | React Native rules (via jsPlugins)                      |
+| `imports`        | Import rules (no-cycle, no-duplicates, etc.)            |
+| `playwright`     | Playwright e2e testing (via jsPlugins)                  |
+| `testingLibrary` | Testing Library rules (via jsPlugins)                   |
 
 ## Playwright E2E Testing
 
@@ -170,9 +170,9 @@ export default defineConfig({
   "type": "module",
   "scripts": {
     "lint": "oxlint",
-    "lint:fix": "oxlint --fix && oxfmt .",
-    "format": "oxfmt .",
-    "format:check": "oxfmt --check ."
+    "lint:fix": "oxlint --fix && oxfmt",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   }
 }
 ```
@@ -183,12 +183,12 @@ If your project also runs `tsc`:
 {
   "scripts": {
     "lint": "tsc --noEmit && oxlint",
-    "lint:fix": "tsc --noEmit && oxlint --fix && oxfmt ."
+    "lint:fix": "tsc --noEmit && oxlint --fix && oxfmt"
   }
 }
 ```
 
-> `oxfmt .` formats everything (JS, TS, JSON, CSS, MD, etc.). To exclude files, use `ignorePatterns` in `oxfmt.config.ts` — not globs in the CLI.
+> `oxfmt` formats everything (JS, TS, JSON, CSS, MD, etc.). To exclude files, use `ignorePatterns` in `oxfmt.config.ts` — not globs in the CLI.
 
 ## VS Code
 
@@ -214,12 +214,12 @@ If your project also runs `tsc`:
 
 ## Requirements
 
-| Dependency   | Minimum version | Notes                       |
-| ------------ | --------------- | --------------------------- |
-| `oxlint`     | >= 1.57         | Flat config, `extends` API  |
-| `oxfmt`      | >= 0.42         | `sortImports` support       |
-| `typescript`  | >= 5            |                             |
-| Node.js      | >= 22.18        | For `.config.ts` support    |
+| Dependency   | Minimum version | Notes                      |
+| ------------ | --------------- | -------------------------- |
+| `oxlint`     | >= 1.57         | Flat config, `extends` API |
+| `oxfmt`      | >= 0.42         | `sortImports` support      |
+| `typescript` | >= 5            |                            |
+| Node.js      | >= 22.18        | For `.config.ts` support   |
 
 > Ensure your `package.json` has `"type": "module"` to avoid ESM warnings with `.config.ts` files.
 

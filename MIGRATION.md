@@ -77,10 +77,10 @@ Copy your rule overrides from the old ESLint config. See [section 7](#7-handle-r
 export default defineConfig({
   extends: [typescript, react, hooks, jsxA11y, imports],
   rules: {
-    "react/no-children-prop": "off",
-    "id-length": ["error", { exceptions: ["_", "x", "y"] }],
-  },
-});
+    'react/no-children-prop': 'off',
+    'id-length': ['error', { exceptions: ['_', 'x', 'y'] }]
+  }
+})
 ```
 
 > oxlint respects `.gitignore` by default. Only add `ignorePatterns` for paths NOT in `.gitignore`.
@@ -133,7 +133,7 @@ The Prettier config used `endOfLine: "auto"`. oxfmt does not support `"auto"` �
 Run oxfmt and **commit the result before continuing the migration**. Import sorting produces large diffs — isolating them keeps the rest reviewable.
 
 ```bash
-npx oxfmt .
+npx oxfmt
 git add -A && git commit -m "chore: reformat codebase with oxfmt"
 ```
 
@@ -146,20 +146,20 @@ git add -A && git commit -m "chore: reformat codebase with oxfmt"
 -  "lint": "eslint",
 -  "lint:fix": "eslint --fix",
 +  "lint": "oxlint",
-+  "lint:fix": "oxlint --fix && oxfmt .",
-+  "format": "oxfmt .",
-+  "format:check": "oxfmt --check ."
++  "lint:fix": "oxlint --fix && oxfmt",
++  "format": "oxfmt",
++  "format:check": "oxfmt --check"
  }
 ```
 
-> `oxfmt .` formats everything (JS, TS, JSON, CSS, MD, etc.). To exclude files, use `ignorePatterns` in `oxfmt.config.ts` — not globs in the CLI.
+> `oxfmt` formats everything (JS, TS, JSON, CSS, MD, etc.). To exclude files, use `ignorePatterns` in `oxfmt.config.ts` — not globs in the CLI.
 
 If your scripts include `tsc`, keep it:
 
 ```diff
 -  "lint": "tsc && eslint",
 +  "lint": "tsc && oxlint",
-+  "lint:fix": "tsc && oxlint --fix && oxfmt .",
++  "lint:fix": "tsc && oxlint --fix && oxfmt",
 ```
 
 ---
@@ -232,8 +232,8 @@ If your scripts include `tsc`, keep it:
 | `@typescript-eslint/no-redeclare`           | `no-redeclare`           |
 | `@typescript-eslint/no-unused-expressions`  | `no-unused-expressions`  |
 | `@typescript-eslint/no-useless-constructor` | `no-useless-constructor` |
-| `react-hooks/rules-of-hooks`               | `react/rules-of-hooks`   |
-| `react-hooks/exhaustive-deps`              | `react/exhaustive-deps`  |
+| `react-hooks/rules-of-hooks`                | `react/rules-of-hooks`   |
+| `react-hooks/exhaustive-deps`               | `react/exhaustive-deps`  |
 
 In oxlint, TypeScript extension rules are **unified** — the base rule name handles both JS and TS. Collapse duplicate overrides into one.
 
@@ -340,7 +340,14 @@ Create an internal shared config package (e.g., `packages/lint-config`) that re-
 
 ```typescript
 // packages/lint-config/index.ts
-export { typescript, react, hooks, jsxA11y, next, imports } from '@viclafouch/oxc-config'
+export {
+  typescript,
+  react,
+  hooks,
+  jsxA11y,
+  next,
+  imports
+} from '@viclafouch/oxc-config'
 ```
 
 Then in each workspace:
@@ -348,7 +355,14 @@ Then in each workspace:
 ```typescript
 // apps/web/oxlint.config.ts
 import { defineConfig } from 'oxlint'
-import { typescript, react, hooks, jsxA11y, next, imports } from '@my-org/lint-config'
+import {
+  typescript,
+  react,
+  hooks,
+  jsxA11y,
+  next,
+  imports
+} from '@my-org/lint-config'
 
 export default defineConfig({
   extends: [typescript, react, hooks, jsxA11y, next, imports]
@@ -371,7 +385,7 @@ The package must be in `devDependencies` of the workspace that imports it. In a 
 
 ### `oxfmt` reformats unexpected files
 
-`oxfmt .` formats everything (JS, TS, JSON, CSS, MD, etc.). To exclude files, add them to `ignorePatterns` in `oxfmt.config.ts`:
+`oxfmt` formats everything (JS, TS, JSON, CSS, MD, etc.). To exclude files, add them to `ignorePatterns` in `oxfmt.config.ts`:
 
 ```typescript
 export default defineConfig({
@@ -388,10 +402,10 @@ oxfmt respects `.gitignore` — `node_modules` is always excluded.
 
 | Before                   | After                                  |
 | ------------------------ | -------------------------------------- |
-| `eslint .`               | `oxlint .`                             |
-| `eslint --fix .`         | `oxlint --fix .`                       |
-| `prettier --check .`     | `oxfmt --check .`                      |
-| `prettier --write .`     | `oxfmt .`                              |
+| `eslint .`               | `oxlint`                               |
+| `eslint --fix .`         | `oxlint --fix`                         |
+| `prettier --check .`     | `oxfmt --check`                        |
+| `prettier --write .`     | `oxfmt`                                |
 | `eslint.config.js`       | `oxlint.config.ts`                     |
 | `.prettierrc`            | `oxfmt.config.ts`                      |
 | `.prettierignore`        | `ignorePatterns` in `oxfmt.config.ts`  |

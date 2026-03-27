@@ -10,6 +10,7 @@ Oxlint + oxfmt config package. Built by tsup (ESM + dts) because Node doesn't st
 ## Documentation
 
 Keep `README.md` up to date when making changes:
+
 - Update usage examples when adding/removing/renaming exported configs
 - Update the list of available configurations
 - Document breaking changes

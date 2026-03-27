@@ -6,11 +6,11 @@
     "config",
     "formatter",
     "linter",
+    "nextjs",
     "oxc",
     "oxfmt",
     "oxlint",
     "react",
-    "nextjs",
     "typescript"
   ],
   "homepage": "https://github.com/viclafouch/oxc-config#readme",
@@ -42,8 +42,8 @@
   },
   "scripts": {
     "build": "tsup",
-    "lint": "oxlint && oxfmt --check '**/*.{ts,tsx}'",
-    "lint:fix": "oxlint --fix && oxfmt '**/*.{ts,tsx}'",
+    "lint": "oxlint && oxfmt --check",
+    "lint:fix": "oxlint --fix && oxfmt",
     "prepublishOnly": "tsup",
     "bump": "npm version minor",
     "release": "npm publish",
