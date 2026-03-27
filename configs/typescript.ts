@@ -452,10 +452,6 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-plusplus
     'no-plusplus': 'error',
 
-    // Disallow inline comments after code
-    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-inline-comments
-    'no-inline-comments': 'error',
-
     // Disallow @nocommit comments to prevent committing temporary code
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-warning-comments
     'no-warning-comments': ['error', { terms: ['@nocommit'] }],
@@ -534,7 +530,11 @@ export default {
 
     // Enforce kebab-case for filenames
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/filename-case
-    'unicorn/filename-case': ['error', { case: 'kebabCase' }],
+    // ignore: framework conventions ($param.tsx, [slug].tsx, [...catchAll].tsx)
+    'unicorn/filename-case': [
+      'error',
+      { case: 'kebabCase', ignore: '^[\\[$]' }
+    ],
 
     // Disallow creating a variable and immediately mutating it
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-immediate-mutation
@@ -667,10 +667,6 @@ export default {
     // Prefer .slice() over .substring() and .substr()
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-string-slice
     'unicorn/prefer-string-slice': 'error',
-
-    // Prefer top-level await over async IIFE
-    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-top-level-await
-    'unicorn/prefer-top-level-await': 'error',
 
     // Enforce numeric separators for readability
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/numeric-separators-style

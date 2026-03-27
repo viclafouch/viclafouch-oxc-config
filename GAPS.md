@@ -116,3 +116,37 @@ All 21 recommended Next.js rules have been migrated. No gaps.
 ## Formatting (handled by oxfmt)
 
 `arrow-parens`, `arrow-spacing`, `dot-location`, `no-confusing-arrow`, `no-extra-semi`, `no-floating-decimal`, `no-multi-spaces`, `rest-spread-spacing`, `template-curly-spacing`, `jsx-quotes`, `react/jsx-closing-bracket-location`, `react/jsx-closing-tag-location`, `react/jsx-curly-spacing`, `react/jsx-indent-props`, `react/jsx-max-props-per-line`, `react/jsx-wrap-multilines`, `react/jsx-first-prop-new-line`, `react/jsx-equals-spacing`, `react/jsx-indent`, `react/jsx-one-expression-per-line`, `react/jsx-props-no-multi-spaces`, `react/jsx-tag-spacing`, `react/jsx-curly-newline`, `react/jsx-child-element-spacing`, `prettier/prettier`
+
+---
+
+## Known issues & workarounds
+
+### `unicorn/prefer-top-level-await` — false positives with Zod `.catch()`
+
+Zod 4's `.catch()` method (e.g., `z.string().optional().catch(undefined)`) is flagged as a "promise chain" by this rule. This is a false positive — Zod's `.catch()` is not `Promise.catch()`.
+
+**Impact:** High in Zod-heavy codebases (schema files, search params, form validation).
+
+**Status:** Rule is disabled by default in `@viclafouch/oxc-config` until this is fixed upstream. ESLint's unicorn plugin has the same false positive — this is not specific to oxlint. Re-enable when oxlint or the upstream rule gains `.catch()` disambiguation.
+
+### `no-shadow-restricted-names` — Prisma `globalThis` singleton pattern
+
+The standard Prisma singleton pattern triggers `no-shadow-restricted-names`:
+
+```typescript
+// This is flagged:
+declare const globalThis: {
+  prisma: PrismaClient | undefined
+} & typeof global
+```
+
+This pattern is canonical in the [Prisma docs](https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-dev-practices) and widely used. The error is technically correct (it shadows `globalThis`) but unavoidable for this pattern.
+
+**Workaround:** Suppress with an inline comment:
+
+```typescript
+// oxlint-disable-next-line no-shadow-restricted-names
+declare const globalThis: {
+  prisma: PrismaClient | undefined
+} & typeof global
+```

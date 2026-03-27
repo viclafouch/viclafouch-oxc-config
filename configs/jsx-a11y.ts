@@ -121,6 +121,11 @@ export default {
 
     // Enforce tabIndex on non-interactive elements is not positive
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-noninteractive-tabindex
-    'jsx-a11y/no-noninteractive-tabindex': 'error'
+    'jsx-a11y/no-noninteractive-tabindex': 'error',
+
+    // Prefer semantic HTML tags over ARIA roles
+    // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/prefer-tag-over-role
+    // OFF: too many legitimate cases where role is needed (custom components, UI libs)
+    'jsx-a11y/prefer-tag-over-role': 'off'
   }
 } satisfies OxlintConfig

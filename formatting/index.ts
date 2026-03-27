@@ -48,7 +48,7 @@ export const oxfmtConfig = {
  * Import sorting configuration (opt-in).
  *
  * Replaces simple-import-sort with oxfmt's built-in sorting.
- * Order: react → frameworks → external → aliases → relative → side-effects.
+ * Order: react → frameworks → node: builtins → unscoped external → @scoped external → aliases → relative.
  * No blank lines between groups (matches simple-import-sort behavior).
  *
  * Enable by spreading into the config:
@@ -61,7 +61,6 @@ export const sortImportsConfig = {
   newlinesBetween: false,
   ignoreCase: true,
   order: 'asc' as const,
-  internalPattern: ['@/', '~/'],
   customGroups: [
     {
       groupName: 'react',
@@ -72,18 +71,33 @@ export const sortImportsConfig = {
       elementNamePattern: ['next', 'next/**', '@remix**', 'expo', 'expo-**']
     },
     {
+      groupName: 'builtin',
+      elementNamePattern: ['node:*', 'node:**']
+    },
+    {
+      groupName: 'unscoped',
+      selector: 'external',
+      elementNamePattern: ['[!@]*', '[!@]*/**']
+    },
+    {
+      groupName: 'scoped',
+      selector: 'external',
+      elementNamePattern: ['@*/**', '@*']
+    },
+    {
       groupName: 'aliases',
-      elementNamePattern: ['@/*', '~/*']
+      elementNamePattern: ['~/*', '~**/*']
     }
   ],
   groups: [
     'react',
     'frameworks',
-    'external',
+    'builtin',
+    'unscoped',
+    'scoped',
     'aliases',
     'internal',
     ['parent', 'sibling', 'index'],
-    'side_effect',
     'unknown'
   ]
 }

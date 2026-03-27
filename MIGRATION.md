@@ -185,14 +185,22 @@ In practice this has no impact: most projects use `.gitattributes` with `* text=
 .prettierignore
 ```
 
+### Commit formatting changes separately
+
+Run `oxfmt` immediately after creating the config and **commit the formatting changes in a separate commit** before continuing the migration. Import sorting and formatting changes produce large diffs — isolating them keeps the rest of the migration diff reviewable.
+
+```bash
+npx oxfmt '**/*.{ts,tsx,js,jsx}'
+git add -A && git commit -m "chore: reformat codebase with oxfmt"
+```
+
 ### Verify formatting parity (optional)
 
 ```bash
-npx oxfmt .
-git diff
+npx oxfmt --check '**/*.{ts,tsx,js,jsx}'
 ```
 
-If the diff is empty (or only whitespace/import order changes), the migration is safe.
+If the check passes, the migration is safe.
 
 ---
 
@@ -340,7 +348,7 @@ These active rules have no oxlint equivalent. Remove any overrides for them — 
 | `react/jsx-no-leaked-render`           | Medium                                               |
 | `react/jsx-no-bind`                    | Medium                                               |
 
-See [GAPS.md](./GAPS.md) for the complete list with status per plugin.
+See [GAPS.md](./GAPS.md) for the complete list with status per plugin and [known issues & workarounds](./GAPS.md#known-issues--workarounds) for common migration pitfalls (Prisma `globalThis` pattern, etc.).
 
 ---
 
@@ -358,6 +366,24 @@ This converts:
 
 - `// eslint-disable-next-line rule-name` → `// oxlint-disable-next-line rule-name`
 - `/* eslint-disable */` → `/* oxlint-disable */`
+
+### Remove stale disable comments
+
+`oxlint --fix` does **not** auto-remove unused disable comments (e.g., `// eslint-disable-next-line @typescript-eslint/naming-convention` for rules that don't exist in oxlint). You'll see "Unused eslint-disable directive" errors for these.
+
+Remove them manually — this is typically the most time-consuming part of the migration. Search for common patterns:
+
+```bash
+# Find all eslint-disable comments
+grep -rn "eslint-disable" --include="*.ts" --include="*.tsx" .
+```
+
+Common stale comments to look for:
+- `@typescript-eslint/naming-convention` (not in oxlint)
+- `no-restricted-syntax` (not in oxlint)
+- `react-hooks/purity`, `react-hooks/incompatible-library` (not in oxlint)
+- `camelcase` (not in oxlint)
+- `react/hook-use-state` (not in oxlint)
 
 ---
 
