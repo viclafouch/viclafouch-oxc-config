@@ -33,7 +33,9 @@ export const oxfmtConfig = {
   arrowParens: 'always',
   quoteProps: 'as-needed',
   insertFinalNewline: true,
-  sortPackageJson: false,
+  sortPackageJson: {
+    sortScripts: false
+  },
   sortImports: {
     newlinesBetween: false,
     ignoreCase: true,
