@@ -1,6 +1,11 @@
 {
   "version": 1,
   "skills": {
+    "deep-dive": {
+      "source": "viclafouch/skills",
+      "sourceType": "github",
+      "computedHash": "f20826e481e0b07a95ce10a3afb632772fdb9e8801121694f74f65c786b9db5f"
+    },
     "dependency-updater": {
       "source": "softaworks/agent-toolkit",
       "sourceType": "github",

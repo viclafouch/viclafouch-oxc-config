@@ -1,16 +1,17 @@
 import type { OxlintConfig } from 'oxlint'
 
 /**
- * Playwright e2e testing configuration for oxlint.
+ * Playwright e2e testing rules.
+ * Requires `eslint-plugin-playwright` as a peer dependency.
  *
- * Migrated from `rules/playwright.mjs`.
- * Uses jsPlugins to load eslint-plugin-playwright (not natively supported).
+ * @example
+ * ```ts
+ * extends: [typescript, imports, playwright]
+ * ```
  */
 export default {
   jsPlugins: ['eslint-plugin-playwright'],
   rules: {
-    // ===== Recommended rules =====
-
     // Enforce consistent spacing between test blocks
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/consistent-spacing-between-blocks.md
     'playwright/consistent-spacing-between-blocks': 'error',
@@ -151,8 +152,6 @@ export default {
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/valid-title.md
     'playwright/valid-title': 'error',
 
-    // ===== Additional rules =====
-
     // Enforce a maximum number of assertion calls in a test body
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/max-expects.md
     'playwright/max-expects': 'error',
@@ -212,8 +211,6 @@ export default {
     // Require test cases and hooks to be inside a test.describe block
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/require-top-level-describe.md
     'playwright/require-top-level-describe': 'error',
-
-    // ===== Disabled rules =====
 
     // Disallow using getByTitle()
     'playwright/no-get-by-title': 'off',

@@ -1,10 +1,13 @@
 import type { OxlintConfig } from 'oxlint'
 
 /**
- * JSX Accessibility configuration for oxlint.
+ * JSX accessibility rules (WCAG compliance).
+ * For web projects only — omit for React Native.
  *
- * Migrated from `rules/jsx-a11y.mjs`.
- * Uses the jsx-a11y recommended rules from oxlint + custom overrides.
+ * @example
+ * ```ts
+ * extends: [typescript, react, hooks, jsxA11y, imports]
+ * ```
  */
 export default {
   plugins: ['jsx-a11y'],

@@ -100,6 +100,7 @@ export default defineConfig({
 | `imports`        | Import rules (no-cycle, no-duplicates, etc.)            |
 | `playwright`     | Playwright e2e testing (via jsPlugins)                  |
 | `testingLibrary` | Testing Library rules (via jsPlugins)                   |
+| `vitest`         | Vitest testing rules (native plugin)                    |
 
 ## Playwright E2E Testing
 
@@ -118,6 +119,32 @@ import {
 
 export default defineConfig({
   extends: [typescript, react, hooks, jsxA11y, imports, playwright]
+})
+```
+
+## Vitest
+
+Add `vitest` and configure `consistent-test-filename` with a regex that matches your project convention:
+
+```typescript
+import { defineConfig } from 'oxlint'
+import { typescript, imports, vitest } from '@viclafouch/oxc-config'
+
+export default defineConfig({
+  extends: [typescript, imports, vitest],
+  rules: {
+    'vitest/consistent-test-filename': [
+      'error',
+      {
+        // *.test.ts(x) only
+        pattern: '.*\\.test\\.tsx?$'
+        // *.spec.ts(x) only
+        // pattern: '.*\\.spec\\.tsx?$'
+        // Both *.test.ts(x) and *.spec.ts(x)
+        // pattern: '.*\\.(test|spec)\\.tsx?$'
+      }
+    ]
+  }
 })
 ```
 
@@ -210,14 +237,14 @@ If your project also runs `tsc`:
 1. `typescript` (always first — base rules)
 2. `react` / `hooks` / `jsxA11y` / `next` / `reactNative`
 3. `imports`
-4. `playwright` / `testingLibrary` (testing)
+4. `vitest` / `playwright` / `testingLibrary` (testing)
 
 ## Requirements
 
 | Dependency   | Minimum version | Notes                      |
 | ------------ | --------------- | -------------------------- |
-| `oxlint`     | >= 1.57         | Flat config, `extends` API |
-| `oxfmt`      | >= 0.42         | `sortImports` support      |
+| `oxlint`     | >= 1.58         | Flat config, `extends` API |
+| `oxfmt`      | >= 0.43         | `sortImports` support      |
 | `typescript` | >= 5            |                            |
 | Node.js      | >= 22.18        | For `.config.ts` support   |
 

@@ -1,10 +1,13 @@
 import type { OxlintConfig } from 'oxlint'
 
 /**
- * React Hooks configuration for oxlint.
+ * React Hooks rules: rules-of-hooks and exhaustive-deps.
+ * In oxlint, hooks rules are part of the `react` plugin.
  *
- * Migrated from `rules/react-hooks.mjs`.
- * In oxlint, hooks rules are part of the `react` plugin (not a separate `react-hooks` plugin).
+ * @example
+ * ```ts
+ * extends: [typescript, react, hooks, imports]
+ * ```
  */
 export default {
   plugins: ['react'],

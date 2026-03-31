@@ -1,10 +1,13 @@
 import type { OxlintConfig } from 'oxlint'
 
 /**
- * React Native configuration for oxlint.
+ * React Native rules (styles, platform splits, raw text).
+ * Requires `eslint-plugin-react-native` as a peer dependency.
  *
- * Migrated from `rules/react-native.mjs`.
- * Uses jsPlugins to load eslint-plugin-react-native (not natively supported).
+ * @example
+ * ```ts
+ * extends: [typescript, react, hooks, reactNative, imports]
+ * ```
  */
 export default {
   jsPlugins: ['eslint-plugin-react-native'],

@@ -1,16 +1,17 @@
 import type { OxlintConfig } from 'oxlint'
 
 /**
- * Testing Library configuration for oxlint.
+ * Testing Library rules (async queries, screen usage, user events).
+ * Requires `eslint-plugin-testing-library` as a peer dependency.
  *
- * Migrated from `rules/testing-library.mjs`.
- * Uses jsPlugins to load eslint-plugin-testing-library (not natively supported).
+ * @example
+ * ```ts
+ * extends: [typescript, react, hooks, imports, testingLibrary]
+ * ```
  */
 export default {
   jsPlugins: ['eslint-plugin-testing-library'],
   rules: {
-    // ===== testing-library/react recommended rules =====
-
     // Enforce async queries to have proper await
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/await-async-events.md
     'testing-library/await-async-events': 'error',

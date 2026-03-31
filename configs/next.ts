@@ -1,13 +1,12 @@
 import type { OxlintConfig } from 'oxlint'
 
 /**
- * Next.js configuration for oxlint.
+ * Next.js specific rules (App Router, pages, fonts, scripts).
  *
- * Migrated from `next.mjs`.
- * All recommended @next/eslint-plugin-next rules are listed explicitly.
- *
- * Consumers must compose this with other configs via `extends`:
- *   extends: [typescript, react, hooks, jsxA11y, next, imports]
+ * @example
+ * ```ts
+ * extends: [typescript, react, hooks, jsxA11y, next, imports]
+ * ```
  */
 export default {
   plugins: ['nextjs'],

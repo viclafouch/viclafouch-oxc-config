@@ -1,11 +1,13 @@
 import type { OxlintConfig } from 'oxlint'
 
 /**
- * Imports configuration for oxlint.
+ * Import hygiene rules (cycles, duplicates, ordering).
+ * Import sorting is handled by oxfmt, not here.
  *
- * Migrated from `rules/imports.mjs`.
- * Import sorting is delegated to oxfmt (replaces simple-import-sort).
- * Only linting rules for imports are included here.
+ * @example
+ * ```ts
+ * extends: [typescript, imports]
+ * ```
  */
 export default {
   plugins: ['import'],

@@ -5,7 +5,7 @@ Oxlint + oxfmt config package. Built by tsup (ESM + dts) because Node doesn't st
 ## Coding Conventions
 
 - Every value explicit — even defaults. Categories, options, settings: all declared.
-- `'error'` or `'off'`. Never `'warn'` except `no-console` and `react/no-danger`.
+- `'error'` or `'off'`. Never `'warn'` except `no-console`, `react/no-danger`, and `vitest/warn-todo`.
 
 ## Documentation
 
@@ -19,11 +19,7 @@ Keep `README.md` up to date when making changes:
 
 ## On Every Session
 
-**Proactively check for updates before anything else.** Read current versions from `package.json`, then launch parallel agents to fetch ALL changelogs since our pinned versions (not just the latest — every release we missed). Look for new rules, new options, rules leaving nursery, and rules from `GAPS.md` now implemented. Present each finding as an interview (rule, example, recommendation, yes/no). Update deps, `GAPS.md`, and configs accordingly.
-
-Use `/dependency-updater` to bump deps, then check changelogs for new rules/options.
-
-Sources: https://github.com/oxc-project/oxc/releases · https://github.com/nicolo-ribaudo/oxfmt/releases · https://oxc.rs/blog/ · [oxc#481](https://github.com/oxc-project/oxc/issues/481)
+**Proactively run `/oxc-update` before anything else.** This skill detects missed releases, fetches changelogs, interviews on each new rule, and applies decisions to configs + docs.
 
 ## Adding Rules
 

@@ -1,11 +1,12 @@
 import type { OxlintConfig } from 'oxlint'
 
 /**
- * TypeScript (core) configuration for oxlint.
+ * Required base config. TypeScript, core, unicorn, and oxc rules.
  *
- * Migrated from `rules/typescript.mjs`.
- * Type-aware rules are commented out at the bottom (requires tsgolint).
- * Rules not supported by oxlint are documented in ../GAPS.md.
+ * @example
+ * ```ts
+ * extends: [typescript, imports]
+ * ```
  */
 export default {
   plugins: ['typescript', 'unicorn'],
@@ -31,10 +32,6 @@ export default {
     typeCheck: false
   },
   rules: {
-    // ==========================================
-    // Best Practices
-    // ==========================================
-
     // Force curly braces in all control flow
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/curly
     curly: ['error', 'all'],
@@ -270,10 +267,6 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/radix
     radix: 'error',
 
-    // ==========================================
-    // Variables
-    // ==========================================
-
     // Disallow deletion of variables
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-delete-var
     'no-delete-var': 'error',
@@ -296,10 +289,6 @@ export default {
     // Disallow use of undeclared variables unless mentioned in a /*global */ block
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-undef
     'no-undef': ['error', { typeof: true }],
-
-    // ==========================================
-    // ES6+
-    // ==========================================
 
     // Require braces around arrow function bodies
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/arrow-body-style
@@ -399,10 +388,6 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-template-curly-in-string
     'no-template-curly-in-string': 'error',
 
-    // ==========================================
-    // Errors
-    // ==========================================
-
     // Disallow await inside of loops
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-await-in-loop
     'no-await-in-loop': 'error',
@@ -440,10 +425,6 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-ex-assign
     'no-ex-assign': 'error',
 
-    // ==========================================
-    // Style
-    // ==========================================
-
     // Prefer color === "red" over "red" === color
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/yoda
     yoda: 'error',
@@ -455,10 +436,6 @@ export default {
     // Disallow @nocommit comments to prevent committing temporary code
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-warning-comments
     'no-warning-comments': ['error', { terms: ['@nocommit'] }],
-
-    // ==========================================
-    // Oxc (oxlint-only rules)
-    // ==========================================
 
     // Detect missing throw before new Error()
     // https://oxc.rs/docs/guide/usage/linter/rules/oxc/missing-throw
@@ -523,10 +500,6 @@ export default {
     // Detect duplicated code between if/else branches
     // https://oxc.rs/docs/guide/usage/linter/rules/oxc/branches-sharing-code
     'oxc/branches-sharing-code': 'error',
-
-    // ==========================================
-    // Unicorn
-    // ==========================================
 
     // Enforce kebab-case for filenames
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/filename-case
@@ -684,10 +657,6 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-abusive-eslint-disable
     'unicorn/no-abusive-eslint-disable': 'error',
 
-    // ==========================================
-    // TypeScript extension rules (unified in oxlint)
-    // ==========================================
-
     // Enforce default parameters to be last
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/default-param-last
     'default-param-last': 'error',
@@ -734,10 +703,6 @@ export default {
     // Disallow unnecessary constructors
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-useless-constructor
     'no-useless-constructor': 'error',
-
-    // ==========================================
-    // TypeScript-specific rules
-    // ==========================================
 
     // Disallow @ts-<directive> comments or require descriptions after directives
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/ban-ts-comment
@@ -787,15 +752,18 @@ export default {
 
     // Disallow non-null assertions after an optional chain expression
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-non-null-asserted-optional-chain
-    '@typescript-eslint/no-non-null-asserted-optional-chain': 'error'
+    '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
 
-    // ==========================================
+    // Require class properties that are never reassigned to be readonly
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-readonly
+    '@typescript-eslint/prefer-readonly': 'error',
+
+    // Enforce RegExp#exec() over String#match() when no global flag
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-regexp-exec
+    '@typescript-eslint/prefer-regexp-exec': 'error'
+
     // Type-aware rules (REQUIRES tsgolint + TypeScript-Go)
-    //
-    // To enable: install tsgolint, add `options: { typeAware: true }`
-    // to your oxlint.config.ts, and uncomment these rules.
-    // Also add a JS/CJS override to disable them for non-TS files.
-    // ==========================================
+    // To enable: set typeAware: true and uncomment these rules.
     // '@typescript-eslint/consistent-return': ['error', { treatUndefinedAsUnspecified: true }],
     // '@typescript-eslint/dot-notation': ['error', { allowKeywords: true }],
     // '@typescript-eslint/return-await': ['error', 'in-try-catch'],

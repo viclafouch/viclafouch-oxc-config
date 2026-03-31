@@ -1,11 +1,13 @@
 import type { OxlintConfig } from 'oxlint'
 
 /**
- * React configuration for oxlint.
- *
- * Migrated from `rules/react.mjs`.
+ * React rules for JSX, components, and patterns.
  * Formatting rules (jsx-indent, jsx-spacing, etc.) are handled by oxfmt.
- * Rules not supported by oxlint are documented in ../GAPS.md.
+ *
+ * @example
+ * ```ts
+ * extends: [typescript, react, hooks, jsxA11y, imports]
+ * ```
  */
 export default {
   plugins: ['react'],
