@@ -166,6 +166,14 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-iterator
     'no-iterator': 'error',
 
+    // Disallow use of __proto__ (deprecated, use Object.getPrototypeOf/setPrototypeOf)
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-proto
+    'no-proto': 'error',
+
+    // Disallow calling Object.prototype methods directly on objects
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-prototype-builtins
+    'no-prototype-builtins': 'error',
+
     // Disallow use of labels for anything other than loops and switches
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-labels
     'no-labels': ['error', { allowLoop: false, allowSwitch: false }],
@@ -181,6 +189,10 @@ export default {
     // Disallow use of new operator when not part of an assignment or comparison
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-new
     'no-new': 'error',
+
+    // Disallow use of new Function() (equivalent to eval)
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-new-func
+    'no-new-func': 'error',
 
     // Disallow creating new instances of String, Number, and Boolean
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-new-wrappers
@@ -206,6 +218,10 @@ export default {
     // Disallow ternary operators when simpler alternatives exist
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unneeded-ternary
     'no-unneeded-ternary': 'error',
+
+    // Disallow use of the comma operator
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-sequences
+    'no-sequences': 'error',
 
     // Disallow assignments where both sides are exactly the same
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-self-assign
@@ -728,6 +744,14 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-explicit-any
     '@typescript-eslint/no-explicit-any': 'error',
 
+    // Disallow the {} type (matches any non-nullish value, not "empty object")
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-empty-object-type
+    '@typescript-eslint/no-empty-object-type': 'error',
+
+    // Disallow the Function type (no type safety)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-function-type
+    '@typescript-eslint/no-unsafe-function-type': 'error',
+
     // Disallow explicit return type annotations on functions (trust inference)
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/explicit-function-return-type
     '@typescript-eslint/explicit-function-return-type': 'off',
@@ -738,6 +762,10 @@ export default {
       'error',
       { prefer: 'type-imports' }
     ],
+
+    // Disallow import { type A, type B } when all imports are types (use import type { A, B })
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-import-type-side-effects
+    '@typescript-eslint/no-import-type-side-effects': 'error',
 
     // Disallow unnecessarily defining types for simple inferred values
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-inferrable-types
@@ -753,6 +781,14 @@ export default {
     // Disallow non-null assertions after an optional chain expression
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-non-null-asserted-optional-chain
     '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
+
+    // Disallow non-null assertion with nullish coalescing (contradictory: ! + ??)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-non-null-asserted-nullish-coalescing
+    '@typescript-eslint/no-non-null-asserted-nullish-coalescing': 'error',
+
+    // Disallow require() imports in TypeScript (use ESM imports)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-require-imports
+    '@typescript-eslint/no-require-imports': 'error',
 
     // Require class properties that are never reassigned to be readonly
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-readonly
