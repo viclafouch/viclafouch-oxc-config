@@ -45,11 +45,11 @@
     "lint": "oxlint && oxfmt --check",
     "lint:fix": "oxlint --fix && oxfmt",
     "prepublishOnly": "tsup",
-    "bump": "npm version minor",
+    "bump": "npm run build && npm version minor",
     "release": "npm publish",
-    "bump:alpha": "npm version prerelease --preid alpha",
+    "bump:alpha": "npm run build && npm version prerelease --preid alpha",
     "release:alpha": "npm publish --tag alpha",
-    "bump:beta": "npm version prerelease --preid beta",
+    "bump:beta": "npm run build && npm version prerelease --preid beta",
     "release:beta": "npm publish --tag beta"
   },
   "devDependencies": {
