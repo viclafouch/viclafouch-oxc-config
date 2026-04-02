@@ -5,6 +5,7 @@ Oxlint + oxfmt config package. Built by tsup (ESM + dts) because Node doesn't st
 ## Coding Conventions
 
 - Every value explicit — even defaults. Categories, options, settings: all declared.
+- Rule options always explicit, even when empty/default. If a rule accepts options, write them out (e.g. `['error', { allowlist: { variables: [], types: [] } }]`). Serves as living documentation and surfaces hidden options.
 - `'error'` or `'off'`. Never `'warn'` except `no-console`, `react/no-danger`, and `vitest/warn-todo`.
 
 ## Documentation

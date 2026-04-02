@@ -59,8 +59,9 @@ For each **new or graduated rule**:
 
 1. Rule name and plugin
 2. Code example: what it catches and the fix
-3. Recommendation with reasoning
-4. Ask via **AskUserQuestion** with concrete options — one rule at a time
+3. List all available options (check the rule's schema in source). Present them even if defaults are empty.
+4. Recommendation with reasoning
+5. Ask via **AskUserQuestion** with concrete options — one rule at a time
 
 For each **new option** on an existing rule: show what it changes, ask if we adopt it.
 
@@ -85,7 +86,7 @@ Order matters: bump versions first, install, then edit configs, then verify.
 
 - Add rules to the correct file in `configs/`
 - Read `CLAUDE.md` for coding conventions before editing
-- Each rule: one-line comment + doc URL
+- Each rule: one-line comment + doc URL. Always write options explicitly, even when using defaults.
 - If new plugin config: create file, export from `index.ts`, add JSDoc with `@example`
 
 ### 3. Documentation

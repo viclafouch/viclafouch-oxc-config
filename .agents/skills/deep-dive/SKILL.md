@@ -2,7 +2,7 @@
 name: deep-dive
 description: Interview the user relentlessly about a plan, design, strategy, or decision until reaching shared understanding. Walks down each branch of the decision tree, resolving dependencies one-by-one. Use when user wants to stress-test a plan, get grilled on a design, deep-dive into a phase, or clarify a complex decision — works for both technical and non-technical topics.
 user-invocable: true
-argument-hint: "[phase-or-topic]"
+argument-hint: <phase-or-topic>
 ---
 
 Interview me about this specific phase/topic until we reach a shared understanding. Walk down each branch of the decision tree, resolving dependencies between decisions one-by-one.

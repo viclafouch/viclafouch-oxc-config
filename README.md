@@ -18,11 +18,12 @@ import {
   react,
   hooks,
   jsxA11y,
-  imports
+  imports,
+  tanstackQuery
 } from '@viclafouch/oxc-config'
 
 export default defineConfig({
-  extends: [typescript, react, hooks, jsxA11y, imports]
+  extends: [typescript, react, hooks, jsxA11y, imports, tanstackQuery]
 })
 ```
 
@@ -59,11 +60,12 @@ import {
   hooks,
   jsxA11y,
   next,
-  imports
+  imports,
+  tanstackQuery
 } from '@viclafouch/oxc-config'
 
 export default defineConfig({
-  extends: [typescript, react, hooks, jsxA11y, next, imports]
+  extends: [typescript, react, hooks, jsxA11y, next, imports, tanstackQuery]
 })
 ```
 
@@ -79,11 +81,12 @@ import {
   react,
   hooks,
   reactNative,
-  imports
+  imports,
+  tanstackQuery
 } from '@viclafouch/oxc-config'
 
 export default defineConfig({
-  extends: [typescript, react, hooks, reactNative, imports]
+  extends: [typescript, react, hooks, reactNative, imports, tanstackQuery]
 })
 ```
 
@@ -98,6 +101,7 @@ export default defineConfig({
 | `next`           | Next.js specific rules                                  |
 | `reactNative`    | React Native rules (via jsPlugins)                      |
 | `imports`        | Import rules (no-cycle, no-duplicates, etc.)            |
+| `tanstackQuery`  | TanStack Query rules (via jsPlugins)                    |
 | `playwright`     | Playwright e2e testing (via jsPlugins)                  |
 | `testingLibrary` | Testing Library rules (via jsPlugins)                   |
 | `vitest`         | Vitest testing rules (native plugin)                    |
@@ -168,6 +172,26 @@ export default defineConfig({
 })
 ```
 
+## TanStack Query
+
+> Requires `@tanstack/eslint-plugin-query`: `npm install -D @tanstack/eslint-plugin-query`
+
+```typescript
+import { defineConfig } from 'oxlint'
+import {
+  typescript,
+  react,
+  hooks,
+  jsxA11y,
+  imports,
+  tanstackQuery
+} from '@viclafouch/oxc-config'
+
+export default defineConfig({
+  extends: [typescript, react, hooks, jsxA11y, imports, tanstackQuery]
+})
+```
+
 ## Formatting (oxfmt)
 
 ```typescript
@@ -235,7 +259,7 @@ If your project also runs `tsc`:
 ## Configuration Hierarchy
 
 1. `typescript` (always first — base rules)
-2. `react` / `hooks` / `jsxA11y` / `next` / `reactNative`
+2. `react` / `hooks` / `jsxA11y` / `next` / `reactNative` / `tanstackQuery`
 3. `imports`
 4. `vitest` / `playwright` / `testingLibrary` (testing)
 
@@ -256,10 +280,11 @@ See [GAPS.md](https://github.com/viclafouch/oxc-config/blob/main/GAPS.md) for ru
 
 ## jsPlugins
 
-Three configs use external plugins (install only the ones you need):
+Four configs use external plugins (install only the ones you need):
 
 ```bash
-npm install -D eslint-plugin-react-native      # for reactNative
+npm install -D @tanstack/eslint-plugin-query    # for tanstackQuery
+npm install -D eslint-plugin-react-native       # for reactNative
 npm install -D eslint-plugin-playwright         # for playwright
 npm install -D eslint-plugin-testing-library    # for testingLibrary
 ```

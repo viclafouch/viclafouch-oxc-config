@@ -57,6 +57,7 @@
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
+    "@tanstack/eslint-plugin-query": ">= 5",
     "eslint-plugin-playwright": ">= 2",
     "eslint-plugin-react-native": ">= 5",
     "eslint-plugin-testing-library": ">= 7",
@@ -65,16 +66,19 @@
     "typescript": ">= 5"
   },
   "peerDependenciesMeta": {
-    "oxfmt": {
-      "optional": true
-    },
-    "eslint-plugin-react-native": {
+    "@tanstack/eslint-plugin-query": {
       "optional": true
     },
     "eslint-plugin-playwright": {
       "optional": true
     },
+    "eslint-plugin-react-native": {
+      "optional": true
+    },
     "eslint-plugin-testing-library": {
+      "optional": true
+    },
+    "oxfmt": {
       "optional": true
     }
   }
