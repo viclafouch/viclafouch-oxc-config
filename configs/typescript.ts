@@ -128,7 +128,7 @@ export default {
 
     // Disallow empty destructuring patterns
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-empty-pattern
-    'no-empty-pattern': ['error', { allowObjectPatternsAsParameters: false }],
+    'no-empty-pattern': 'error',
 
     // Disallow adding to native types
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-extend-native
