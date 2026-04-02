@@ -1,6 +1,6 @@
 {
   "name": "@viclafouch/oxc-config",
-  "version": "1.0.0-alpha.10",
+  "version": "1.0.0-alpha.9",
   "description": "Oxlint and Oxfmt configuration for modern TypeScript, React, Next.js, and React Native projects.",
   "keywords": [
     "config",
@@ -45,11 +45,11 @@
     "lint": "oxlint && oxfmt --check",
     "lint:fix": "oxlint --fix && oxfmt",
     "prepublishOnly": "tsup",
-    "bump": "npm run build && npm version minor",
+    "bump": "npm version minor",
     "release": "npm publish",
-    "bump:alpha": "npm run build && npm version prerelease --preid alpha",
+    "bump:alpha": "npm version prerelease --preid alpha",
     "release:alpha": "npm publish --tag alpha",
-    "bump:beta": "npm run build && npm version prerelease --preid beta",
+    "bump:beta": "npm version prerelease --preid beta",
     "release:beta": "npm publish --tag beta"
   },
   "devDependencies": {
