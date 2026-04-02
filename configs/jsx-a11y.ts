@@ -24,7 +24,15 @@ export default {
   rules: {
     // Enforce alt text for elements that require it
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/alt-text
-    'jsx-a11y/alt-text': 'error',
+    'jsx-a11y/alt-text': [
+      'error',
+      {
+        area: [],
+        img: [],
+        'input[type="image"]': [],
+        object: []
+      }
+    ],
 
     // Enforce anchors have content
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/anchor-has-content
@@ -32,7 +40,7 @@ export default {
 
     // Enforce valid anchor elements
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/anchor-is-valid
-    'jsx-a11y/anchor-is-valid': 'error',
+    'jsx-a11y/anchor-is-valid': ['error', { validHrefs: [] }],
 
     // Enforce aria-activedescendant has tabindex
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/aria-activedescendant-has-tabindex
@@ -48,7 +56,13 @@ export default {
 
     // Enforce valid ARIA role
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/aria-role
-    'jsx-a11y/aria-role': 'error',
+    'jsx-a11y/aria-role': [
+      'error',
+      {
+        allowedInvalidRoles: [],
+        ignoreNonDOM: false
+      }
+    ],
 
     // Enforce ARIA state and property values are valid
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/aria-unsupported-elements
@@ -60,7 +74,7 @@ export default {
 
     // Enforce heading has content
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/heading-has-content
-    'jsx-a11y/heading-has-content': 'error',
+    'jsx-a11y/heading-has-content': ['error', { components: [] }],
 
     // Enforce html element has lang
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/html-has-lang
@@ -72,19 +86,47 @@ export default {
 
     // Enforce img alt does not contain the word image, picture, or photo
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/img-redundant-alt
-    'jsx-a11y/img-redundant-alt': 'error',
+    'jsx-a11y/img-redundant-alt': [
+      'error',
+      {
+        components: ['img'],
+        words: ['image', 'photo', 'picture']
+      }
+    ],
 
     // Enforce label has associated control
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/label-has-associated-control
-    'jsx-a11y/label-has-associated-control': 'error',
+    'jsx-a11y/label-has-associated-control': [
+      'error',
+      {
+        assert: 'either',
+        controlComponents: [],
+        depth: 2,
+        labelAttributes: ['alt', 'aria-label', 'aria-labelledby'],
+        labelComponents: ['label']
+      }
+    ],
 
     // Disallow requiring captions for video / audio
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/media-has-caption
-    'jsx-a11y/media-has-caption': 'off',
+    'jsx-a11y/media-has-caption': [
+      'off',
+      {
+        audio: ['audio'],
+        track: ['track'],
+        video: ['video']
+      }
+    ],
 
     // Enforce mouse events have key events
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/mouse-events-have-key-events
-    'jsx-a11y/mouse-events-have-key-events': 'error',
+    'jsx-a11y/mouse-events-have-key-events': [
+      'error',
+      {
+        hoverInHandlers: ['onMouseOver'],
+        hoverOutHandlers: ['onMouseOut']
+      }
+    ],
 
     // Enforce no access key
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-access-key
@@ -92,11 +134,14 @@ export default {
 
     // Enforce no autofocus
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-autofocus
-    'jsx-a11y/no-autofocus': 'error',
+    'jsx-a11y/no-autofocus': ['error', { ignoreNonDOM: false }],
 
     // Enforce no distracting elements
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-distracting-elements
-    'jsx-a11y/no-distracting-elements': 'error',
+    'jsx-a11y/no-distracting-elements': [
+      'error',
+      { elements: ['marquee', 'blink'] }
+    ],
 
     // Enforce redundant roles are not used
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-redundant-roles
@@ -104,7 +149,13 @@ export default {
 
     // Enforce non-interactive elements have no role
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-static-element-interactions
-    'jsx-a11y/no-static-element-interactions': 'error',
+    'jsx-a11y/no-static-element-interactions': [
+      'error',
+      {
+        allowExpressionValues: false,
+        handlers: []
+      }
+    ],
 
     // Enforce role attribute has required ARIA props
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/role-has-required-aria-props
@@ -124,7 +175,14 @@ export default {
 
     // Enforce tabIndex on non-interactive elements is not positive
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-noninteractive-tabindex
-    'jsx-a11y/no-noninteractive-tabindex': 'error',
+    'jsx-a11y/no-noninteractive-tabindex': [
+      'error',
+      {
+        allowExpressionValues: true,
+        roles: ['tabpanel'],
+        tags: []
+      }
+    ],
 
     // Prefer semantic HTML tags over ARIA roles
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/prefer-tag-over-role

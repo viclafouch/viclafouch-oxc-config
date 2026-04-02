@@ -21,6 +21,6 @@ export default {
 
     // Verify the list of dependencies for hooks
     // https://oxc.rs/docs/guide/usage/linter/rules/react/exhaustive-deps
-    'react/exhaustive-deps': 'error'
+    'react/exhaustive-deps': ['error', { additionalHooks: '' }]
   }
 } satisfies OxlintConfig

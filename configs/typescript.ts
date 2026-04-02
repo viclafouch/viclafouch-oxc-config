@@ -49,7 +49,7 @@ export default {
 
     // Enforce return statements in getters
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/getter-return
-    'getter-return': 'error',
+    'getter-return': ['error', { allowImplicit: false }],
 
     // Treat var statements as if they were block scoped
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/block-scoped-var
@@ -96,7 +96,7 @@ export default {
 
     // Require default case in switch statements
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/default-case
-    'default-case': 'error',
+    'default-case': ['error', { commentPattern: 'no default' }],
 
     // Enforce default clauses in switch statements to be last
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/default-case-last
@@ -128,11 +128,11 @@ export default {
 
     // Disallow empty destructuring patterns
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-empty-pattern
-    'no-empty-pattern': 'error',
+    'no-empty-pattern': ['error', { allowObjectPatternsAsParameters: false }],
 
     // Disallow adding to native types
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-extend-native
-    'no-extend-native': 'error',
+    'no-extend-native': ['error', { exceptions: [] }],
 
     // Disallow unnecessary labels
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-extra-label
@@ -140,15 +140,31 @@ export default {
 
     // Disallow fallthrough of case statements
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-fallthrough
-    'no-fallthrough': 'error',
+    'no-fallthrough': [
+      'error',
+      {
+        allowEmptyCase: false,
+        commentPattern: 'falls?\\s?through',
+        reportUnusedFallthroughComment: false
+      }
+    ],
 
     // Disallow reassignments of native objects or read-only globals
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-global-assign
-    'no-global-assign': 'error',
+    'no-global-assign': ['error', { exceptions: [] }],
 
     // Disallow implicit type conversions
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-implicit-coercion
-    'no-implicit-coercion': 'error',
+    'no-implicit-coercion': [
+      'error',
+      {
+        allow: [],
+        boolean: true,
+        disallowTemplateShorthand: false,
+        number: true,
+        string: true
+      }
+    ],
 
     // Disallow reassigning function declarations
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-func-assign
@@ -217,11 +233,11 @@ export default {
 
     // Disallow ternary operators when simpler alternatives exist
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unneeded-ternary
-    'no-unneeded-ternary': 'error',
+    'no-unneeded-ternary': ['error', { defaultAssignment: true }],
 
     // Disallow use of the comma operator
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-sequences
-    'no-sequences': 'error',
+    'no-sequences': ['error', { allowInParentheses: true }],
 
     // Disallow assignments where both sides are exactly the same
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-self-assign
@@ -241,15 +257,21 @@ export default {
 
     // Disallow negating the left operand of relational operators
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unsafe-negation
-    'no-unsafe-negation': 'error',
+    'no-unsafe-negation': [
+      'error',
+      { enforceForOrderingRelations: false }
+    ],
 
     // Enforce comparing typeof expressions against valid strings
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/valid-typeof
-    'valid-typeof': 'error',
+    'valid-typeof': ['error', { requireStringLiterals: false }],
 
     // Require calls to isNaN() when checking for NaN
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/use-isnan
-    'use-isnan': 'error',
+    'use-isnan': [
+      'error',
+      { enforceForIndexOf: false, enforceForSwitchCase: true }
+    ],
 
     // Disallow unreachable code after return, throw, continue, and break statements
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unreachable
@@ -269,7 +291,7 @@ export default {
 
     // Disallow unnecessary string escaping
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-useless-escape
-    'no-useless-escape': 'error',
+    'no-useless-escape': ['error', { allowRegexCharacters: [] }],
 
     // Disallow redundant return; keywords
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-useless-return
@@ -300,7 +322,10 @@ export default {
 
     // Disallow shadowing of names such as arguments
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-shadow-restricted-names
-    'no-shadow-restricted-names': 'error',
+    'no-shadow-restricted-names': [
+      'error',
+      { reportGlobalThis: true }
+    ],
 
     // Disallow use of undeclared variables unless mentioned in a /*global */ block
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-undef
@@ -332,11 +357,11 @@ export default {
 
     // Disallow returning values from Promise executor functions
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-promise-executor-return
-    'no-promise-executor-return': 'error',
+    'no-promise-executor-return': ['error', { allowVoid: false }],
 
     // Disallow invalid regular expression strings in RegExp constructors
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-invalid-regexp
-    'no-invalid-regexp': 'error',
+    'no-invalid-regexp': ['error', { allowConstructorFlags: [] }],
 
     // Disallow this/super before calling super() in constructors
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-this-before-super
@@ -344,7 +369,10 @@ export default {
 
     // Disallow use of optional chaining in contexts where undefined is not allowed
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unsafe-optional-chaining
-    'no-unsafe-optional-chaining': 'error',
+    'no-unsafe-optional-chaining': [
+      'error',
+      { disallowArithmeticOperators: false }
+    ],
 
     // Disallow control flow statements in finally blocks
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unsafe-finally
@@ -352,11 +380,21 @@ export default {
 
     // Disallow useless computed property keys
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-useless-computed-key
-    'no-useless-computed-key': 'error',
+    'no-useless-computed-key': [
+      'error',
+      { enforceForClassMembers: true }
+    ],
 
     // Disallow renaming import, export, and destructured assignments to the same name
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-useless-rename
-    'no-useless-rename': 'error',
+    'no-useless-rename': [
+      'error',
+      {
+        ignoreDestructuring: false,
+        ignoreExport: false,
+        ignoreImport: false
+      }
+    ],
 
     // Require let or const instead of var
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-var
@@ -419,7 +457,10 @@ export default {
 
     // Disallow use of constant expressions in conditions
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-constant-condition
-    'no-constant-condition': 'error',
+    'no-constant-condition': [
+      'error',
+      { checkLoops: 'allExceptWhileTrue' }
+    ],
 
     // Disallow use of debugger
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-debugger
@@ -443,11 +484,11 @@ export default {
 
     // Prefer color === "red" over "red" === color
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/yoda
-    yoda: 'error',
+    yoda: ['error', 'never', { exceptRange: false, onlyEquality: false }],
 
     // Disallow the unary operators ++ and --
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-plusplus
-    'no-plusplus': 'error',
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: false }],
 
     // Disallow @nocommit comments to prevent committing temporary code
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-warning-comments
@@ -539,11 +580,17 @@ export default {
 
     // Prefer Array#toReversed() over Array#reverse() to avoid mutation
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-array-reverse
-    'unicorn/no-array-reverse': 'error',
+    'unicorn/no-array-reverse': [
+      'error',
+      { allowExpressionStatement: true }
+    ],
 
     // Prefer Array#toSorted() over Array#sort() to avoid mutation
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-array-sort
-    'unicorn/no-array-sort': 'error',
+    'unicorn/no-array-sort': [
+      'error',
+      { allowExpressionStatement: true }
+    ],
 
     // Require using new when throwing an error
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/throw-new-error
@@ -563,11 +610,20 @@ export default {
 
     // Prefer .at() for accessing elements by negative index
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-at
-    'unicorn/prefer-at': 'error',
+    'unicorn/prefer-at': [
+      'error',
+      {
+        checkAllIndexAccess: false,
+        getLastElementFunctions: []
+      }
+    ],
 
     // Prefer Number static properties over global ones
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-number-properties
-    'unicorn/prefer-number-properties': 'error',
+    'unicorn/prefer-number-properties': [
+      'error',
+      { checkInfinity: false, checkNaN: true }
+    ],
 
     // Prefer for...of over Array#forEach
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-array-for-each
@@ -583,7 +639,10 @@ export default {
 
     // Disallow useless undefined
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-useless-undefined
-    'unicorn/no-useless-undefined': 'error',
+    'unicorn/no-useless-undefined': [
+      'error',
+      { checkArguments: true, checkArrowFunctionBody: true }
+    ],
 
     // Prefer String#replaceAll() over regex with global flag
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-string-replace-all
@@ -611,11 +670,17 @@ export default {
 
     // Prefer === undefined over typeof === 'undefined'
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-typeof-undefined
-    'unicorn/no-typeof-undefined': 'error',
+    'unicorn/no-typeof-undefined': [
+      'error',
+      { checkGlobalVariables: false }
+    ],
 
     // Prefer Object.fromEntries() over reduce to create objects
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-object-from-entries
-    'unicorn/prefer-object-from-entries': 'error',
+    'unicorn/prefer-object-from-entries': [
+      'error',
+      { functions: ['_.fromPairs', 'lodash.fromPairs'] }
+    ],
 
     // Prefer some() over find() !== undefined for boolean checks
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-array-some
@@ -643,15 +708,24 @@ export default {
 
     // Disallow useless Promise.resolve/reject in async functions
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-useless-promise-resolve-reject
-    'unicorn/no-useless-promise-resolve-reject': 'error',
+    'unicorn/no-useless-promise-resolve-reject': [
+      'error',
+      { allowReject: false }
+    ],
 
     // Prefer structuredClone over JSON.parse(JSON.stringify())
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-structured-clone
-    'unicorn/prefer-structured-clone': 'error',
+    'unicorn/prefer-structured-clone': [
+      'error',
+      { functions: ['cloneDeep', 'utils.clone'] }
+    ],
 
     // Enforce the name `error` in catch clauses
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/catch-error-name
-    'unicorn/catch-error-name': 'error',
+    'unicorn/catch-error-name': [
+      'error',
+      { ignore: [], name: 'error' }
+    ],
 
     // Prefer .slice() over .substring() and .substr()
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-string-slice
@@ -659,7 +733,16 @@ export default {
 
     // Enforce numeric separators for readability
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/numeric-separators-style
-    'unicorn/numeric-separators-style': 'error',
+    'unicorn/numeric-separators-style': [
+      'error',
+      {
+        onlyIfContainsSeparator: false,
+        binary: { groupLength: 4, minimumDigits: 0 },
+        hexadecimal: { groupLength: 2, minimumDigits: 0 },
+        number: { groupLength: 3, minimumDigits: 5 },
+        octal: { groupLength: 4, minimumDigits: 0 }
+      }
+    ],
 
     // Prefer Set#size over converting to array
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-set-size
@@ -667,7 +750,10 @@ export default {
 
     // Enforce consistent text encoding identifier casing (utf-8)
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/text-encoding-identifier-case
-    'unicorn/text-encoding-identifier-case': 'error',
+    'unicorn/text-encoding-identifier-case': [
+      'error',
+      { withDash: false }
+    ],
 
     // Disallow disable comments without specifying a rule
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-abusive-eslint-disable
@@ -686,11 +772,21 @@ export default {
 
     // Disallow variable redeclaration
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-redeclare
-    'no-redeclare': 'error',
+    'no-redeclare': ['error', { builtinGlobals: true }],
 
     // Disallow variable declarations from shadowing variables declared in the outer scope
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-shadow
-    'no-shadow': 'error',
+    'no-shadow': [
+      'error',
+      {
+        allow: [],
+        builtinGlobals: false,
+        hoist: 'functions-and-types',
+        ignoreFunctionTypeParameterNameValueShadow: true,
+        ignoreOnInitialization: false,
+        ignoreTypeValueShadow: true
+      }
+    ],
 
     // Disallow unused expressions
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-expressions
@@ -734,7 +830,10 @@ export default {
 
     // Require consistently using T[] instead of Array<T>
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/array-type
-    '@typescript-eslint/array-type': 'error',
+    '@typescript-eslint/array-type': [
+      'error',
+      { default: 'array', readonly: 'array' }
+    ],
 
     // Enforce type definitions to consistently use type instead of interface
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/consistent-type-definitions
@@ -742,11 +841,20 @@ export default {
 
     // Disallow the any type
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-explicit-any
-    '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/no-explicit-any': [
+      'error',
+      { fixToUnknown: false, ignoreRestArgs: false }
+    ],
 
     // Disallow the {} type (matches any non-nullish value, not "empty object")
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-empty-object-type
-    '@typescript-eslint/no-empty-object-type': 'error',
+    '@typescript-eslint/no-empty-object-type': [
+      'error',
+      {
+        allowInterfaces: 'never',
+        allowObjectTypes: 'never'
+      }
+    ],
 
     // Disallow the Function type (no type safety)
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-function-type
@@ -754,7 +862,19 @@ export default {
 
     // Disallow explicit return type annotations on functions (trust inference)
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/explicit-function-return-type
-    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-function-return-type': [
+      'off',
+      {
+        allowConciseArrowFunctionExpressionsStartingWithVoid: false,
+        allowDirectConstAssertionInArrowFunctions: true,
+        allowExpressions: false,
+        allowFunctionsWithoutTypeParameters: false,
+        allowHigherOrderFunctions: true,
+        allowIIFEs: false,
+        allowTypedFunctionExpressions: true,
+        allowedNames: []
+      }
+    ],
 
     // Enforce import type { T }
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/consistent-type-imports
@@ -776,7 +896,10 @@ export default {
 
     // Disallow TypeScript namespaces
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-namespace
-    '@typescript-eslint/no-namespace': 'error',
+    '@typescript-eslint/no-namespace': [
+      'error',
+      { allowDeclarations: false, allowDefinitionFiles: true }
+    ],
 
     // Disallow non-null assertions after an optional chain expression
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-non-null-asserted-optional-chain
@@ -788,11 +911,17 @@ export default {
 
     // Disallow require() imports in TypeScript (use ESM imports)
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-require-imports
-    '@typescript-eslint/no-require-imports': 'error',
+    '@typescript-eslint/no-require-imports': [
+      'error',
+      { allow: [], allowAsImport: false }
+    ],
 
     // Require class properties that are never reassigned to be readonly
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-readonly
-    '@typescript-eslint/prefer-readonly': 'error',
+    '@typescript-eslint/prefer-readonly': [
+      'error',
+      { onlyInlineLambdas: false }
+    ],
 
     // Enforce RegExp#exec() over String#match() when no global flag
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-regexp-exec

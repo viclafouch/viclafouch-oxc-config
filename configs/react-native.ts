@@ -21,7 +21,13 @@ export default {
 
     // Enforce using platform-specific filenames when necessary
     // https://github.com/Intellicode/eslint-plugin-react-native/blob/master/docs/rules/split-platform-components.md
-    'react-native/split-platform-components': 'error',
+    'react-native/split-platform-components': [
+      'error',
+      {
+        androidPathRegex: '\\.android\\.[jt]sx?$',
+        iosPathRegex: '\\.ios\\.[jt]sx?$'
+      }
+    ],
 
     // Detect inline styles in components
     // https://github.com/Intellicode/eslint-plugin-react-native/blob/master/docs/rules/no-inline-styles.md
@@ -33,7 +39,7 @@ export default {
 
     // Detect raw text outside of Text component
     // https://github.com/Intellicode/eslint-plugin-react-native/blob/master/docs/rules/no-raw-text.md
-    'react-native/no-raw-text': 'error',
+    'react-native/no-raw-text': ['error', { skip: [] }],
 
     // Detect single element style arrays
     // https://github.com/Intellicode/eslint-plugin-react-native/blob/master/docs/rules/no-single-element-style-arrays.md

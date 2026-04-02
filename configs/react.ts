@@ -21,11 +21,25 @@ export default {
   rules: {
     // Enforce boolean attributes notation in JSX
     // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-boolean-value
-    'react/jsx-boolean-value': 'error',
+    'react/jsx-boolean-value': [
+      'error',
+      'never',
+      {
+        assumeUndefinedIsFalse: false,
+        always: []
+      }
+    ],
 
     // Validate JSX has key prop when in array or iterator (disabled - too many false positives)
     // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-key
-    'react/jsx-key': 'off',
+    'react/jsx-key': [
+      'off',
+      {
+        checkFragmentShorthand: true,
+        checkKeyMustBeforeSpread: true,
+        warnOnDuplicates: true
+      }
+    ],
 
     // Prevent duplicate props in JSX
     // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-no-duplicate-props
@@ -47,15 +61,21 @@ export default {
 
     // Prevent using string references
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-string-refs
-    'react/no-string-refs': 'error',
+    'react/no-string-refs': ['error', { noTemplateLiterals: false }],
 
     // Prevent usage of unknown DOM property
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-unknown-property
-    'react/no-unknown-property': 'error',
+    'react/no-unknown-property': [
+      'error',
+      {
+        ignore: [],
+        requireDataLowercase: false
+      }
+    ],
 
     // Prevent extra closing tags for components without children
     // https://oxc.rs/docs/guide/usage/linter/rules/react/self-closing-comp
-    'react/self-closing-comp': 'error',
+    'react/self-closing-comp': ['error', { component: true, html: true }],
 
     // Disallow target="_blank" on links
     // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-no-target-blank
@@ -79,7 +99,7 @@ export default {
 
     // Require style prop value be an object or var
     // https://oxc.rs/docs/guide/usage/linter/rules/react/style-prop-object
-    'react/style-prop-object': 'error',
+    'react/style-prop-object': ['error', { allow: [] }],
 
     // Prevent invalid characters from appearing in markup (disabled)
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-unescaped-entities
@@ -130,7 +150,13 @@ export default {
 
     // Disallow javascript: URLs in JSX (XSS prevention)
     // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-no-script-url
-    'react/jsx-no-script-url': 'error',
+    'react/jsx-no-script-url': [
+      'error',
+      {
+        components: {},
+        includeFromSettings: false
+      }
+    ],
 
     // Disallow children on void DOM elements (<br>, <img>, <input>, etc.)
     // https://oxc.rs/docs/guide/usage/linter/rules/react/void-dom-elements-no-children
@@ -142,7 +168,13 @@ export default {
 
     // Require onChange or readOnly on checked inputs
     // https://oxc.rs/docs/guide/usage/linter/rules/react/checked-requires-onchange-or-readonly
-    'react/checked-requires-onchange-or-readonly': 'error',
+    'react/checked-requires-onchange-or-readonly': [
+      'error',
+      {
+        ignoreExclusiveCheckedAttribute: false,
+        ignoreMissingProperties: false
+      }
+    ],
 
     // Disallow React.Children API (use props instead)
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-react-children

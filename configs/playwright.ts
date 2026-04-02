@@ -18,15 +18,27 @@ export default {
 
     // Enforce assertion to be made in a test body
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/expect-expect.md
-    'playwright/expect-expect': 'error',
+    'playwright/expect-expect': [
+      'error',
+      {
+        assertFunctionNames: [],
+        assertFunctionPatterns: []
+      }
+    ],
 
     // Enforce a maximum depth to nested describe calls
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/max-nested-describe.md
-    'playwright/max-nested-describe': 'error',
+    'playwright/max-nested-describe': ['error', { max: 5 }],
 
     // Enforce Playwright APIs to be awaited
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/missing-playwright-await.md
-    'playwright/missing-playwright-await': 'error',
+    'playwright/missing-playwright-await': [
+      'error',
+      {
+        customMatchers: [],
+        includePageLocatorMethods: false
+      }
+    ],
 
     // Disallow calling expect conditionally
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-conditional-expect.md
@@ -74,7 +86,13 @@ export default {
 
     // Disallow usage of the .skip annotation
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-skipped-test.md
-    'playwright/no-skipped-test': 'error',
+    'playwright/no-skipped-test': [
+      'error',
+      {
+        allowConditional: false,
+        disallowFixme: false
+      }
+    ],
 
     // Disallow using expect outside of test blocks
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-standalone-expect.md
@@ -142,19 +160,35 @@ export default {
 
     // Enforce valid expect() usage
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/valid-expect.md
-    'playwright/valid-expect': 'error',
+    'playwright/valid-expect': ['error', { minArgs: 1, maxArgs: 2 }],
 
     // Enforce valid tag format in test blocks
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/valid-test-tags.md
-    'playwright/valid-test-tags': 'error',
+    'playwright/valid-test-tags': [
+      'error',
+      {
+        allowedTags: [],
+        disallowedTags: []
+      }
+    ],
 
     // Enforce valid titles
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/valid-title.md
-    'playwright/valid-title': 'error',
+    'playwright/valid-title': [
+      'error',
+      {
+        ignoreSpaces: false,
+        ignoreTypeOfStepName: true,
+        ignoreTypeOfDescribeName: false,
+        disallowedWords: [],
+        mustNotMatch: {},
+        mustMatch: {}
+      }
+    ],
 
     // Enforce a maximum number of assertion calls in a test body
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/max-expects.md
-    'playwright/max-expects': 'error',
+    'playwright/max-expects': ['error', { max: 5 }],
 
     // Disallow commented out tests
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-commented-out-tests.md
@@ -166,11 +200,11 @@ export default {
 
     // Disallow using raw locators
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-raw-locators.md
-    'playwright/no-raw-locators': 'error',
+    'playwright/no-raw-locators': ['error', { allowed: [] }],
 
     // Disallow usage of the .slow annotation
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-slowed-test.md
-    'playwright/no-slowed-test': 'error',
+    'playwright/no-slowed-test': ['error', { allowConditional: false }],
 
     // Suggest using the built-in comparison matchers
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/prefer-comparison-matcher.md
@@ -182,11 +216,21 @@ export default {
 
     // Enforce lowercase test names
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/prefer-lowercase-title.md
-    'playwright/prefer-lowercase-title': 'error',
+    'playwright/prefer-lowercase-title': [
+      'error',
+      {
+        ignore: [],
+        allowedPrefixes: [],
+        ignoreTopLevelDescribe: false
+      }
+    ],
 
     // Suggest built-in locators over page.locator()
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/prefer-native-locators.md
-    'playwright/prefer-native-locators': 'error',
+    'playwright/prefer-native-locators': [
+      'error',
+      { testIdAttribute: 'data-testid' }
+    ],
 
     // Suggest using toStrictEqual()
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/prefer-strict-equal.md
@@ -202,7 +246,7 @@ export default {
 
     // Require setup and teardown code to be within a hook
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/require-hook.md
-    'playwright/require-hook': 'error',
+    'playwright/require-hook': ['error', { allowedFunctionCalls: [] }],
 
     // Require a message for toThrow()
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/require-to-throw-message.md
@@ -210,13 +254,16 @@ export default {
 
     // Require test cases and hooks to be inside a test.describe block
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/require-top-level-describe.md
-    'playwright/require-top-level-describe': 'error',
+    'playwright/require-top-level-describe': [
+      'error',
+      { maxTopLevelDescribes: Infinity }
+    ],
 
     // Disallow using getByTitle()
     'playwright/no-get-by-title': 'off',
 
     // Disallow setup and teardown hooks
-    'playwright/no-hooks': 'off',
+    'playwright/no-hooks': ['off', { allow: [] }],
 
     // Require assertions to use expect.soft()
     'playwright/require-soft-assertions': 'off',

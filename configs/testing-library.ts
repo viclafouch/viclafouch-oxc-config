@@ -14,7 +14,10 @@ export default {
   rules: {
     // Enforce async queries to have proper await
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/await-async-events.md
-    'testing-library/await-async-events': 'error',
+    'testing-library/await-async-events': [
+      'error',
+      { eventModule: 'userEvent' }
+    ],
 
     // Enforce async utils to be awaited properly
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/await-async-queries.md
@@ -26,7 +29,10 @@ export default {
 
     // Disallow unnecessary await for firing events
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-await-sync-events.md
-    'testing-library/no-await-sync-events': 'error',
+    'testing-library/no-await-sync-events': [
+      'error',
+      { eventModules: ['fire-event'] }
+    ],
 
     // Disallow unnecessary await for sync queries
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-await-sync-queries.md
@@ -38,11 +44,23 @@ export default {
 
     // Disallow the use of debugging utilities like debug
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-debugging-utils.md
-    'testing-library/no-debugging-utils': 'error',
+    'testing-library/no-debugging-utils': [
+      'error',
+      {
+        utilsToCheckFor: {
+          debug: true,
+          logTestingPlaygroundURL: true,
+          prettyDOM: true,
+          logRoles: true,
+          logDOM: true,
+          prettyFormat: true
+        }
+      }
+    ],
 
     // Disallow importing from DOM Testing Library
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-dom-import.md
-    'testing-library/no-dom-import': 'error',
+    'testing-library/no-dom-import': ['error', 'react'],
 
     // Disallow the use of cleanup
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-manual-cleanup.md
@@ -50,11 +68,14 @@ export default {
 
     // Disallow the use of render in testing frameworks setup functions
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-render-in-lifecycle.md
-    'testing-library/no-render-in-lifecycle': 'error',
+    'testing-library/no-render-in-lifecycle': [
+      'error',
+      { allowTestingFrameworkSetupHook: '' }
+    ],
 
     // Disallow unnecessary act wrapping of Testing Library calls
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-unnecessary-act.md
-    'testing-library/no-unnecessary-act': 'error',
+    'testing-library/no-unnecessary-act': ['error', { isStrict: true }],
 
     // Disallow empty callbacks for waitFor and waitForElementToBeRemoved
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-wait-for-empty-callback.md
@@ -82,7 +103,10 @@ export default {
 
     // Suggest using userEvent over fireEvent for simulating user interactions
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/prefer-user-event.md
-    'testing-library/prefer-user-event': 'error',
+    'testing-library/prefer-user-event': [
+      'error',
+      { allowedMethods: [] }
+    ],
 
     // Enforce a valid naming for return value of render (disabled)
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/render-result-naming-convention.md

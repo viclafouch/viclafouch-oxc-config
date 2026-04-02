@@ -14,15 +14,29 @@ export default {
   rules: {
     // Ensure all imports appear before other statements
     // https://oxc.rs/docs/guide/usage/linter/rules/import/first
-    'import/first': 'error',
+    'import/first': ['error', 'disable-absolute-first'],
 
     // Disallow duplicate imports
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-duplicates
-    'import/no-duplicates': 'error',
+    'import/no-duplicates': [
+      'error',
+      {
+        considerQueryString: false,
+        preferInline: false
+      }
+    ],
 
     // Disallow circular imports
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-cycle
-    'import/no-cycle': 'error',
+    'import/no-cycle': [
+      'error',
+      {
+        allowUnsafeDynamicCyclicDependency: false,
+        ignoreExternal: false,
+        ignoreTypes: true,
+        maxDepth: 4294967295
+      }
+    ],
 
     // Disallow a module from importing itself
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-self-import
@@ -34,6 +48,13 @@ export default {
 
     // Disallow absolute path imports
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-absolute-path
-    'import/no-absolute-path': 'error'
+    'import/no-absolute-path': [
+      'error',
+      {
+        amd: false,
+        commonjs: true,
+        esmodule: true
+      }
+    ]
   }
 } satisfies OxlintConfig

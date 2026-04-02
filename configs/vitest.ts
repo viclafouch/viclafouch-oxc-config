@@ -27,7 +27,15 @@ export default {
 
     // Enforce consistent style for parameterized tests (test.each vs for loop)
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/consistent-each-for
-    'vitest/consistent-each-for': 'error',
+    'vitest/consistent-each-for': [
+      'error',
+      {
+        describe: 'each',
+        it: 'each',
+        suite: 'each',
+        test: 'each'
+      }
+    ],
 
     // Enforce vi.mock/vi.hoisted at the top of the file
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/hoisted-apis-on-top
@@ -43,11 +51,11 @@ export default {
 
     // Enforce consistent usage of vi (import vs global)
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/consistent-vitest-vi
-    'vitest/consistent-vitest-vi': 'error',
+    'vitest/consistent-vitest-vi': ['error', { fn: 'vi' }],
 
     // Prefer vi.importActual() inside vi.mock() over external imports
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-import-in-mock
-    'vitest/prefer-import-in-mock': 'error',
+    'vitest/prefer-import-in-mock': ['error', { fixable: false }],
 
     // Prefer toHaveBeenCalledOnce() over toHaveBeenCalledTimes(1)
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-called-once
@@ -70,7 +78,13 @@ export default {
     'vitest/prefer-to-be-object': 'error',
 
     // Enforce *.test.ts or *.spec.ts naming — project-specific convention
-    'vitest/consistent-test-filename': 'off',
+    'vitest/consistent-test-filename': [
+      'off',
+      {
+        pattern: '',
+        allTestPattern: ''
+      }
+    ],
 
     // Disallow importing vitest globals when globals: true — depends on vitest config
     'vitest/no-importing-vitest-globals': 'off',
