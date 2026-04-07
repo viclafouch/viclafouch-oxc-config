@@ -180,6 +180,17 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-react-children
     'react/no-react-children': 'error',
 
+    // Enforce [value, setValue] naming convention for useState
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/hook-use-state
+    'react/hook-use-state': ['error', { allowDestructuredState: true }],
+
+    // Prefer function components over class components
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/prefer-function-component
+    'react/prefer-function-component': [
+      'error',
+      { allowComponentDidCatch: true }
+    ],
+
     // Disallow destructured imports from React and ReactDOM
     // Use `import React from 'react'` instead of `import { useState } from 'react'`
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-restricted-imports

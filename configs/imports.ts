@@ -34,7 +34,7 @@ export default {
         allowUnsafeDynamicCyclicDependency: false,
         ignoreExternal: false,
         ignoreTypes: true,
-        maxDepth: 4294967295
+        maxDepth: 4_294_967_295
       }
     ],
 

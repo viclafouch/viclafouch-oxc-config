@@ -103,10 +103,7 @@ export default {
 
     // Suggest using userEvent over fireEvent for simulating user interactions
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/prefer-user-event.md
-    'testing-library/prefer-user-event': [
-      'error',
-      { allowedMethods: [] }
-    ],
+    'testing-library/prefer-user-event': ['error', { allowedMethods: [] }],
 
     // Enforce a valid naming for return value of render (disabled)
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/render-result-naming-convention.md

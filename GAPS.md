@@ -6,15 +6,13 @@ Sources: [oxc#481](https://github.com/oxc-project/oxc/issues/481) (meta), [oxc#4
 
 ## Core rules — [oxc#479](https://github.com/oxc-project/oxc/issues/479)
 
-**ESLint: 82 active** | **oxlint: 116 rules (68 migrated + 48 new)** | **Not migrated: 14**
+**ESLint: 82 active** | **oxlint: 121 rules (70 migrated + 51 new)** | **Not migrated: 12**
 
 | Rule                              | Status                                                          |
 | --------------------------------- | --------------------------------------------------------------- |
 | `no-restricted-properties`        | Not started                                                     |
-| `no-restricted-exports`           | Not started                                                     |
 | `no-restricted-syntax`            | Partial via `no-restricted-imports` (AST selectors lost)        |
 | `prefer-regex-literals`           | Not started                                                     |
-| `object-shorthand`                | Not started                                                     |
 | `id-denylist`                     | Not started                                                     |
 | `prefer-arrow-callback`           | Not started                                                     |
 | `camelcase`                       | Will not implement (use `@typescript-eslint/naming-convention`) |
@@ -27,7 +25,7 @@ Sources: [oxc#481](https://github.com/oxc-project/oxc/issues/481) (meta), [oxc#4
 
 ## TypeScript rules — [oxc#1117](https://github.com/oxc-project/oxc/issues/1117)
 
-**ESLint: 22 active** | **Migrated: 8** | **Type-aware deferred: 13** | **Not migrated: 1**
+**ESLint: 22 active** | **Migrated: 8** | **Type-aware deferred: 14** | **Not migrated: 1**
 
 | Rule                                   | Status                                           |
 | -------------------------------------- | ------------------------------------------------ |
@@ -49,6 +47,7 @@ Type-aware rules (deferred until tsgolint):
 | `@typescript-eslint/no-deprecated`                  | -                                       |
 | `@typescript-eslint/no-misused-spread`              | -                                       |
 | `@typescript-eslint/no-useless-default-assignment`  | -                                       |
+| `@typescript-eslint/no-unnecessary-type-conversion` | -                                       |
 | `@typescript-eslint/naming-convention`              | Complex multi-selector config           |
 
 ## Unicorn rules — [oxc#493](https://github.com/oxc-project/oxc/issues/493)
@@ -59,7 +58,7 @@ All active unicorn rules have been migrated plus 10 new rules added.
 
 ## React rules — [oxc#1022](https://github.com/oxc-project/oxc/issues/1022)
 
-**ESLint: 35 active** | **oxlint: 26 rules (21 migrated + 5 new)** | **Not migrated: 14**
+**ESLint: 35 active** | **oxlint: 29 rules (22 migrated + 7 new)** | **Not migrated: 13**
 
 | Rule                                   | Status                                                 |
 | -------------------------------------- | ------------------------------------------------------ |
@@ -70,7 +69,6 @@ All active unicorn rules have been migrated plus 10 new rules added.
 | `react/no-invalid-html-attribute`      | Not started                                            |
 | `react/no-object-type-as-default-prop` | Not started                                            |
 | `react/function-component-definition`  | Not started                                            |
-| `react/hook-use-state`                 | Not started                                            |
 | `react/jsx-no-leaked-render`           | Not started                                            |
 | `react/prefer-stateless-function`      | Not started                                            |
 | `react/no-unused-prop-types`           | Will not implement (oxc#1022)                          |
@@ -80,11 +78,9 @@ All active unicorn rules have been migrated plus 10 new rules added.
 
 ## React Hooks
 
-**ESLint: 3 active** | **Migrated: 2** | **Not migrated: 1**
+**ESLint: 3 active** | **Migrated: 3** | **Not migrated: 0**
 
-| Rule                   | Status                               |
-| ---------------------- | ------------------------------------ |
-| `react/hook-use-state` | Not started (counted in React above) |
+All 3 active hooks rules have been migrated. No gaps.
 
 ## jsx-a11y rules — [oxc#492](https://github.com/oxc-project/oxc/issues/492)
 

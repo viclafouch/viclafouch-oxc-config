@@ -257,10 +257,7 @@ export default {
 
     // Disallow negating the left operand of relational operators
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unsafe-negation
-    'no-unsafe-negation': [
-      'error',
-      { enforceForOrderingRelations: false }
-    ],
+    'no-unsafe-negation': ['error', { enforceForOrderingRelations: false }],
 
     // Enforce comparing typeof expressions against valid strings
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/valid-typeof
@@ -297,6 +294,10 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-useless-return
     'no-useless-return': 'error',
 
+    // Disallow assignments that are never read (dead stores)
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-useless-assignment
+    'no-useless-assignment': 'error',
+
     // Require using Error objects as Promise rejection reasons
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/prefer-promise-reject-errors
     'prefer-promise-reject-errors': ['error', { allowEmptyReject: true }],
@@ -322,14 +323,24 @@ export default {
 
     // Disallow shadowing of names such as arguments
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-shadow-restricted-names
-    'no-shadow-restricted-names': [
-      'error',
-      { reportGlobalThis: true }
-    ],
+    'no-shadow-restricted-names': ['error', { reportGlobalThis: true }],
 
     // Disallow use of undeclared variables unless mentioned in a /*global */ block
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-undef
     'no-undef': ['error', { typeof: true }],
+
+    // Enforce shorthand syntax for object properties and methods
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/object-shorthand
+    'object-shorthand': [
+      'error',
+      'always',
+      {
+        avoidQuotes: true,
+        ignoreConstructors: false,
+        avoidExplicitReturnArrows: false,
+        methodsIgnorePattern: ''
+      }
+    ],
 
     // Require braces around arrow function bodies
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/arrow-body-style
@@ -380,10 +391,7 @@ export default {
 
     // Disallow useless computed property keys
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-useless-computed-key
-    'no-useless-computed-key': [
-      'error',
-      { enforceForClassMembers: true }
-    ],
+    'no-useless-computed-key': ['error', { enforceForClassMembers: true }],
 
     // Disallow renaming import, export, and destructured assignments to the same name
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-useless-rename
@@ -457,10 +465,7 @@ export default {
 
     // Disallow use of constant expressions in conditions
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-constant-condition
-    'no-constant-condition': [
-      'error',
-      { checkLoops: 'allExceptWhileTrue' }
-    ],
+    'no-constant-condition': ['error', { checkLoops: 'allExceptWhileTrue' }],
 
     // Disallow use of debugger
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-debugger
@@ -580,17 +585,11 @@ export default {
 
     // Prefer Array#toReversed() over Array#reverse() to avoid mutation
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-array-reverse
-    'unicorn/no-array-reverse': [
-      'error',
-      { allowExpressionStatement: true }
-    ],
+    'unicorn/no-array-reverse': ['error', { allowExpressionStatement: true }],
 
     // Prefer Array#toSorted() over Array#sort() to avoid mutation
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-array-sort
-    'unicorn/no-array-sort': [
-      'error',
-      { allowExpressionStatement: true }
-    ],
+    'unicorn/no-array-sort': ['error', { allowExpressionStatement: true }],
 
     // Require using new when throwing an error
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/throw-new-error
@@ -670,10 +669,7 @@ export default {
 
     // Prefer === undefined over typeof === 'undefined'
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-typeof-undefined
-    'unicorn/no-typeof-undefined': [
-      'error',
-      { checkGlobalVariables: false }
-    ],
+    'unicorn/no-typeof-undefined': ['error', { checkGlobalVariables: false }],
 
     // Prefer Object.fromEntries() over reduce to create objects
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-object-from-entries
@@ -702,9 +698,17 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-node-protocol
     'unicorn/prefer-node-protocol': 'error',
 
+    // Prefer import.meta.dirname/filename over __dirname/__filename
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-import-meta-properties
+    'unicorn/prefer-import-meta-properties': 'error',
+
     // Disallow useless spread operators
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-useless-spread
     'unicorn/no-useless-spread': 'error',
+
+    // Disallow unnecessary iterator-to-array conversion
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-useless-iterator-to-array
+    'unicorn/no-useless-iterator-to-array': 'error',
 
     // Disallow useless Promise.resolve/reject in async functions
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-useless-promise-resolve-reject
@@ -722,10 +726,7 @@ export default {
 
     // Enforce the name `error` in catch clauses
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/catch-error-name
-    'unicorn/catch-error-name': [
-      'error',
-      { ignore: [], name: 'error' }
-    ],
+    'unicorn/catch-error-name': ['error', { ignore: [], name: 'error' }],
 
     // Prefer .slice() over .substring() and .substr()
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-string-slice
@@ -750,10 +751,11 @@ export default {
 
     // Enforce consistent text encoding identifier casing (utf-8)
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/text-encoding-identifier-case
-    'unicorn/text-encoding-identifier-case': [
-      'error',
-      { withDash: false }
-    ],
+    'unicorn/text-encoding-identifier-case': ['error', { withDash: false }],
+
+    // Enforce consistent break/return position in switch cases
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/switch-case-break-position
+    'unicorn/switch-case-break-position': 'error',
 
     // Disallow disable comments without specifying a rule
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-abusive-eslint-disable
@@ -883,6 +885,13 @@ export default {
       { prefer: 'type-imports' }
     ],
 
+    // Enforce export type { T } for type-only exports
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/consistent-type-exports
+    '@typescript-eslint/consistent-type-exports': [
+      'error',
+      { fixMixedExportsWithInlineTypeSpecifier: true }
+    ],
+
     // Disallow import { type A, type B } when all imports are types (use import type { A, B })
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-import-type-side-effects
     '@typescript-eslint/no-import-type-side-effects': 'error',
@@ -941,6 +950,7 @@ export default {
     // '@typescript-eslint/no-deprecated': 'error',
     // '@typescript-eslint/no-misused-spread': 'error',
     // '@typescript-eslint/no-useless-default-assignment': 'error',
+    // '@typescript-eslint/no-unnecessary-type-conversion': 'error',
     // '@typescript-eslint/strict-void-return': 'off',
     // '@typescript-eslint/require-await': 'off',
   },
