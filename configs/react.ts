@@ -182,13 +182,13 @@ export default {
 
     // Enforce [value, setValue] naming convention for useState
     // https://oxc.rs/docs/guide/usage/linter/rules/react/hook-use-state
-    'react/hook-use-state': ['error', { allowDestructuredState: true }],
+    'react/hook-use-state': ['error', { allowDestructuredState: false }],
 
     // Prefer function components over class components
     // https://oxc.rs/docs/guide/usage/linter/rules/react/prefer-function-component
     'react/prefer-function-component': [
       'error',
-      { allowComponentDidCatch: true }
+      { allowErrorBoundary: true, allowJsxUtilityClass: false }
     ],
 
     // Disallow destructured imports from React and ReactDOM

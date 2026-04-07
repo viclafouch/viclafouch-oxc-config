@@ -82,7 +82,7 @@ For each **new or graduated rule**:
 
 1. Rule name and plugin
 2. Code example: what it catches and the fix
-3. List all available options (check the rule's schema in source). Present them even if defaults are empty.
+3. List all available options by fetching the rule's doc page (WebFetch). Never guess option names from the changelog or commit messages. Present options even if defaults are empty.
 4. Recommendation with reasoning
 5. Ask via **AskUserQuestion** with concrete options — one rule at a time
 
