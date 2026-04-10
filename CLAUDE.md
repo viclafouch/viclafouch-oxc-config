@@ -24,7 +24,7 @@ Keep `README.md` up to date when making changes:
 
 ## Adding Rules
 
-Always via interactive interview: rule name, code example (what it catches + fix), recommendation, yes/no. Never bulk-activate.
+Always via interactive interview: rule name, code example (what it catches + fix), recommendation, yes/no. Never bulk-activate. Rejected rules are written `'off'` in the config (with comment + doc URL) so they are not re-proposed in future interviews.
 
 ## Future
 

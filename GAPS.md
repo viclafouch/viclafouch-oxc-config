@@ -1,5 +1,7 @@
 # oxlint Gap Analysis
 
+This config was migrated from a full ESLint setup. This file tracks which ESLint rules have an oxlint equivalent and which ones are still missing upstream. "Not started" means oxlint hasn't implemented the rule yet. "Will not implement" means oxlint won't add it (deprecated, covered elsewhere, etc.).
+
 Sources: [oxc#481](https://github.com/oxc-project/oxc/issues/481) (meta), [oxc#479](https://github.com/oxc-project/oxc/issues/479) (core), [oxc#1022](https://github.com/oxc-project/oxc/issues/1022) (react), [oxc#1117](https://github.com/oxc-project/oxc/issues/1117) (typescript), [oxc#493](https://github.com/oxc-project/oxc/issues/493) (unicorn), [oxc#492](https://github.com/oxc-project/oxc/issues/492) (jsx-a11y), [oxc#684](https://github.com/oxc-project/oxc/issues/684) (nextjs), [oxc#1141](https://github.com/oxc-project/oxc/issues/1141) (import)
 
 ---
@@ -25,13 +27,13 @@ Sources: [oxc#481](https://github.com/oxc-project/oxc/issues/481) (meta), [oxc#4
 
 ## TypeScript rules — [oxc#1117](https://github.com/oxc-project/oxc/issues/1117)
 
-**ESLint: 22 active** | **Migrated: 8** | **Type-aware deferred: 14** | **Not migrated: 1**
+**ESLint: 22 active** | **Migrated: 8** | **Type-aware: 14 (13 in [tsgolint](https://github.com/oxc-project/tsgolint) alpha, requires TS 7.0+)** | **Not migrated: 1**
 
 | Rule                                   | Status                                           |
 | -------------------------------------- | ------------------------------------------------ |
 | `@typescript-eslint/naming-convention` | Not implemented (not in oxlint, not in tsgolint) |
 
-Type-aware rules (deferred until tsgolint):
+Type-aware rules (available via tsgolint alpha, 13/14 implemented):
 
 | Rule                                                | Options                                 |
 | --------------------------------------------------- | --------------------------------------- |
@@ -52,13 +54,13 @@ Type-aware rules (deferred until tsgolint):
 
 ## Unicorn rules — [oxc#493](https://github.com/oxc-project/oxc/issues/493)
 
-**ESLint: 29 active** | **oxlint: 39 rules (29 migrated + 10 new)** | **Not migrated: 0**
+**ESLint: 29 active** | **oxlint: 42 rules (29 migrated + 13 new)** | **Not migrated: 0**
 
-All active unicorn rules have been migrated plus 10 new rules added.
+All active unicorn rules have been migrated plus 13 new rules added.
 
 ## React rules — [oxc#1022](https://github.com/oxc-project/oxc/issues/1022)
 
-**ESLint: 35 active** | **oxlint: 29 rules (22 migrated + 7 new)** | **Not migrated: 13**
+**ESLint: 35 active** | **oxlint: 31 rules (22 migrated + 9 new)** | **Not migrated: 13**
 
 | Rule                                   | Status                                                 |
 | -------------------------------------- | ------------------------------------------------------ |
@@ -78,9 +80,9 @@ All active unicorn rules have been migrated plus 10 new rules added.
 
 ## React Hooks
 
-**ESLint: 3 active** | **Migrated: 3** | **Not migrated: 0**
+**ESLint: 2 active** | **Migrated: 2** | **Not migrated: 0**
 
-All 3 active hooks rules have been migrated. No gaps.
+All 2 active hooks rules have been migrated. No gaps.
 
 ## jsx-a11y rules — [oxc#492](https://github.com/oxc-project/oxc/issues/492)
 

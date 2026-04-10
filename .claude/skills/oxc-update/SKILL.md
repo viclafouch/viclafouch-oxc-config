@@ -94,6 +94,8 @@ For **breaking changes**: explain impact, ask how to handle.
 
 For a **new plugin**: ask if we create a config. If yes, list all rules and interview each one.
 
+**Rejected rules get `'off'`.** When the user declines a rule, add it to the appropriate config file with `'off'` severity, the standard one-line comment, and the doc URL. This prevents re-proposing it in future interviews.
+
 Keep a running decision log as you go — you will need it in Step 6.
 
 ## Step 6: Apply

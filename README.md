@@ -276,7 +276,7 @@ If your project also runs `tsc`:
 
 ## Gaps
 
-See [GAPS.md](https://github.com/viclafouch/oxc-config/blob/main/GAPS.md) for rules not available in oxlint.
+See [GAPS.md](./GAPS.md) for rules not available in oxlint.
 
 ## jsPlugins
 
