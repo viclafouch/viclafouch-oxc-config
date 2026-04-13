@@ -27,36 +27,39 @@ Sources: [oxc#481](https://github.com/oxc-project/oxc/issues/481) (meta), [oxc#4
 
 ## TypeScript rules — [oxc#1117](https://github.com/oxc-project/oxc/issues/1117)
 
-**ESLint: 22 active** | **Migrated: 8** | **Type-aware: 14 (13 in [tsgolint](https://github.com/oxc-project/tsgolint) alpha, requires TS 7.0+)** | **Not migrated: 1**
+**ESLint: 22 active** | **Migrated: 8** | **Type-aware: 17 (13 in [tsgolint](https://github.com/oxc-project/tsgolint) alpha, requires TS 7.0+)** | **Not migrated: 1**
 
 | Rule                                   | Status                                           |
 | -------------------------------------- | ------------------------------------------------ |
 | `@typescript-eslint/naming-convention` | Not implemented (not in oxlint, not in tsgolint) |
 
-Type-aware rules (available via tsgolint alpha, 13/14 implemented):
+Type-aware rules (available via tsgolint alpha or oxlint typeAware, 16/17 implemented):
 
-| Rule                                                | Options                                 |
-| --------------------------------------------------- | --------------------------------------- |
-| `@typescript-eslint/consistent-return`              | `{ treatUndefinedAsUnspecified: true }` |
-| `@typescript-eslint/dot-notation`                   | `{ allowKeywords: true }`               |
-| `@typescript-eslint/return-await`                   | `'in-try-catch'`                        |
-| `@typescript-eslint/no-floating-promises`           | `{ ignoreVoid: true }`                  |
-| `@typescript-eslint/no-array-delete`                | -                                       |
-| `@typescript-eslint/prefer-find`                    | -                                       |
-| `@typescript-eslint/prefer-string-starts-ends-with` | -                                       |
-| `@typescript-eslint/prefer-reduce-type-parameter`   | -                                       |
-| `@typescript-eslint/no-duplicate-type-constituents` | -                                       |
-| `@typescript-eslint/no-deprecated`                  | -                                       |
-| `@typescript-eslint/no-misused-spread`              | -                                       |
-| `@typescript-eslint/no-useless-default-assignment`  | -                                       |
-| `@typescript-eslint/no-unnecessary-type-conversion` | -                                       |
-| `@typescript-eslint/naming-convention`              | Complex multi-selector config           |
+| Rule                                                 | Options                                                                                                    |
+| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `@typescript-eslint/consistent-return`               | `{ treatUndefinedAsUnspecified: true }`                                                                    |
+| `@typescript-eslint/dot-notation`                    | `{ allowKeywords: true }`                                                                                  |
+| `@typescript-eslint/return-await`                    | `'in-try-catch'`                                                                                           |
+| `@typescript-eslint/no-floating-promises`            | `{ ignoreVoid: true }`                                                                                     |
+| `@typescript-eslint/no-array-delete`                 | -                                                                                                          |
+| `@typescript-eslint/prefer-find`                     | -                                                                                                          |
+| `@typescript-eslint/prefer-string-starts-ends-with`  | -                                                                                                          |
+| `@typescript-eslint/prefer-reduce-type-parameter`    | -                                                                                                          |
+| `@typescript-eslint/no-duplicate-type-constituents`  | -                                                                                                          |
+| `@typescript-eslint/no-deprecated`                   | -                                                                                                          |
+| `@typescript-eslint/no-misused-spread`               | -                                                                                                          |
+| `@typescript-eslint/no-useless-default-assignment`   | -                                                                                                          |
+| `@typescript-eslint/no-unnecessary-type-conversion`  | -                                                                                                          |
+| `@typescript-eslint/no-unnecessary-type-parameters`  | -                                                                                                          |
+| `@typescript-eslint/no-unnecessary-qualifier`        | -                                                                                                          |
+| `@typescript-eslint/prefer-readonly-parameter-types` | `{ allow: [], checkParameterProperties: true, ignoreInferredTypes: false, treatMethodsAsReadonly: false }` |
+| `@typescript-eslint/naming-convention`               | Complex multi-selector config                                                                              |
 
 ## Unicorn rules — [oxc#493](https://github.com/oxc-project/oxc/issues/493)
 
-**ESLint: 29 active** | **oxlint: 42 rules (29 migrated + 13 new)** | **Not migrated: 0**
+**ESLint: 29 active** | **oxlint: 43 rules (29 migrated + 14 new)** | **Not migrated: 0**
 
-All active unicorn rules have been migrated plus 13 new rules added.
+All active unicorn rules have been migrated plus 14 new rules added.
 
 ## React rules — [oxc#1022](https://github.com/oxc-project/oxc/issues/1022)
 

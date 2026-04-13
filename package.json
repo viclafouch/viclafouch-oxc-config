@@ -53,8 +53,8 @@
     "release:beta": "npm publish --tag beta"
   },
   "devDependencies": {
-    "oxfmt": "^0.44.0",
-    "oxlint": "^1.59.0",
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"
   },
@@ -63,8 +63,8 @@
     "eslint-plugin-playwright": ">= 2",
     "eslint-plugin-react-native": ">= 5",
     "eslint-plugin-testing-library": ">= 7",
-    "oxfmt": ">= 0.44",
-    "oxlint": ">= 1.59",
+    "oxfmt": ">= 0.45",
+    "oxlint": ">= 1.60",
     "typescript": ">= 5"
   },
   "peerDependenciesMeta": {

@@ -95,6 +95,10 @@ export default {
     // Enforce describe() title to match function name
     'vitest/prefer-describe-function-title': 'off',
 
+    // Ensure expect calls in promise chains are properly awaited or returned
+    // https://oxc.rs/docs/guide/usage/linter/rules/jest/valid-expect-in-promise
+    'vitest/valid-expect-in-promise': 'error',
+
     // Prefer toBeTruthy()/toBeFalsy() — conflicts with prefer-strict-boolean-matchers
     'vitest/prefer-to-be-truthy': 'off',
     'vitest/prefer-to-be-falsy': 'off'

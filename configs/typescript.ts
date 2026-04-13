@@ -761,6 +761,10 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-abusive-eslint-disable
     'unicorn/no-abusive-eslint-disable': 'error',
 
+    // Enforce consistent style for escaping ${ in template literals
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/consistent-template-literal-escape
+    'unicorn/consistent-template-literal-escape': 'error',
+
     // Enforce default parameters to be last
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/default-param-last
     'default-param-last': 'error',
@@ -951,6 +955,9 @@ export default {
     // '@typescript-eslint/no-misused-spread': 'error',
     // '@typescript-eslint/no-useless-default-assignment': 'error',
     // '@typescript-eslint/no-unnecessary-type-conversion': 'error',
+    // '@typescript-eslint/no-unnecessary-type-parameters': 'error',
+    // '@typescript-eslint/no-unnecessary-qualifier': 'error',
+    // '@typescript-eslint/prefer-readonly-parameter-types': ['error', { allow: [], checkParameterProperties: true, ignoreInferredTypes: false, treatMethodsAsReadonly: false }],
     // '@typescript-eslint/strict-void-return': 'off',
     // '@typescript-eslint/require-await': 'off',
   },

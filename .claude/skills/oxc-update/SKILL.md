@@ -19,16 +19,17 @@ Read these files in parallel:
 
 Run `npx taze` to check for available updates on `oxlint` and `oxfmt`.
 
+**Important:** taze may not detect oxfmt updates even when a new version exists. Always cross-check with `gh release list --repo oxc-project/oxc` because oxlint and oxfmt are released together in the same tag (e.g. `apps_v1.60.0` bundles both).
+
 **If the user provided a release URL:** skip this step, go straight to Step 3.
 
-**If both are already up to date:** report it and stop.
+**If both are already up to date (confirmed by both taze AND gh release list):** report it and stop.
 
 ## Step 3: Fetch changelogs
 
-Use `gh release list` to identify missed releases, then `gh release view <tag>` for each one. Fetch oxlint and oxfmt in parallel.
+Use `gh release list` to identify missed releases, then `gh release view <tag>` for each one.
 
-- **oxlint**: repo `oxc-project/oxc`
-- **oxfmt**: repo `nicolo-ribaudo/oxfmt`
+- **Both oxlint and oxfmt** live in repo `oxc-project/oxc`. Releases are bundled under a single tag (e.g. `apps_v1.60.0`). One `gh release view` call gives you both changelogs.
 
 Keep it compact — only extract linter and formatter changes, skip parser/transformer noise.
 
