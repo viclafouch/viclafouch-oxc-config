@@ -128,7 +128,7 @@ export default {
 
     // Disallow empty destructuring patterns
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-empty-pattern
-    'no-empty-pattern': 'error',
+    'no-empty-pattern': ['error', { allowObjectPatternsAsParameters: false }],
 
     // Disallow adding to native types
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-extend-native
@@ -938,7 +938,11 @@ export default {
 
     // Enforce RegExp#exec() over String#match() when no global flag
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-regexp-exec
-    '@typescript-eslint/prefer-regexp-exec': 'error'
+    '@typescript-eslint/prefer-regexp-exec': 'error',
+
+    // Require explicit accessibility modifiers on class members
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/explicit-member-accessibility
+    '@typescript-eslint/explicit-member-accessibility': 'off'
 
     // Type-aware rules (REQUIRES tsgolint + TypeScript-Go)
     // To enable: set typeAware: true and uncomment these rules.

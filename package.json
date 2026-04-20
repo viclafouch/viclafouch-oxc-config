@@ -42,8 +42,8 @@
   },
   "scripts": {
     "build": "tsup",
-    "lint": "oxlint && oxfmt --check",
-    "lint:fix": "oxlint --fix && oxfmt",
+    "lint": "oxlint && oxfmt --check --disable-nested-config",
+    "lint:fix": "oxlint --fix && oxfmt --disable-nested-config",
     "prepublishOnly": "tsup",
     "bump": "npm version minor",
     "release": "npm publish",
@@ -53,8 +53,8 @@
     "release:beta": "npm publish --tag beta"
   },
   "devDependencies": {
-    "oxfmt": "^0.45.0",
-    "oxlint": "^1.60.0",
+    "oxfmt": "^0.46.0",
+    "oxlint": "^1.61.0",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"
   },
@@ -63,8 +63,8 @@
     "eslint-plugin-playwright": ">= 2",
     "eslint-plugin-react-native": ">= 5",
     "eslint-plugin-testing-library": ">= 7",
-    "oxfmt": ">= 0.45",
-    "oxlint": ">= 1.60",
+    "oxfmt": ">= 0.46",
+    "oxlint": ">= 1.61",
     "typescript": ">= 5"
   },
   "peerDependenciesMeta": {
