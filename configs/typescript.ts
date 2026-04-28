@@ -942,7 +942,35 @@ export default {
 
     // Require explicit accessibility modifiers on class members
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/explicit-member-accessibility
-    '@typescript-eslint/explicit-member-accessibility': 'off'
+    '@typescript-eslint/explicit-member-accessibility': 'off',
+
+    // Enforce function name matches variable/property name — rare in modern TS
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/func-name-matching
+    'func-name-matching': [
+      'off',
+      'always',
+      {
+        considerPropertyDescriptor: false,
+        includeCommonJSModuleExports: false
+      }
+    ],
+
+    // Disallow dangling underscores — too many legitimate uses (_unused, __typename, _id)
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-underscore-dangle
+    'no-underscore-dangle': [
+      'off',
+      {
+        allow: [],
+        allowAfterSuper: false,
+        allowAfterThis: false,
+        allowAfterThisConstructor: false,
+        allowFunctionParams: true,
+        allowInArrayDestructuring: true,
+        allowInObjectDestructuring: true,
+        enforceInClassFields: false,
+        enforceInMethodNames: false
+      }
+    ]
 
     // Type-aware rules (REQUIRES tsgolint + TypeScript-Go)
     // To enable: set typeAware: true and uncomment these rules.

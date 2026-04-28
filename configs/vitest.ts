@@ -101,6 +101,95 @@ export default {
 
     // Prefer toBeTruthy()/toBeFalsy() — conflicts with prefer-strict-boolean-matchers
     'vitest/prefer-to-be-truthy': 'off',
-    'vitest/prefer-to-be-falsy': 'off'
+    'vitest/prefer-to-be-falsy': 'off',
+
+    // Prevent duplicate test/describe titles in the same scope
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-identical-title
+    'vitest/no-identical-title': 'error',
+
+    // Prevent committing .only tests
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-focused-tests
+    'vitest/no-focused-tests': 'error',
+
+    // Prevent duplicate lifecycle hooks in the same describe
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-duplicate-hooks
+    'vitest/no-duplicate-hooks': 'error',
+
+    // Prevent expect() inside conditional blocks (if/catch)
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-conditional-expect
+    'vitest/no-conditional-expect': 'error',
+
+    // Prevent if/switch/ternary inside test bodies
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-conditional-in-test
+    'vitest/no-conditional-in-test': 'error',
+
+    // Detect commented-out test blocks
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-commented-out-tests
+    'vitest/no-commented-out-tests': 'error',
+
+    // Enforce canonical matcher names (toThrow not toThrowError, etc.)
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-alias-methods
+    'vitest/no-alias-methods': 'error',
+
+    // Limit describe nesting depth
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/max-nested-describe
+    'vitest/max-nested-describe': ['error', { max: 3 }],
+
+    // Limit assertions per test
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/max-expects
+    'vitest/max-expects': ['error', { max: 5 }],
+
+    // Prevent direct imports from __mocks__ directories
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-mocks-import
+    'vitest/no-mocks-import': 'error',
+
+    // Limit snapshot size for reviewability
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-large-snapshots
+    'vitest/no-large-snapshots': [
+      'error',
+      {
+        maxSize: 50,
+        inlineMaxSize: 50,
+        allowedSnapshots: {}
+      }
+    ],
+
+    // Prevent template interpolation in snapshot values
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-interpolation-in-snapshots
+    'vitest/no-interpolation-in-snapshots': 'error',
+
+    // Prefer toContain() over .includes() + toBe()
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-to-contain
+    'vitest/prefer-to-contain': 'error',
+
+    // Require all tests inside a describe block
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/require-top-level-describe
+    'vitest/require-top-level-describe': [
+      'error',
+      { maxNumberOfTopLevelDescribes: Infinity }
+    ],
+
+    // Prefer test.todo() over empty test bodies
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-todo
+    'vitest/prefer-todo': 'error',
+
+    // Disallow .skip and xdescribe — legitimate during development
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-disabled-tests
+    'vitest/no-disabled-tests': 'off',
+
+    // Disallow all lifecycle hooks — too strict
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-hooks
+    'vitest/no-hooks': ['off', { allow: [] }],
+
+    // Require expect.assertions() — too noisy for most codebases
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-expect-assertions
+    'vitest/prefer-expect-assertions': [
+      'off',
+      {
+        onlyFunctionsWithAsyncKeyword: false,
+        onlyFunctionsWithExpectInCallback: false,
+        onlyFunctionsWithExpectInLoop: false
+      }
+    ]
   }
 } satisfies OxlintConfig

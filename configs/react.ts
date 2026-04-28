@@ -191,6 +191,14 @@ export default {
       { allowErrorBoundary: true, allowJsxUtilityClass: false }
     ],
 
+    // Prevent setState in componentDidUpdate (infinite re-render risk)
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-did-update-set-state
+    'react/no-did-update-set-state': ['error', 'disallow-in-func'],
+
+    // Forbid specific props on custom components — too project-specific
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/forbid-component-props
+    'react/forbid-component-props': ['off', { forbid: [] }],
+
     // Disallow destructured imports from React and ReactDOM
     // Use `import React from 'react'` instead of `import { useState } from 'react'`
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-restricted-imports
