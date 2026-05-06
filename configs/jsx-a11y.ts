@@ -173,6 +173,23 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/tabindex-no-positive
     'jsx-a11y/tabindex-no-positive': 'error',
 
+    // Enforce interactive elements with click handlers are keyboard-accessible
+    // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/interactive-supports-focus
+    'jsx-a11y/interactive-supports-focus': [
+      'error',
+      {
+        tabbable: [
+          'button',
+          'checkbox',
+          'link',
+          'searchbox',
+          'spinbutton',
+          'switch',
+          'textbox'
+        ]
+      }
+    ],
+
     // Enforce tabIndex on non-interactive elements is not positive
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-noninteractive-tabindex
     'jsx-a11y/no-noninteractive-tabindex': [

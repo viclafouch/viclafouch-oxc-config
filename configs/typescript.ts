@@ -970,6 +970,22 @@ export default {
         enforceInClassFields: false,
         enforceInMethodNames: false
       }
+    ],
+
+    // Enforce the u or v flag on regular expressions for proper Unicode handling
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/require-unicode-regexp
+    'require-unicode-regexp': ['error', { requireFlag: null }],
+
+    // Disallow specific properties on specific objects — project-specific, enable downstream
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-restricted-properties
+    'no-restricted-properties': 'off',
+
+    // Enforce logical assignment operator shorthand (||=, &&=, ??=)
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/logical-assignment-operators
+    'logical-assignment-operators': [
+      'error',
+      'always',
+      { enforceForIfStatements: true }
     ]
 
     // Type-aware rules (REQUIRES tsgolint + TypeScript-Go)

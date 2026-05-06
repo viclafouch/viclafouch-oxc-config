@@ -8,11 +8,10 @@ Sources: [oxc#481](https://github.com/oxc-project/oxc/issues/481) (meta), [oxc#4
 
 ## Core rules — [oxc#479](https://github.com/oxc-project/oxc/issues/479)
 
-**ESLint: 82 active** | **oxlint: 121 rules (70 migrated + 51 new)** | **Not migrated: 12**
+**ESLint: 82 active** | **oxlint: 124 rules (71 migrated + 53 new)** | **Not migrated: 11**
 
 | Rule                              | Status                                                          |
 | --------------------------------- | --------------------------------------------------------------- |
-| `no-restricted-properties`        | Not started                                                     |
 | `no-restricted-syntax`            | Partial via `no-restricted-imports` (AST selectors lost)        |
 | `prefer-regex-literals`           | Not started                                                     |
 | `id-denylist`                     | Not started                                                     |
@@ -89,11 +88,10 @@ All 2 active hooks rules have been migrated. No gaps.
 
 ## jsx-a11y rules — [oxc#492](https://github.com/oxc-project/oxc/issues/492)
 
-**ESLint: 29 active** | **Migrated: 25** | **Not migrated: 4**
+**ESLint: 29 active** | **Migrated: 26** | **Not migrated: 3**
 
 | Rule                                                     | Status      |
 | -------------------------------------------------------- | ----------- |
-| `jsx-a11y/interactive-supports-focus`                    | Not started |
 | `jsx-a11y/no-interactive-element-to-noninteractive-role` | Not started |
 | `jsx-a11y/no-noninteractive-element-interactions`        | Not started |
 | `jsx-a11y/no-noninteractive-element-to-interactive-role` | Not started |

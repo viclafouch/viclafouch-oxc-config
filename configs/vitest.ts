@@ -77,6 +77,101 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-to-be-object
     'vitest/prefer-to-be-object': 'error',
 
+    // Prefer toBe() for primitives over toEqual()/toStrictEqual()
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-to-be
+    'vitest/prefer-to-be': 'error',
+
+    // Prefer toStrictEqual() over toEqual() for structural equality
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-strict-equal
+    'vitest/prefer-strict-equal': 'error',
+
+    // Prefer vi.spyOn() over manual property assignment for mock cleanup
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-spy-on
+    'vitest/prefer-spy-on': 'error',
+
+    // Prefer mockResolvedValue/mockRejectedValue over mockImplementation+Promise
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-mock-promise-shorthand
+    'vitest/prefer-mock-promise-shorthand': 'error',
+
+    // Prefer mockReturnValue over mockImplementation for simple returns
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-mock-return-shorthand
+    'vitest/prefer-mock-return-shorthand': 'error',
+
+    // Enforce hooks (beforeAll, beforeEach, etc.) before test cases
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-hooks-on-top
+    'vitest/prefer-hooks-on-top': 'error',
+
+    // Enforce hooks in execution order: beforeAll > beforeEach > afterEach > afterAll
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-hooks-in-order
+    'vitest/prefer-hooks-in-order': 'error',
+
+    // Prefer direct equality matchers over boolean comparison in expect
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-equality-matcher
+    'vitest/prefer-equality-matcher': 'error',
+
+    // Prefer toBeGreaterThan etc. over comparison+toBe(true)
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-comparison-matcher
+    'vitest/prefer-comparison-matcher': 'error',
+
+    // Prefer describe.each/test.each over manual loops
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-each
+    'vitest/prefer-each': 'error',
+
+    // Prefer toHaveBeenCalledWith() over toHaveBeenCalled() for argument validation
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-called-with
+    'vitest/prefer-called-with': 'error',
+
+    // Prefer toHaveBeenCalledTimes() over mock.calls.length checks
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-to-have-been-called-times
+    'vitest/prefer-to-have-been-called-times': 'error',
+
+    // Remove unnecessary async wrappers in expect()
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-unneeded-async-expect-function
+    'vitest/no-unneeded-async-expect-function': 'error',
+
+    // Disallow return statements in test bodies
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-test-return-statement
+    'vitest/no-test-return-statement': 'error',
+
+    // Enforce .skip/.only over x/f prefixes (xtest, fit, etc.)
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-test-prefixes
+    'vitest/no-test-prefixes': 'error',
+
+    // Prefer toHaveLength() over .length + toBe()
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-to-have-length
+    'vitest/prefer-to-have-length': 'error',
+
+    // Prevent expect() outside test blocks
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-standalone-expect
+    'vitest/no-standalone-expect': [
+      'error',
+      { additionalTestBlockFunctions: [] }
+    ],
+
+    // Ensure describe callback is sync, has no params, and no return
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/valid-describe-callback
+    'vitest/valid-describe-callback': 'error',
+
+    // Require error message argument in toThrow()
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/require-to-throw-message
+    'vitest/require-to-throw-message': 'error',
+
+    // Enforce setup/teardown code in hooks, not at scope level
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/require-hook
+    'vitest/require-hook': ['error', { allowedFunctionCalls: [] }],
+
+    // Enforce lowercase test titles
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-lowercase-title
+    'vitest/prefer-lowercase-title': [
+      'error',
+      {
+        allowedPrefixes: [],
+        ignore: [],
+        ignoreTopLevelDescribe: false,
+        lowercaseFirstCharacterOnly: true
+      }
+    ],
+
     // Enforce *.test.ts or *.spec.ts naming — project-specific convention
     'vitest/consistent-test-filename': [
       'off',
@@ -190,6 +285,18 @@ export default {
         onlyFunctionsWithExpectInCallback: false,
         onlyFunctionsWithExpectInLoop: false
       }
-    ]
+    ],
+
+    // Prefer .resolves over await-then-expect — both forms are acceptable
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-expect-resolves
+    'vitest/prefer-expect-resolves': 'off',
+
+    // Require snapshot hints — inline snapshots are preferred, hints add noise
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-snapshot-hint
+    'vitest/prefer-snapshot-hint': ['off', 'always'],
+
+    // Restrict specific matchers — project-specific, enable downstream
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-restricted-matchers
+    'vitest/no-restricted-matchers': ['off', {}]
   }
 } satisfies OxlintConfig

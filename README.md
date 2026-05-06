@@ -267,8 +267,8 @@ If your project also runs `tsc`:
 
 | Dependency   | Minimum version | Notes                      |
 | ------------ | --------------- | -------------------------- |
-| `oxlint`     | >= 1.62         | Flat config, `extends` API |
-| `oxfmt`      | >= 0.47         | `sortImports` support      |
+| `oxlint`     | >= 1.63         | Flat config, `extends` API |
+| `oxfmt`      | >= 0.48         | `sortImports` support      |
 | `typescript` | >= 5            |                            |
 | Node.js      | >= 22.18        | For `.config.ts` support   |
 
