@@ -8,14 +8,12 @@ Sources: [oxc#481](https://github.com/oxc-project/oxc/issues/481) (meta), [oxc#4
 
 ## Core rules — [oxc#479](https://github.com/oxc-project/oxc/issues/479)
 
-**ESLint: 82 active** | **oxlint: 124 rules (71 migrated + 53 new)** | **Not migrated: 11**
+**ESLint: 82 active** | **oxlint: 126 rules (73 migrated + 53 new)** | **Not migrated: 9**
 
 | Rule                              | Status                                                          |
 | --------------------------------- | --------------------------------------------------------------- |
 | `no-restricted-syntax`            | Partial via `no-restricted-imports` (AST selectors lost)        |
-| `prefer-regex-literals`           | Not started                                                     |
 | `id-denylist`                     | Not started                                                     |
-| `prefer-arrow-callback`           | Not started                                                     |
 | `camelcase`                       | Will not implement (use `@typescript-eslint/naming-convention`) |
 | `lines-between-class-members`     | Will not implement (deprecated stylistic)                       |
 | `padding-line-between-statements` | Will not implement (deprecated stylistic)                       |
@@ -88,13 +86,9 @@ All 2 active hooks rules have been migrated. No gaps.
 
 ## jsx-a11y rules — [oxc#492](https://github.com/oxc-project/oxc/issues/492)
 
-**ESLint: 29 active** | **Migrated: 26** | **Not migrated: 3**
+**ESLint: 29 active** | **Migrated: 29** | **Not migrated: 0**
 
-| Rule                                                     | Status      |
-| -------------------------------------------------------- | ----------- |
-| `jsx-a11y/no-interactive-element-to-noninteractive-role` | Not started |
-| `jsx-a11y/no-noninteractive-element-interactions`        | Not started |
-| `jsx-a11y/no-noninteractive-element-to-interactive-role` | Not started |
+All 29 active jsx-a11y rules have been migrated. No gaps.
 
 ## Next.js rules — [oxc#684](https://github.com/oxc-project/oxc/issues/684)
 

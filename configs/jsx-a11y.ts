@@ -204,6 +204,51 @@ export default {
     // Prefer semantic HTML tags over ARIA roles
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/prefer-tag-over-role
     // OFF: too many legitimate cases where role is needed (custom components, UI libs)
-    'jsx-a11y/prefer-tag-over-role': 'off'
+    'jsx-a11y/prefer-tag-over-role': 'off',
+
+    // Disallow adding interactive roles to non-interactive elements
+    // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-noninteractive-element-to-interactive-role
+    'jsx-a11y/no-noninteractive-element-to-interactive-role': [
+      'error',
+      {
+        ul: ['menu', 'menubar', 'radiogroup', 'tablist', 'tree', 'treegrid'],
+        ol: ['menu', 'menubar', 'radiogroup', 'tablist', 'tree', 'treegrid'],
+        li: [
+          'menuitem',
+          'menuitemcheckbox',
+          'menuitemradio',
+          'row',
+          'tab',
+          'treeitem'
+        ],
+        fieldset: ['radiogroup', 'presentation']
+      }
+    ],
+
+    // Disallow adding non-interactive roles to interactive elements
+    // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-interactive-element-to-noninteractive-role
+    'jsx-a11y/no-interactive-element-to-noninteractive-role': 'error',
+
+    // Disallow event handlers on non-interactive elements without a role
+    // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-noninteractive-element-interactions
+    'jsx-a11y/no-noninteractive-element-interactions': [
+      'error',
+      {
+        handlers: []
+      }
+    ],
+
+    // Require interactive controls to have an accessible label
+    // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/control-has-associated-label
+    'jsx-a11y/control-has-associated-label': [
+      'error',
+      {
+        labelAttributes: [],
+        controlComponents: [],
+        ignoreElements: [],
+        ignoreRoles: [],
+        depth: 2
+      }
+    ]
   }
 } satisfies OxlintConfig

@@ -986,7 +986,22 @@ export default {
       'error',
       'always',
       { enforceForIfStatements: true }
-    ]
+    ],
+
+    // Prefer regex literals over new RegExp() when pattern is static
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/prefer-regex-literals
+    'prefer-regex-literals': ['error', { disallowRedundantWrapping: true }],
+
+    // Prefer arrow functions for callbacks
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/prefer-arrow-callback
+    'prefer-arrow-callback': [
+      'error',
+      { allowNamedFunctions: false, allowUnboundThis: true }
+    ],
+
+    // Disallow declarations in the global scope — irrelevant for ESM/TypeScript
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-implicit-globals
+    'no-implicit-globals': 'off'
 
     // Type-aware rules (REQUIRES tsgolint + TypeScript-Go)
     // To enable: set typeAware: true and uncomment these rules.
