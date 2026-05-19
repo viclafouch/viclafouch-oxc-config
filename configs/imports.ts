@@ -55,6 +55,17 @@ export default {
         commonjs: true,
         esmodule: true
       }
+    ],
+
+    // Enforce blank line after the last import statement
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/newline-after-import
+    'import/newline-after-import': [
+      'error',
+      {
+        count: 1,
+        exactCount: false,
+        considerComments: false
+      }
     ]
   }
 } satisfies OxlintConfig

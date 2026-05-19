@@ -195,6 +195,21 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-did-update-set-state
     'react/no-did-update-set-state': ['error', 'disallow-in-func'],
 
+    // Disallow object/array/function as default values for destructured props (defeats memoization)
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-object-type-as-default-prop
+    'react/no-object-type-as-default-prop': 'error',
+
+    // Disallow defining components inside other components (causes remount on every render)
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-unstable-nested-components
+    'react/no-unstable-nested-components': [
+      'error',
+      {
+        allowAsProps: false,
+        customValidators: [],
+        propNamePattern: 'render*'
+      }
+    ],
+
     // Forbid specific props on custom components — too project-specific
     // https://oxc.rs/docs/guide/usage/linter/rules/react/forbid-component-props
     'react/forbid-component-props': ['off', { forbid: [] }],

@@ -297,6 +297,10 @@ export default {
 
     // Restrict specific matchers — project-specific, enable downstream
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-restricted-matchers
-    'vitest/no-restricted-matchers': ['off', {}]
+    'vitest/no-restricted-matchers': ['off', {}],
+
+    // Enforce blank line padding around afterAll blocks
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/padding-around-after-all-blocks
+    'vitest/padding-around-after-all-blocks': 'error'
   }
 } satisfies OxlintConfig

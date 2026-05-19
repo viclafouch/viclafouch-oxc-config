@@ -60,23 +60,22 @@ All active unicorn rules have been migrated plus 14 new rules added.
 
 ## React rules — [oxc#1022](https://github.com/oxc-project/oxc/issues/1022)
 
-**ESLint: 35 active** | **oxlint: 31 rules (22 migrated + 9 new)** | **Not migrated: 13**
+**ESLint: 35 active** | **oxlint: 33 rules (24 migrated + 9 new)** | **Not migrated: 11**
 
-| Rule                                   | Status                                                 |
-| -------------------------------------- | ------------------------------------------------------ |
-| `react/jsx-no-bind`                    | Not started                                            |
-| `react/no-deprecated`                  | Not started                                            |
-| `react/destructuring-assignment`       | Not started                                            |
-| `react/no-arrow-function-lifecycle`    | Not started                                            |
-| `react/no-invalid-html-attribute`      | Not started                                            |
-| `react/no-object-type-as-default-prop` | Not started                                            |
-| `react/function-component-definition`  | Not started                                            |
-| `react/jsx-no-leaked-render`           | Not started                                            |
-| `react/prefer-stateless-function`      | Not started                                            |
-| `react/no-unused-prop-types`           | Will not implement (oxc#1022)                          |
-| `react/no-unused-state`                | Will not implement (oxc#1022)                          |
-| `react/jsx-newline`                    | Will not implement (oxc#1022)                          |
-| `react/jsx-uses-vars`                  | Will not implement (deprecated with new JSX transform) |
+| Rule                                  | Status                                                 |
+| ------------------------------------- | ------------------------------------------------------ |
+| `react/jsx-no-bind`                   | Not started                                            |
+| `react/no-deprecated`                 | Not started                                            |
+| `react/destructuring-assignment`      | Not started                                            |
+| `react/no-arrow-function-lifecycle`   | Not started                                            |
+| `react/no-invalid-html-attribute`     | Not started                                            |
+| `react/function-component-definition` | Not started                                            |
+| `react/jsx-no-leaked-render`          | Not started                                            |
+| `react/prefer-stateless-function`     | Not started                                            |
+| `react/no-unused-prop-types`          | Will not implement (oxc#1022)                          |
+| `react/no-unused-state`               | Will not implement (oxc#1022)                          |
+| `react/jsx-newline`                   | Will not implement (oxc#1022)                          |
+| `react/jsx-uses-vars`                 | Will not implement (deprecated with new JSX transform) |
 
 ## React Hooks
 
@@ -98,13 +97,12 @@ All 21 recommended Next.js rules have been migrated. No gaps.
 
 ## Import rules — [oxc#1141](https://github.com/oxc-project/oxc/issues/1141)
 
-**ESLint: 4 active** | **oxlint: 6 rules (2 migrated + 4 new)** | **Handled by oxfmt: 2**
+**ESLint: 4 active** | **oxlint: 7 rules (3 migrated + 4 new)** | **Handled by oxfmt: 2**
 
-| Rule                          | Status           |
-| ----------------------------- | ---------------- |
-| `import/newline-after-import` | Not implemented  |
-| `simple-import-sort/imports`  | Handled by oxfmt |
-| `simple-import-sort/exports`  | Handled by oxfmt |
+| Rule                         | Status           |
+| ---------------------------- | ---------------- |
+| `simple-import-sort/imports` | Handled by oxfmt |
+| `simple-import-sort/exports` | Handled by oxfmt |
 
 ## Formatting (handled by oxfmt)
 

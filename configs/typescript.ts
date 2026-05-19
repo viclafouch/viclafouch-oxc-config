@@ -967,6 +967,7 @@ export default {
         allowFunctionParams: true,
         allowInArrayDestructuring: true,
         allowInObjectDestructuring: true,
+        allowInUsingDeclarations: false,
         enforceInClassFields: false,
         enforceInMethodNames: false
       }
@@ -998,6 +999,14 @@ export default {
       'error',
       { allowNamedFunctions: false, allowUnboundThis: true }
     ],
+
+    // Disallow passing strings to setTimeout/setInterval (implied eval)
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-implied-eval
+    'no-implied-eval': 'error',
+
+    // Enforce identifier naming via regex — too blunt, waiting on @typescript-eslint/naming-convention
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/id-match
+    'id-match': 'off',
 
     // Disallow declarations in the global scope — irrelevant for ESM/TypeScript
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-implicit-globals
