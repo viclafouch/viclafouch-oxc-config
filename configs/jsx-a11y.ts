@@ -249,6 +249,15 @@ export default {
         ignoreRoles: [],
         depth: 2
       }
+    ],
+
+    // Disallow ambiguous link text ("click here", "learn more")
+    // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/anchor-ambiguous-text
+    'jsx-a11y/anchor-ambiguous-text': [
+      'error',
+      {
+        words: ['click here', 'here', 'link', 'a link', 'learn more']
+      }
     ]
   }
 } satisfies OxlintConfig

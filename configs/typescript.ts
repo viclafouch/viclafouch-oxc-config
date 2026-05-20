@@ -563,6 +563,38 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/oxc/branches-sharing-code
     'oxc/branches-sharing-code': 'error',
 
+    // Detect approximate constants that should use Math.*
+    // https://oxc.rs/docs/guide/usage/linter/rules/oxc/approx-constant
+    'oxc/approx-constant': 'error',
+
+    // Disallow this in exported functions (undefined after bundling)
+    // https://oxc.rs/docs/guide/usage/linter/rules/oxc/no-this-in-exported-function
+    'oxc/no-this-in-exported-function': 'error',
+
+    // Disallow spread in map() — Object.assign fix mutates, dangerous in React
+    // https://oxc.rs/docs/guide/usage/linter/rules/oxc/no-map-spread
+    'oxc/no-map-spread': 'off',
+
+    // Disallow async Express handlers — Express 5 handles natively
+    // https://oxc.rs/docs/guide/usage/linter/rules/oxc/no-async-endpoint-handlers
+    'oxc/no-async-endpoint-handlers': 'off',
+
+    // Disallow barrel files re-exporting too many modules
+    // https://oxc.rs/docs/guide/usage/linter/rules/oxc/no-barrel-file
+    'oxc/no-barrel-file': ['error', { threshold: 10 }],
+
+    // Disallow async/await — no reason in modern JS
+    // https://oxc.rs/docs/guide/usage/linter/rules/oxc/no-async-await
+    'oxc/no-async-await': 'off',
+
+    // Disallow optional chaining — no reason in modern JS
+    // https://oxc.rs/docs/guide/usage/linter/rules/oxc/no-optional-chaining
+    'oxc/no-optional-chaining': 'off',
+
+    // Disallow rest/spread properties — no reason in modern JS
+    // https://oxc.rs/docs/guide/usage/linter/rules/oxc/no-rest-spread-properties
+    'oxc/no-rest-spread-properties': 'off',
+
     // Enforce kebab-case for filenames
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/filename-case
     // ignore: framework conventions ($param.tsx, [slug].tsx, [...catchAll].tsx)
@@ -765,6 +797,254 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/consistent-template-literal-escape
     'unicorn/consistent-template-literal-escape': 'error',
 
+    // Require a message when throwing Error
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/error-message
+    'unicorn/error-message': 'error',
+
+    // Prefer Array.isArray() over instanceof Array (cross-realm safe)
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-instanceof-builtins
+    'unicorn/no-instanceof-builtins': [
+      'error',
+      {
+        exclude: [],
+        include: [],
+        strategy: 'strict',
+        useErrorIsError: false
+      }
+    ],
+
+    // Enforce new for Map/Set/Error, forbid new for String/Number/Boolean
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/new-for-builtins
+    'unicorn/new-for-builtins': 'error',
+
+    // Prefer || or ?? over redundant ternary
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-logical-operator-over-ternary
+    'unicorn/prefer-logical-operator-over-ternary': 'error',
+
+    // Throw TypeError after type checks instead of generic Error
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-type-error
+    'unicorn/prefer-type-error': 'error',
+
+    // Enforce === -1 / !== -1 for indexOf checks
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/consistent-existence-index-check
+    'unicorn/consistent-existence-index-check': 'error',
+
+    // Prefer globalThis — too restrictive for browser-specific code
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-global-this
+    'unicorn/prefer-global-this': 'off',
+
+    // Prefer Set.has() for lookups — Array.includes is fine for small arrays
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-set-has
+    'unicorn/prefer-set-has': 'off',
+
+    // Prefer EventTarget over EventEmitter (web standard)
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-event-target
+    'unicorn/prefer-event-target': 'error',
+
+    // Prefer indexOf() over findIndex() with simple equality
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-array-index-of
+    'unicorn/prefer-array-index-of': 'error',
+
+    // Enforce uppercase escape sequences
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/escape-case
+    'unicorn/escape-case': 'error',
+
+    // Enforce lowercase prefix in number literals (0xff not 0XFF)
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/number-literal-case
+    'unicorn/number-literal-case': 'error',
+
+    // Detect useless case before default in switch
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-useless-switch-case
+    'unicorn/no-useless-switch-case': 'error',
+
+    // Enforce consistent types in ternary array spreads
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/consistent-empty-array-spread
+    'unicorn/consistent-empty-array-spread': 'error',
+
+    // Allow catch parameter even if unused
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-optional-catch-binding
+    'unicorn/prefer-optional-catch-binding': 'off',
+
+    // Disallow leading/trailing spaces in console.log
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-console-spaces
+    'unicorn/no-console-spaces': 'error',
+
+    // Prefer Unicode escape over hex escape — too niche
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-hex-escape
+    'unicorn/no-hex-escape': 'off',
+
+    // Force braces in switch cases — too opinionated
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/switch-case-braces
+    'unicorn/switch-case-braces': 'off',
+
+    // Disallow null — null is semantically different from undefined
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-null
+    'unicorn/no-null': 'off',
+
+    // Disallow Array.reduce — valid for accumulations
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-array-reduce
+    'unicorn/no-array-reduce': 'off',
+
+    // Disallow passing function references to array methods — .filter(Boolean) is idiomatic
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-array-callback-reference
+    'unicorn/no-array-callback-reference': 'off',
+
+    // Prefer codePointAt over charCodeAt — charCodeAt fine for ASCII
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-code-point
+    'unicorn/prefer-code-point': 'off',
+
+    // Prefer addEventListener over onclick=
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-add-event-listener
+    'unicorn/prefer-add-event-listener': 'error',
+
+    // Prefer append() over appendChild()
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-dom-node-append
+    'unicorn/prefer-dom-node-append': 'error',
+
+    // Prefer dataset over getAttribute('data-') — dataset not on Element type, only HTMLElement
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-dom-node-dataset
+    'unicorn/prefer-dom-node-dataset': 'off',
+
+    // Prefer textContent over innerText
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-dom-node-text-content
+    'unicorn/prefer-dom-node-text-content': 'error',
+
+    // Prefer remove() over parentNode.removeChild()
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-dom-node-remove
+    'unicorn/prefer-dom-node-remove': 'error',
+
+    // Prefer event.key over event.keyCode
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-keyboard-event-key
+    'unicorn/prefer-keyboard-event-key': 'error',
+
+    // Prefer querySelector over getElementById
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-query-selector
+    'unicorn/prefer-query-selector': 'error',
+
+    // Prefer classList.toggle over add/remove
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-classlist-toggle
+    'unicorn/prefer-classlist-toggle': 'error',
+
+    // Prefer Math.min/Math.max over ternary
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-math-min-max
+    'unicorn/prefer-math-min-max': 'error',
+
+    // Prefer Math.trunc over ~~ or | 0
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-math-trunc
+    'unicorn/prefer-math-trunc': 'error',
+
+    // Prefer modern Math APIs (Math.hypot, Math.log2, etc.)
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-modern-math-apis
+    'unicorn/prefer-modern-math-apis': 'error',
+
+    // Prefer Number() over +x, String() over '' + x
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-native-coercion-functions
+    'unicorn/prefer-native-coercion-functions': 'error',
+
+    // Prefer Reflect.apply over fn.apply()
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-reflect-apply
+    'unicorn/prefer-reflect-apply': 'error',
+
+    // Prefer Array.prototype.slice over [].slice
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-prototype-methods
+    'unicorn/prefer-prototype-methods': 'error',
+
+    // Require explicit separator in .join()
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/require-array-join-separator
+    'unicorn/require-array-join-separator': 'error',
+
+    // Require explicit digits argument in .toFixed()
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/require-number-to-fixed-digits-argument
+    'unicorn/require-number-to-fixed-digits-argument': 'error',
+
+    // Hoist functions that don't depend on outer scope
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/consistent-function-scoping
+    'unicorn/consistent-function-scoping': 'error',
+
+    // Prefer new Date(date) for cloning dates
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/consistent-date-clone
+    'unicorn/consistent-date-clone': 'error',
+
+    // Disallow (await foo).bar — assign first
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-await-expression-member
+    'unicorn/no-await-expression-member': 'error',
+
+    // Allow objects as default parameters
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-object-as-default-parameter
+    'unicorn/no-object-as-default-parameter': 'off',
+
+    // Disallow const self = this — use arrow functions
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-this-assignment
+    'unicorn/no-this-assignment': 'error',
+
+    // Disallow static-only classes — use module functions
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-static-only-class
+    'unicorn/no-static-only-class': 'error',
+
+    // Prefer blob.text() over FileReader
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-blob-reading-methods
+    'unicorn/prefer-blob-reading-methods': 'error',
+
+    // Prefer Response.json() over new Response(JSON.stringify())
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-response-static-json
+    'unicorn/prefer-response-static-json': 'error',
+
+    // Prefer 123n over BigInt(123)
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-bigint-literals
+    'unicorn/prefer-bigint-literals': 'error',
+
+    // Prefer ternary over if/else for assignments
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-ternary
+    'unicorn/prefer-ternary': 'error',
+
+    // Prefer String.raw for backslash-heavy strings
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-string-raw
+    'unicorn/prefer-string-raw': 'error',
+
+    // Allow process.exit() in CLI tools
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-process-exit
+    'unicorn/no-process-exit': 'off',
+
+    // Allow document.cookie
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-document-cookie
+    'unicorn/no-document-cookie': 'off',
+
+    // Prefer ESM — already covered by import/no-commonjs
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-module
+    'unicorn/prefer-module': 'off',
+
+    // Enforce explicit arr.length > 0 over truthy check
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/explicit-length-check
+    'unicorn/explicit-length-check': 'error',
+
+    // Disallow thisArg in array methods — arrow functions handle it
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-array-method-this-argument
+    'unicorn/no-array-method-this-argument': 'error',
+
+    // Prefer new URL('foo', base) over new URL('./foo', base)
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/relative-url-style
+    'unicorn/relative-url-style': 'error',
+
+    // Enforce custom Error class pattern
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/custom-error-definition
+    'unicorn/custom-error-definition': 'error',
+
+    // Disallow spaces in empty braces { } → {}
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/empty-brace-spaces
+    'unicorn/empty-brace-spaces': 'error',
+
+    // Allow .flat(2) without named variable
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-magic-array-flat-depth
+    'unicorn/no-magic-array-flat-depth': 'off',
+
+    // Disabled — false positives with Zod .catch() (see GAPS.md)
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-top-level-await
+    'unicorn/prefer-top-level-await': 'off',
+
+    // Consistent assert style — rarely used in frontend
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/consistent-assert
+    'unicorn/consistent-assert': 'off',
+
     // Enforce default parameters to be last
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/default-param-last
     'default-param-last': 'error',
@@ -882,12 +1162,9 @@ export default {
       }
     ],
 
-    // Enforce import type { T }
+    // Enforce type-only imports — disabled, handled by import/consistent-type-specifier-style (prefer-inline)
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/consistent-type-imports
-    '@typescript-eslint/consistent-type-imports': [
-      'error',
-      { prefer: 'type-imports' }
-    ],
+    '@typescript-eslint/consistent-type-imports': 'off',
 
     // Enforce export type { T } for type-only exports
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/consistent-type-exports
@@ -896,9 +1173,9 @@ export default {
       { fixMixedExportsWithInlineTypeSpecifier: true }
     ],
 
-    // Disallow import { type A, type B } when all imports are types (use import type { A, B })
+    // Disabled — conflicts with import/consistent-type-specifier-style: 'prefer-inline'
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-import-type-side-effects
-    '@typescript-eslint/no-import-type-side-effects': 'error',
+    '@typescript-eslint/no-import-type-side-effects': 'off',
 
     // Disallow unnecessarily defining types for simple inferred values
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-inferrable-types
@@ -1010,7 +1287,113 @@ export default {
 
     // Disallow declarations in the global scope — irrelevant for ESM/TypeScript
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-implicit-globals
-    'no-implicit-globals': 'off'
+    'no-implicit-globals': 'off',
+
+    // Disallow unnecessary type constraints (extends any / extends unknown)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-type-constraint
+    '@typescript-eslint/no-unnecessary-type-constraint': 'error',
+
+    // Disallow non-null assertion next to equality (a! == b looks like a !== b)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-confusing-non-null-assertion
+    '@typescript-eslint/no-confusing-non-null-assertion': 'error',
+
+    // Disallow classes used as namespaces (static-only, empty, constructor-only)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-extraneous-class
+    '@typescript-eslint/no-extraneous-class': [
+      'error',
+      {
+        allowConstructorOnly: false,
+        allowEmpty: false,
+        allowStaticOnly: false,
+        allowWithDecorator: true
+      }
+    ],
+
+    // Enforce consistent type assertion style (as > angle-bracket)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/consistent-type-assertions
+    '@typescript-eslint/consistent-type-assertions': [
+      'error',
+      {
+        assertionStyle: 'as',
+        objectLiteralTypeAssertions: 'allow-as-parameter',
+        arrayLiteralTypeAssertions: 'allow-as-parameter'
+      }
+    ],
+
+    // Enforce type argument on constructor call, not annotation
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/consistent-generic-constructors
+    '@typescript-eslint/consistent-generic-constructors': ['error', 'constructor'],
+
+    // Prefer for-of when index is only used for element access
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-for-of
+    '@typescript-eslint/prefer-for-of': 'error',
+
+    // Prefer function type over interface with single call signature
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-function-type
+    '@typescript-eslint/prefer-function-type': 'error',
+
+    // Unify overload signatures that can be combined
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/unified-signatures
+    '@typescript-eslint/unified-signatures': [
+      'error',
+      {
+        ignoreDifferentlyNamedParameters: false,
+        ignoreOverloadsWithDifferentJSDoc: false
+      }
+    ],
+
+    // Require overload signatures to be adjacent
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/adjacent-overload-signatures
+    '@typescript-eslint/adjacent-overload-signatures': 'error',
+
+    // Remove obsolete TSLint comments
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/ban-tslint-comment
+    '@typescript-eslint/ban-tslint-comment': 'error',
+
+    // Enforce Record<K, V> over index signatures
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/consistent-indexed-object-style
+    '@typescript-eslint/consistent-indexed-object-style': ['error', 'record'],
+
+    // Prefer readonly fields over trivial getters for literals
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/class-literal-property-style
+    '@typescript-eslint/class-literal-property-style': ['error', 'fields'],
+
+    // Allow both parameter properties and explicit declarations
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/parameter-properties
+    '@typescript-eslint/parameter-properties': 'off',
+
+    // Disallow non-null assertion operator (!)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-non-null-assertion
+    '@typescript-eslint/no-non-null-assertion': 'error',
+
+    // Disallow void type outside return positions and generics
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-invalid-void-type
+    '@typescript-eslint/no-invalid-void-type': [
+      'error',
+      {
+        allowAsThisParameter: false,
+        allowInGenericTypeArguments: true
+      }
+    ],
+
+    // Enforce literal values in enum members (no computed expressions)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-literal-enum-member
+    '@typescript-eslint/prefer-literal-enum-member': [
+      'error',
+      { allowBitwiseExpressions: false }
+    ],
+
+    // Disallow dynamic delete on computed keys — prefer Map/Set
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-dynamic-delete
+    '@typescript-eslint/no-dynamic-delete': 'error',
+
+    // Require explicit initializers on all enum members
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-enum-initializers
+    '@typescript-eslint/prefer-enum-initializers': 'error',
+
+    // Prefer @ts-expect-error over @ts-ignore (detects stale suppressions)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-ts-expect-error
+    '@typescript-eslint/prefer-ts-expect-error': 'error'
 
     // Type-aware rules (REQUIRES tsgolint + TypeScript-Go)
     // To enable: set typeAware: true and uncomment these rules.
@@ -1030,6 +1413,10 @@ export default {
     // '@typescript-eslint/no-unnecessary-type-parameters': 'error',
     // '@typescript-eslint/no-unnecessary-qualifier': 'error',
     // '@typescript-eslint/prefer-readonly-parameter-types': ['error', { allow: [], checkParameterProperties: true, ignoreInferredTypes: false, treatMethodsAsReadonly: false }],
+    // '@typescript-eslint/prefer-optional-chain': ['error', { checkAny: true, checkBigInt: true, checkBoolean: true, checkNumber: true, checkString: true, checkUnknown: true, requireNullish: false, allowPotentiallyUnsafeFixesThatModifyTheReturnTypeIKnowWhatImDoing: false }],
+    // '@typescript-eslint/no-unsafe-type-assertion': 'error',
+    // '@typescript-eslint/no-unnecessary-template-expression': 'error',
+    // '@typescript-eslint/related-getter-setter-pairs': 'error',
     // '@typescript-eslint/strict-void-return': 'off',
     // '@typescript-eslint/require-await': 'off',
   },

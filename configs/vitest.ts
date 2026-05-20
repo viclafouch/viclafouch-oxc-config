@@ -301,6 +301,62 @@ export default {
 
     // Enforce blank line padding around afterAll blocks
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/padding-around-after-all-blocks
-    'vitest/padding-around-after-all-blocks': 'error'
+    'vitest/padding-around-after-all-blocks': 'error',
+
+    // Ensure expect() is properly formed (arg + matcher called)
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/valid-expect
+    'vitest/valid-expect': [
+      'error',
+      {
+        minArgs: 1,
+        maxArgs: 1,
+        asyncMatchers: ['toResolve', 'toReject'],
+        alwaysAwait: false
+      }
+    ],
+
+    // Ensure tests contain at least one assertion
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/expect-expect
+    'vitest/expect-expect': [
+      'error',
+      {
+        assertFunctionNames: ['expect', 'expectTypeOf', 'assert', 'assertType'],
+        additionalTestBlockFunctions: []
+      }
+    ],
+
+    // Enforce consistent test/it usage (test at top-level, it in describe)
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/consistent-test-it
+    'vitest/consistent-test-it': [
+      'error',
+      {
+        fn: 'test',
+        withinDescribe: 'it'
+      }
+    ],
+
+    // Combine toHaveBeenCalledOnce + toHaveBeenCalledWith into one assertion
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-called-exactly-once-with
+    'vitest/prefer-called-exactly-once-with': 'error',
+
+    // Require await on expect.poll() and expect.element()
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/require-awaited-expect-poll
+    'vitest/require-awaited-expect-poll': 'error',
+
+    // Require type parameters on vi.fn() — too noisy for simple mocks
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/require-mock-type-parameters
+    'vitest/require-mock-type-parameters': 'off',
+
+    // Require timeout on every test — vitest.config global timeout suffices
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/require-test-timeout
+    'vitest/require-test-timeout': 'off',
+
+    // Restrict specific vi methods — project-specific, enable downstream
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-restricted-vi-methods
+    'vitest/no-restricted-vi-methods': ['off', {}],
+
+    // Prefer explicit vitest imports — depends on globals config
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-importing-vitest-globals
+    'vitest/prefer-importing-vitest-globals': 'off'
   }
 } satisfies OxlintConfig

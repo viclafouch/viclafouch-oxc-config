@@ -210,6 +210,121 @@ export default {
       }
     ],
 
+    // Disallow using Array index as key — causes bugs on reorder/filter
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-array-index-key
+    'react/no-array-index-key': 'error',
+
+    // Disallow React.cloneElement — anti-pattern, prefer composition
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-clone-element
+    'react/no-clone-element': 'error',
+
+    // Disallow direct mutation of this.state
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-direct-mutation-state
+    'react/no-direct-mutation-state': 'error',
+
+    // Disallow findDOMNode — removed in React 19
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-find-dom-node
+    'react/no-find-dom-node': 'error',
+
+    // Disallow isMounted — removed API
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-is-mounted
+    'react/no-is-mounted': 'error',
+
+    // Prevent setState in componentDidMount (double render)
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-did-mount-set-state
+    'react/no-did-mount-set-state': ['error', 'disallow-in-func'],
+
+    // Disallow this in stateless functional components
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-this-in-sfc
+    'react/no-this-in-sfc': 'error',
+
+    // Disallow UNSAFE_ lifecycle methods — removed in React 19
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-unsafe
+    'react/no-unsafe': ['error', { checkAliases: true }],
+
+    // Require forwardRef to actually use the ref parameter
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/forward-ref-uses-ref
+    'react/forward-ref-uses-ref': 'error',
+
+    // Only export components — too many false positives with framework conventions (loaders, routes)
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/only-export-components
+    'react/only-export-components': [
+      'off',
+      {
+        allowConstantExport: true,
+        allowExportNames: [],
+        checkJS: false,
+        customHOCs: []
+      }
+    ],
+
+    // Require displayName on components — too noisy on memo/forwardRef
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/display-name
+    'react/display-name': [
+      'off',
+      {
+        checkContextObjects: false,
+        ignoreTranspilerName: false
+      }
+    ],
+
+    // Disallow namespaced JSX elements — not supported in React
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-namespace
+    'react/no-namespace': 'error',
+
+    // Prevent multiple components per file — too strict for helpers
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-multi-comp
+    'react/no-multi-comp': ['off', { ignoreStateless: false }],
+
+    // Enforce on*/handle* naming for event handler props
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-handler-names
+    'react/jsx-handler-names': [
+      'error',
+      {
+        checkInlineFunctions: false,
+        checkLocalVariables: false,
+        eventHandlerPrefixes: 'handle',
+        eventHandlerPropPrefixes: 'on',
+        ignoreComponentNames: []
+      }
+    ],
+
+    // Disallow JSX prop spreading — too restrictive for wrappers/design systems
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-props-no-spreading
+    'react/jsx-props-no-spreading': [
+      'off',
+      {
+        custom: 'enforce',
+        html: 'enforce',
+        exceptions: [],
+        explicitSpread: 'enforce'
+      }
+    ],
+
+    // Enforce maximum JSX depth — too arbitrary
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-max-depth
+    'react/jsx-max-depth': ['off', { max: 2 }],
+
+    // Forbid specific props on DOM elements — project-specific
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/forbid-dom-props
+    'react/forbid-dom-props': ['off', { forbid: [] }],
+
+    // Forbid specific elements — project-specific
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/forbid-elements
+    'react/forbid-elements': ['off', { forbid: [] }],
+
+    // Disallow all setState — too extreme
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-set-state
+    'react/no-set-state': 'off',
+
+    // Prefer ES6 classes over createReactClass — redundant with prefer-function-component
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/prefer-es6-class
+    'react/prefer-es6-class': ['off', 'always'],
+
+    // Enforce state initialization location — stylistic, class components only
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/state-in-constructor
+    'react/state-in-constructor': ['off', 'always'],
+
     // Forbid specific props on custom components — too project-specific
     // https://oxc.rs/docs/guide/usage/linter/rules/react/forbid-component-props
     'react/forbid-component-props': ['off', { forbid: [] }],
