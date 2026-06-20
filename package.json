@@ -42,6 +42,7 @@
   },
   "scripts": {
     "build": "tsup",
+    "test": "vitest run",
     "lint": "oxlint && oxfmt --check",
     "lint:fix": "oxlint --fix && oxfmt",
     "prepublishOnly": "tsup",
@@ -53,10 +54,12 @@
     "release:beta": "npm publish --tag beta"
   },
   "devDependencies": {
+    "@types/node": "^26.0.0",
     "oxfmt": "^0.55.0",
     "oxlint": "^1.70.0",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.9"
   },
   "peerDependencies": {
     "@tanstack/eslint-plugin-query": ">= 5",

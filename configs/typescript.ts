@@ -1421,32 +1421,358 @@ export default {
 
     // Prefer named regex capture groups — too noisy for simple patterns
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/prefer-named-capture-group
-    'prefer-named-capture-group': 'off'
+    'prefer-named-capture-group': 'off',
 
-    // Type-aware rules (REQUIRES tsgolint + TypeScript-Go)
-    // To enable: set typeAware: true and uncomment these rules.
-    // '@typescript-eslint/consistent-return': ['error', { treatUndefinedAsUnspecified: true }],
-    // '@typescript-eslint/dot-notation': ['error', { allowKeywords: true }],
-    // '@typescript-eslint/return-await': ['error', 'in-try-catch'],
-    // '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true }],
-    // '@typescript-eslint/no-array-delete': 'error',
-    // '@typescript-eslint/prefer-find': 'error',
-    // '@typescript-eslint/prefer-string-starts-ends-with': 'error',
-    // '@typescript-eslint/prefer-reduce-type-parameter': 'error',
-    // '@typescript-eslint/no-duplicate-type-constituents': 'error',
-    // '@typescript-eslint/no-deprecated': 'error',
-    // '@typescript-eslint/no-misused-spread': 'error',
-    // '@typescript-eslint/no-useless-default-assignment': 'error',
-    // '@typescript-eslint/no-unnecessary-type-conversion': 'error',
-    // '@typescript-eslint/no-unnecessary-type-parameters': 'error',
-    // '@typescript-eslint/no-unnecessary-qualifier': 'error',
-    // '@typescript-eslint/prefer-readonly-parameter-types': ['error', { allow: [], checkParameterProperties: true, ignoreInferredTypes: false, treatMethodsAsReadonly: false }],
-    // '@typescript-eslint/prefer-optional-chain': ['error', { checkAny: true, checkBigInt: true, checkBoolean: true, checkNumber: true, checkString: true, checkUnknown: true, requireNullish: false, allowPotentiallyUnsafeFixesThatModifyTheReturnTypeIKnowWhatImDoing: false }],
-    // '@typescript-eslint/no-unsafe-type-assertion': 'error',
-    // '@typescript-eslint/no-unnecessary-template-expression': 'error',
-    // '@typescript-eslint/related-getter-setter-pairs': 'error',
-    // '@typescript-eslint/strict-void-return': 'off',
-    // '@typescript-eslint/require-await': 'off',
+    // ──────────────────────────────────────────────────────────────
+    // Type-aware rules (require typeAware: true)
+    // These rules are declared but inactive while typeAware is false.
+    // ──────────────────────────────────────────────────────────────
+
+    // Enforce consistent return statements based on return type
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/consistent-return
+    '@typescript-eslint/consistent-return': [
+      'error',
+      { treatUndefinedAsUnspecified: true }
+    ],
+
+    // Prefer obj.prop over obj['prop'] when type allows it
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/dot-notation
+    '@typescript-eslint/dot-notation': ['error', { allowKeywords: true }],
+
+    // Require return await in try/catch to capture errors
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/return-await
+    '@typescript-eslint/return-await': ['error', 'in-try-catch'],
+
+    // Detect unhandled Promises (silent failures)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-floating-promises
+    '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true }],
+
+    // Disallow delete on array elements (creates sparse holes)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-array-delete
+    '@typescript-eslint/no-array-delete': 'error',
+
+    // Prefer .find() over .filter()[0] with type info
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-find
+    '@typescript-eslint/prefer-find': 'error',
+
+    // Prefer startsWith()/endsWith() over regex or slice (type-aware version)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-string-starts-ends-with
+    '@typescript-eslint/prefer-string-starts-ends-with': 'error',
+
+    // Prefer type parameter on .reduce<T>() over initial value cast
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-reduce-type-parameter
+    '@typescript-eslint/prefer-reduce-type-parameter': 'error',
+
+    // Detect string | string in unions/intersections
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-duplicate-type-constituents
+    '@typescript-eslint/no-duplicate-type-constituents': 'error',
+
+    // Flag usage of @deprecated APIs
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-deprecated
+    '@typescript-eslint/no-deprecated': 'error',
+
+    // Detect incorrect spread usage (spreading string into array, etc.)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-misused-spread
+    '@typescript-eslint/no-misused-spread': 'error',
+
+    // Detect x ?? defaultValue when x can never be nullish
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-useless-default-assignment
+    '@typescript-eslint/no-useless-default-assignment': 'error',
+
+    // Detect String(alreadyString) and similar no-op conversions
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-type-conversion
+    '@typescript-eslint/no-unnecessary-type-conversion': 'error',
+
+    // Detect generic type parameters that serve no purpose
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-type-parameters
+    '@typescript-eslint/no-unnecessary-type-parameters': 'error',
+
+    // Detect unnecessary qualifiers in enums/namespaces
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-qualifier
+    '@typescript-eslint/no-unnecessary-qualifier': 'error',
+
+    // Require readonly parameter types for mutation safety
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-readonly-parameter-types
+    '@typescript-eslint/prefer-readonly-parameter-types': [
+      'error',
+      {
+        allow: [],
+        checkParameterProperties: true,
+        ignoreInferredTypes: false,
+        treatMethodsAsReadonly: false
+      }
+    ],
+
+    // Prefer a?.b over a && a.b
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-optional-chain
+    '@typescript-eslint/prefer-optional-chain': [
+      'error',
+      {
+        checkAny: true,
+        checkBigInt: true,
+        checkBoolean: true,
+        checkNumber: true,
+        checkString: true,
+        checkUnknown: true,
+        requireNullish: false,
+        allowPotentiallyUnsafeFixesThatModifyTheReturnTypeIKnowWhatImDoing: false
+      }
+    ],
+
+    // Detect dangerous as assertions
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-type-assertion
+    '@typescript-eslint/no-unsafe-type-assertion': 'error',
+
+    // Detect `${variable}` when variable alone suffices
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-template-expression
+    '@typescript-eslint/no-unnecessary-template-expression': 'error',
+
+    // Verify getter/setter type coherence
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/related-getter-setter-pairs
+    '@typescript-eslint/related-getter-setter-pairs': 'error',
+
+    // Disallow awaiting non-Promise values
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/await-thenable
+    '@typescript-eslint/await-thenable': 'error',
+
+    // Detect .toString() on objects that return '[object Object]'
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-base-to-string
+    '@typescript-eslint/no-base-to-string': [
+      'error',
+      {
+        checkUnknown: false,
+        ignoredTypeNames: ['Error', 'RegExp', 'URL', 'URLSearchParams']
+      }
+    ],
+
+    // Prevent using void expression results in confusing locations
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-confusing-void-expression
+    '@typescript-eslint/no-confusing-void-expression': [
+      'error',
+      {
+        ignoreArrowShorthand: true,
+        ignoreVoidOperator: false,
+        ignoreVoidReturningFunctions: false
+      }
+    ],
+
+    // Disallow for...in on arrays (iterates index strings, not values)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-for-in-array
+    '@typescript-eslint/no-for-in-array': 'error',
+
+    // Detect void operator on expressions already returning void
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-meaningless-void-operator
+    '@typescript-eslint/no-meaningless-void-operator': [
+      'error',
+      { checkNever: false }
+    ],
+
+    // Detect Promises in conditions or void callbacks
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-misused-promises
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksConditionals: true,
+        checksSpreads: true,
+        checksVoidReturn: {
+          arguments: true,
+          attributes: true,
+          inheritedMethods: true,
+          properties: true,
+          returns: true,
+          variables: true
+        }
+      }
+    ],
+
+    // Disallow mixing string and number members in enums
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-mixed-enums
+    '@typescript-eslint/no-mixed-enums': 'error',
+
+    // Detect string | never, any | string (absorbed constituents)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-redundant-type-constituents
+    '@typescript-eslint/no-redundant-type-constituents': 'error',
+
+    // Simplify x === true to x when type is boolean
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-boolean-literal-compare
+    '@typescript-eslint/no-unnecessary-boolean-literal-compare': [
+      'error',
+      {
+        allowComparingNullableBooleansToTrue: false,
+        allowComparingNullableBooleansToFalse: false
+      }
+    ],
+
+    // Detect conditions that are always truthy/falsy based on type
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-condition
+    '@typescript-eslint/no-unnecessary-condition': [
+      'error',
+      { allowConstantLoopConditions: false, checkTypePredicates: true }
+    ],
+
+    // Detect redundant type arguments that match the default
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-type-arguments
+    '@typescript-eslint/no-unnecessary-type-arguments': 'error',
+
+    // Detect as/! assertions that don't change the type
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-type-assertion
+    '@typescript-eslint/no-unnecessary-type-assertion': [
+      'error',
+      { checkLiteralConstAssertions: false, typesToIgnore: [] }
+    ],
+
+    // Disallow passing any as a typed argument
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-argument
+    '@typescript-eslint/no-unsafe-argument': 'error',
+
+    // Disallow assigning any to typed variables
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-assignment
+    '@typescript-eslint/no-unsafe-assignment': 'error',
+
+    // Disallow calling any as a function
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-call
+    '@typescript-eslint/no-unsafe-call': 'error',
+
+    // Disallow comparing enums of different types
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-enum-comparison
+    '@typescript-eslint/no-unsafe-enum-comparison': 'error',
+
+    // Disallow property access on any
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-member-access
+    '@typescript-eslint/no-unsafe-member-access': [
+      'error',
+      { allowOptionalChaining: false }
+    ],
+
+    // Disallow returning any from typed functions
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-return
+    '@typescript-eslint/no-unsafe-return': 'error',
+
+    // Disallow unary minus on non-numeric types
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-unary-minus
+    '@typescript-eslint/no-unsafe-unary-minus': 'error',
+
+    // Prefer value! over value as T — conflicts with no-non-null-assertion
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/non-nullable-type-assertion-style
+    '@typescript-eslint/non-nullable-type-assertion-style': 'off',
+
+    // Force throw new Error() (type-aware version of no-throw-literal)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/only-throw-error
+    '@typescript-eslint/only-throw-error': [
+      'error',
+      {
+        allow: [],
+        allowRethrowing: true,
+        allowThrowingAny: false,
+        allowThrowingUnknown: false
+      }
+    ],
+
+    // Prefer ?? over || for null/undefined checks
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-nullish-coalescing
+    '@typescript-eslint/prefer-nullish-coalescing': [
+      'error',
+      {
+        ignoreBooleanCoercion: false,
+        ignoreConditionalTests: true,
+        ignoreIfStatements: false,
+        ignoreMixedLogicalExpressions: false,
+        ignorePrimitives: {
+          bigint: false,
+          boolean: false,
+          number: false,
+          string: false
+        },
+        ignoreTernaryTests: false
+      }
+    ],
+
+    // Force return type this instead of class name for chainable methods
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-return-this-type
+    '@typescript-eslint/prefer-return-this-type': 'error',
+
+    // Force async on functions returning Promise — legitimate non-async cases exist
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/promise-function-async
+    '@typescript-eslint/promise-function-async': 'off',
+
+    // Force comparator in .sort() to avoid lexicographic sorting
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/require-array-sort-compare
+    '@typescript-eslint/require-array-sort-compare': [
+      'error',
+      { ignoreStringArrays: false }
+    ],
+
+    // Disallow + between incompatible types (string + number)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/restrict-plus-operands
+    '@typescript-eslint/restrict-plus-operands': [
+      'error',
+      {
+        allowAny: false,
+        allowBoolean: false,
+        allowNullish: false,
+        allowNumberAndString: false,
+        allowRegExp: false,
+        skipCompoundAssignments: false
+      }
+    ],
+
+    // Disallow interpolating non-stringifiable types in template literals
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/restrict-template-expressions
+    '@typescript-eslint/restrict-template-expressions': [
+      'error',
+      {
+        allowAny: false,
+        allowArray: false,
+        allowBoolean: false,
+        allowNever: false,
+        allowNullish: false,
+        allowNumber: true,
+        allowRegExp: false
+      }
+    ],
+
+    // Force explicit boolean conditions (str !== '' instead of if (str))
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/strict-boolean-expressions
+    '@typescript-eslint/strict-boolean-expressions': [
+      'error',
+      {
+        allowAny: false,
+        allowNullableBoolean: false,
+        allowNullableEnum: false,
+        allowNullableNumber: false,
+        allowNullableObject: true,
+        allowNullableString: false,
+        allowNumber: false,
+        allowString: false
+      }
+    ],
+
+    // Verify all union cases are covered in switch statements
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/switch-exhaustiveness-check
+    '@typescript-eslint/switch-exhaustiveness-check': [
+      'error',
+      {
+        allowDefaultCaseForExhaustiveSwitch: true,
+        considerDefaultExhaustiveForUnions: false,
+        requireDefaultForNonUnion: true
+      }
+    ],
+
+    // Detect unbound methods (arr.forEach(obj.method) loses this)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/unbound-method
+    '@typescript-eslint/unbound-method': ['error', { ignoreStatic: false }],
+
+    // Force unknown in .catch() callbacks
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/use-unknown-in-catch-callback-variable
+    '@typescript-eslint/use-unknown-in-catch-callback-variable': 'error',
+
+    // Strict void return checking — too strict for void callbacks
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/strict-void-return
+    '@typescript-eslint/strict-void-return': 'off',
+
+    // Require await in async functions — false positives on delegation
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/require-await
+    '@typescript-eslint/require-await': 'off'
   },
   overrides: [
     {

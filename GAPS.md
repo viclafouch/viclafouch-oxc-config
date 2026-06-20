@@ -24,33 +24,70 @@ Sources: [oxc#481](https://github.com/oxc-project/oxc/issues/481) (meta), [oxc#4
 
 ## TypeScript rules — [oxc#1117](https://github.com/oxc-project/oxc/issues/1117)
 
-**ESLint: 22 active** | **Migrated: 8** | **Type-aware: 17 (13 in [tsgolint](https://github.com/oxc-project/tsgolint) alpha, requires TS 7.0+)** | **Not migrated: 1**
+**ESLint: 22 active** | **Migrated: 8** | **Type-aware: 50 deferred (49/50 implemented in tsgolint, waiting on typeAware stability)** | **Not migrated: 1**
 
 | Rule                                   | Status                                           |
 | -------------------------------------- | ------------------------------------------------ |
 | `@typescript-eslint/naming-convention` | Not implemented (not in oxlint, not in tsgolint) |
 
-Type-aware rules (available via tsgolint alpha or oxlint typeAware, 16/17 implemented):
+Type-aware rules (commented out in `typescript.ts`, activate with `typeAware: true`):
 
-| Rule                                                 | Options                                                                                                    |
-| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `@typescript-eslint/consistent-return`               | `{ treatUndefinedAsUnspecified: true }`                                                                    |
-| `@typescript-eslint/dot-notation`                    | `{ allowKeywords: true }`                                                                                  |
-| `@typescript-eslint/return-await`                    | `'in-try-catch'`                                                                                           |
-| `@typescript-eslint/no-floating-promises`            | `{ ignoreVoid: true }`                                                                                     |
-| `@typescript-eslint/no-array-delete`                 | -                                                                                                          |
-| `@typescript-eslint/prefer-find`                     | -                                                                                                          |
-| `@typescript-eslint/prefer-string-starts-ends-with`  | -                                                                                                          |
-| `@typescript-eslint/prefer-reduce-type-parameter`    | -                                                                                                          |
-| `@typescript-eslint/no-duplicate-type-constituents`  | -                                                                                                          |
-| `@typescript-eslint/no-deprecated`                   | -                                                                                                          |
-| `@typescript-eslint/no-misused-spread`               | -                                                                                                          |
-| `@typescript-eslint/no-useless-default-assignment`   | -                                                                                                          |
-| `@typescript-eslint/no-unnecessary-type-conversion`  | -                                                                                                          |
-| `@typescript-eslint/no-unnecessary-type-parameters`  | -                                                                                                          |
-| `@typescript-eslint/no-unnecessary-qualifier`        | -                                                                                                          |
-| `@typescript-eslint/prefer-readonly-parameter-types` | `{ allow: [], checkParameterProperties: true, ignoreInferredTypes: false, treatMethodsAsReadonly: false }` |
-| `@typescript-eslint/naming-convention`               | Complex multi-selector config                                                                              |
+| Rule                                     | Severity | Options                                                                                                          |
+| ---------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
+| `consistent-return`                      | error    | `{ treatUndefinedAsUnspecified: true }`                                                                          |
+| `dot-notation`                           | error    | `{ allowKeywords: true }`                                                                                        |
+| `return-await`                           | error    | `'in-try-catch'`                                                                                                 |
+| `no-floating-promises`                   | error    | `{ ignoreVoid: true }`                                                                                           |
+| `no-array-delete`                        | error    | -                                                                                                                |
+| `prefer-find`                            | error    | -                                                                                                                |
+| `prefer-string-starts-ends-with`         | error    | -                                                                                                                |
+| `prefer-reduce-type-parameter`           | error    | -                                                                                                                |
+| `no-duplicate-type-constituents`         | error    | -                                                                                                                |
+| `no-deprecated`                          | error    | -                                                                                                                |
+| `no-misused-spread`                      | error    | -                                                                                                                |
+| `no-useless-default-assignment`          | error    | -                                                                                                                |
+| `no-unnecessary-type-conversion`         | error    | -                                                                                                                |
+| `no-unnecessary-type-parameters`         | error    | -                                                                                                                |
+| `no-unnecessary-qualifier`               | error    | -                                                                                                                |
+| `prefer-readonly-parameter-types`        | error    | `{ allow: [], checkParameterProperties: true, ignoreInferredTypes: false, treatMethodsAsReadonly: false }`       |
+| `prefer-optional-chain`                  | error    | `{ checkAny: true, ... requireNullish: false }`                                                                  |
+| `no-unsafe-type-assertion`               | error    | -                                                                                                                |
+| `no-unnecessary-template-expression`     | error    | -                                                                                                                |
+| `related-getter-setter-pairs`            | error    | -                                                                                                                |
+| `await-thenable`                         | error    | -                                                                                                                |
+| `no-base-to-string`                      | error    | `{ checkUnknown: false, ignoredTypeNames: ['Error', 'RegExp', 'URL', 'URLSearchParams'] }`                       |
+| `no-confusing-void-expression`           | error    | `{ ignoreArrowShorthand: true }`                                                                                 |
+| `no-for-in-array`                        | error    | -                                                                                                                |
+| `no-meaningless-void-operator`           | error    | `{ checkNever: false }`                                                                                          |
+| `no-misused-promises`                    | error    | `{ checksConditionals: true, checksSpreads: true, checksVoidReturn: { ... all true } }`                          |
+| `no-mixed-enums`                         | error    | -                                                                                                                |
+| `no-redundant-type-constituents`         | error    | -                                                                                                                |
+| `no-unnecessary-boolean-literal-compare` | error    | `{ allowComparingNullableBooleansToTrue: false, allowComparingNullableBooleansToFalse: false }`                  |
+| `no-unnecessary-condition`               | error    | `{ allowConstantLoopConditions: false, checkTypePredicates: true }`                                              |
+| `no-unnecessary-type-arguments`          | error    | -                                                                                                                |
+| `no-unnecessary-type-assertion`          | error    | `{ checkLiteralConstAssertions: false, typesToIgnore: [] }`                                                      |
+| `no-unsafe-argument`                     | error    | -                                                                                                                |
+| `no-unsafe-assignment`                   | error    | -                                                                                                                |
+| `no-unsafe-call`                         | error    | -                                                                                                                |
+| `no-unsafe-enum-comparison`              | error    | -                                                                                                                |
+| `no-unsafe-member-access`                | error    | `{ allowOptionalChaining: false }`                                                                               |
+| `no-unsafe-return`                       | error    | -                                                                                                                |
+| `no-unsafe-unary-minus`                  | error    | -                                                                                                                |
+| `only-throw-error`                       | error    | `{ allowThrowingAny: false, allowThrowingUnknown: false }`                                                       |
+| `prefer-nullish-coalescing`              | error    | `{ ignoreConditionalTests: true }`                                                                               |
+| `prefer-return-this-type`                | error    | -                                                                                                                |
+| `require-array-sort-compare`             | error    | `{ ignoreStringArrays: false }`                                                                                  |
+| `restrict-plus-operands`                 | error    | `{ allowAny: false, allowBoolean: false, allowNullish: false, allowNumberAndString: false, allowRegExp: false }` |
+| `restrict-template-expressions`          | error    | `{ allowAny: false, allowBoolean: false, allowNullish: false, allowNumber: true, allowRegExp: false }`           |
+| `strict-boolean-expressions`             | error    | `{ allowNullableObject: true, allowNumber: false, allowString: false }`                                          |
+| `switch-exhaustiveness-check`            | error    | `{ requireDefaultForNonUnion: true }`                                                                            |
+| `unbound-method`                         | error    | `{ ignoreStatic: false }`                                                                                        |
+| `use-unknown-in-catch-callback-variable` | error    | -                                                                                                                |
+| `strict-void-return`                     | off      | -                                                                                                                |
+| `require-await`                          | off      | -                                                                                                                |
+| `non-nullable-type-assertion-style`      | off      | Conflicts with no-non-null-assertion                                                                             |
+| `promise-function-async`                 | off      | Legitimate non-async Promise returns                                                                             |
+| `naming-convention`                      | -        | Not implemented in tsgolint                                                                                      |
 
 ## Unicorn rules — [oxc#493](https://github.com/oxc-project/oxc/issues/493)
 
