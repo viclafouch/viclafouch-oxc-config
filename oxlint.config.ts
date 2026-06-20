@@ -4,5 +4,8 @@ import typescript from './configs/typescript.ts'
 
 export default defineConfig({
   extends: [typescript, imports],
-  ignorePatterns: ['dist/**', 'templates/**', 'node_modules/**']
+  ignorePatterns: ['dist/**', 'templates/**', 'node_modules/**'],
+  rules: {
+    'import/no-default-export': 'off'
+  }
 })

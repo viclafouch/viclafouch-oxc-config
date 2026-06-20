@@ -246,6 +246,10 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/react/forward-ref-uses-ref
     'react/forward-ref-uses-ref': 'error',
 
+    // React Compiler lint-only mode — detects Rules of React violations
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/react-compiler
+    'react/react-compiler': ['error', { reportAllBailouts: true }],
+
     // Only export components — too many false positives with framework conventions (loaders, routes)
     // https://oxc.rs/docs/guide/usage/linter/rules/react/only-export-components
     'react/only-export-components': [
@@ -281,10 +285,10 @@ export default {
     'react/jsx-handler-names': [
       'error',
       {
-        checkInlineFunctions: false,
+        checkInlineFunction: false,
         checkLocalVariables: false,
-        eventHandlerPrefixes: 'handle',
-        eventHandlerPropPrefixes: 'on',
+        eventHandlerPrefix: 'handle',
+        eventHandlerPropPrefix: 'on',
         ignoreComponentNames: []
       }
     ],
@@ -328,6 +332,20 @@ export default {
     // Forbid specific props on custom components — too project-specific
     // https://oxc.rs/docs/guide/usage/linter/rules/react/forbid-component-props
     'react/forbid-component-props': ['off', { forbid: [] }],
+
+    // Disallow string literals in JSX — only for i18n-mandatory projects
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-no-literals
+    'react/jsx-no-literals': [
+      'off',
+      {
+        allowedStrings: [],
+        elementOverrides: {},
+        ignoreProps: false,
+        noAttributeStrings: false,
+        noStrings: false,
+        restrictedAttributes: []
+      }
+    ],
 
     // Disallow destructured imports from React and ReactDOM
     // Use `import React from 'react'` instead of `import { useState } from 'react'`

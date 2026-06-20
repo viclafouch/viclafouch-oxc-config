@@ -172,7 +172,7 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/import/consistent-type-specifier-style
     'import/consistent-type-specifier-style': 'off',
 
-// Force files to be unambiguously ESM — TS/bundler handles
+    // Force files to be unambiguously ESM — TS/bundler handles
     // https://oxc.rs/docs/guide/usage/linter/rules/import/unambiguous
     'import/unambiguous': 'off'
   },

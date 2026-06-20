@@ -600,7 +600,7 @@ export default {
     // ignore: framework conventions ($param.tsx, [slug].tsx, [...catchAll].tsx)
     'unicorn/filename-case': [
       'error',
-      { case: 'kebabCase', ignore: '^[\\[$]' }
+      { case: 'kebabCase', ignore: ['^[\\[$]'] }
     ],
 
     // Disallow creating a variable and immediately mutating it
@@ -635,9 +635,9 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-array-find
     'unicorn/prefer-array-find': 'error',
 
-    // Prefer startsWith() and endsWith() over regex or slice comparisons
+    // Deprecated in oxlint v1.70 — replaced by type-aware @typescript-eslint/prefer-string-starts-ends-with
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-string-starts-ends-with
-    'unicorn/prefer-string-starts-ends-with': 'error',
+    'unicorn/prefer-string-starts-ends-with': 'off',
 
     // Prefer .at() for accessing elements by negative index
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-at
@@ -837,6 +837,10 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-set-has
     'unicorn/prefer-set-has': 'off',
 
+    // Prefer re-export from instead of import + export
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-export-from
+    'unicorn/prefer-export-from': ['error', { checkUsedVariables: true }],
+
     // Prefer EventTarget over EventEmitter (web standard)
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-event-target
     'unicorn/prefer-event-target': 'error',
@@ -965,9 +969,17 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/consistent-date-clone
     'unicorn/consistent-date-clone': 'error',
 
+    // Disallow .fill() with mutable reference type (all elements share same reference)
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-array-fill-with-reference-type
+    'unicorn/no-array-fill-with-reference-type': 'error',
+
     // Disallow (await foo).bar — assign first
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-await-expression-member
     'unicorn/no-await-expression-member': 'error',
+
+    // Enforce specific import styles per module — too project-specific for shared config
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/import-style
+    'unicorn/import-style': 'off',
 
     // Allow objects as default parameters
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-object-as-default-parameter
@@ -997,9 +1009,13 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-ternary
     'unicorn/prefer-ternary': 'error',
 
-    // Prefer String.raw for backslash-heavy strings
+    // Prefer String.raw for backslash-heavy strings — too niche, noisy on regex patterns
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-string-raw
-    'unicorn/prefer-string-raw': 'error',
+    'unicorn/prefer-string-raw': 'off',
+
+    // Merge consecutive calls to variadic methods (push, unshift, classList.add)
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-single-call
+    'unicorn/prefer-single-call': ['error', { ignore: [] }],
 
     // Allow process.exit() in CLI tools
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-process-exit
@@ -1081,7 +1097,8 @@ export default {
       {
         allowShortCircuit: false,
         allowTernary: false,
-        allowTaggedTemplates: false
+        allowTaggedTemplates: false,
+        ignoreDirectives: false
       }
     ],
 
@@ -1252,7 +1269,7 @@ export default {
 
     // Enforce the u or v flag on regular expressions for proper Unicode handling
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/require-unicode-regexp
-    'require-unicode-regexp': ['error', { requireFlag: null }],
+    'require-unicode-regexp': 'error',
 
     // Disallow specific properties on specific objects — project-specific, enable downstream
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-restricted-properties
@@ -1322,7 +1339,10 @@ export default {
 
     // Enforce type argument on constructor call, not annotation
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/consistent-generic-constructors
-    '@typescript-eslint/consistent-generic-constructors': ['error', 'constructor'],
+    '@typescript-eslint/consistent-generic-constructors': [
+      'error',
+      'constructor'
+    ],
 
     // Prefer for-of when index is only used for element access
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-for-of
@@ -1393,7 +1413,15 @@ export default {
 
     // Prefer @ts-expect-error over @ts-ignore (detects stale suppressions)
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-ts-expect-error
-    '@typescript-eslint/prefer-ts-expect-error': 'error'
+    '@typescript-eslint/prefer-ts-expect-error': 'error',
+
+    // Enforce property syntax over method shorthand in interfaces (safer with strictFunctionTypes)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/method-signature-style
+    '@typescript-eslint/method-signature-style': ['error', 'property'],
+
+    // Prefer named regex capture groups — too noisy for simple patterns
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/prefer-named-capture-group
+    'prefer-named-capture-group': 'off'
 
     // Type-aware rules (REQUIRES tsgolint + TypeScript-Go)
     // To enable: set typeAware: true and uncomment these rules.
