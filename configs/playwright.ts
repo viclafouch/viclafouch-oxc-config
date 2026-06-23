@@ -256,7 +256,7 @@ export default {
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/require-top-level-describe.md
     'playwright/require-top-level-describe': [
       'error',
-      { maxTopLevelDescribes: Infinity }
+      { maxTopLevelDescribes: 4_294_967_295 }
     ],
 
     // Disallow using getByTitle()

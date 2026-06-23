@@ -208,22 +208,7 @@ export default {
 
     // Disallow adding interactive roles to non-interactive elements
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-noninteractive-element-to-interactive-role
-    'jsx-a11y/no-noninteractive-element-to-interactive-role': [
-      'error',
-      {
-        ul: ['menu', 'menubar', 'radiogroup', 'tablist', 'tree', 'treegrid'],
-        ol: ['menu', 'menubar', 'radiogroup', 'tablist', 'tree', 'treegrid'],
-        li: [
-          'menuitem',
-          'menuitemcheckbox',
-          'menuitemradio',
-          'row',
-          'tab',
-          'treeitem'
-        ],
-        fieldset: ['radiogroup', 'presentation']
-      }
-    ],
+    'jsx-a11y/no-noninteractive-element-to-interactive-role': 'error',
 
     // Disallow adding non-interactive roles to interactive elements
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-interactive-element-to-noninteractive-role

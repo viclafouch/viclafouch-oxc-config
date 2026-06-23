@@ -261,7 +261,7 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/require-top-level-describe
     'vitest/require-top-level-describe': [
       'error',
-      { maxNumberOfTopLevelDescribes: Infinity }
+      { maxNumberOfTopLevelDescribes: 4_294_967_295 }
     ],
 
     // Prefer test.todo() over empty test bodies

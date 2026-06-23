@@ -6,6 +6,7 @@ import path from 'node:path'
 const ROOT = path.resolve(import.meta.dirname, '..')
 const CONFIGS_DIR = path.resolve(ROOT, 'configs')
 const DUMMY_FILE = path.resolve(ROOT, 'index.ts')
+const OXLINT_BIN = path.resolve(ROOT, 'node_modules/.bin/oxlint')
 
 const allConfigFiles = fsSync
   .readdirSync(CONFIGS_DIR)
@@ -56,19 +57,22 @@ async function runOxlintPrintConfig(name: string): Promise<string> {
 
   await fs.writeFile(tmpPath, configSource)
   try {
-    childProcess.execSync(`oxlint -c ${tmpPath} --print-config ${DUMMY_FILE}`, {
-      cwd: ROOT,
-      env: {
-        ...process.env,
-        NODE_OPTIONS: '--experimental-strip-types --no-warnings'
-      },
-      encoding: 'utf8',
-      stdio: ['pipe', 'pipe', 'pipe']
-    })
+    childProcess.execSync(
+      `${OXLINT_BIN} -c ${tmpPath} --print-config ${DUMMY_FILE}`,
+      {
+        cwd: ROOT,
+        env: {
+          ...process.env,
+          NODE_OPTIONS: '--experimental-strip-types --no-warnings'
+        },
+        encoding: 'utf8',
+        stdio: ['pipe', 'pipe', 'pipe']
+      }
+    )
     return ''
   } catch (error: unknown) {
-    const err = error as { stderr: string }
-    return err.stderr
+    const err = error as { stdout: string; stderr: string }
+    return err.stdout || err.stderr
   } finally {
     await fs.unlink(tmpPath).catch(() => {})
   }
