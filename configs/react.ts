@@ -150,13 +150,7 @@ export default {
 
     // Disallow javascript: URLs in JSX (XSS prevention)
     // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-no-script-url
-    'react/jsx-no-script-url': [
-      'error',
-      {
-        components: {},
-        includeFromSettings: false
-      }
-    ],
+    'react/jsx-no-script-url': ['error', { includeFromSettings: false }],
 
     // Disallow children on void DOM elements (<br>, <img>, <input>, etc.)
     // https://oxc.rs/docs/guide/usage/linter/rules/react/void-dom-elements-no-children

@@ -176,7 +176,11 @@ export default {
 
     // Disallow variable or function declarations in nested blocks
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-inner-declarations
-    'no-inner-declarations': ['error', 'both'],
+    'no-inner-declarations': [
+      'error',
+      'both',
+      { blockScopedFunctions: 'allow', namespaces: 'allow' }
+    ],
 
     // Disallow usage of __iterator__ property
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-iterator
@@ -254,6 +258,10 @@ export default {
     // Disallow unmodified conditions of loops
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unmodified-loop-condition
     'no-unmodified-loop-condition': 'error',
+
+    // Disallow loops that can only ever run one iteration (nursery)
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unreachable-loop
+    'no-unreachable-loop': ['error', { ignore: [] }],
 
     // Disallow negating the left operand of relational operators
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unsafe-negation
@@ -621,7 +629,14 @@ export default {
 
     // Prefer Array#toSorted() over Array#sort() to avoid mutation
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-array-sort
-    'unicorn/no-array-sort': ['error', { allowExpressionStatement: true }],
+    'unicorn/no-array-sort': [
+      'error',
+      { allowAfterSpread: false, allowExpressionStatement: true }
+    ],
+
+    // Disallow confusing Array#with() usage (negative index, length-as-index)
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-confusing-array-with
+    'unicorn/no-confusing-array-with': 'error',
 
     // Require using new when throwing an error
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/throw-new-error
@@ -772,7 +787,11 @@ export default {
         onlyIfContainsSeparator: false,
         binary: { groupLength: 4, minimumDigits: 0 },
         hexadecimal: { groupLength: 2, minimumDigits: 0 },
-        number: { groupLength: 3, minimumDigits: 5 },
+        number: {
+          groupLength: 3,
+          minimumDigits: 5,
+          fractionGroupLength: Infinity
+        },
         octal: { groupLength: 4, minimumDigits: 0 }
       }
     ],
@@ -839,7 +858,7 @@ export default {
 
     // Prefer re-export from instead of import + export
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-export-from
-    'unicorn/prefer-export-from': ['error', { checkUsedVariables: true }],
+    'unicorn/prefer-export-from': ['error', { checkUsedVariables: false }],
 
     // Prefer EventTarget over EventEmitter (web standard)
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-event-target
@@ -945,6 +964,10 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-native-coercion-functions
     'unicorn/prefer-native-coercion-functions': 'error',
 
+    // Prefer Number() over parseFloat()/parseInt(x, 10) — parses the full input
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-number-coercion
+    'unicorn/prefer-number-coercion': 'error',
+
     // Prefer Reflect.apply over fn.apply()
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-reflect-apply
     'unicorn/prefer-reflect-apply': 'error',
@@ -964,6 +987,14 @@ export default {
     // Hoist functions that don't depend on outer scope
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/consistent-function-scoping
     'unicorn/consistent-function-scoping': 'error',
+
+    // Enforce a maximum depth of nested function calls
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/max-nested-calls
+    'unicorn/max-nested-calls': ['error', { max: 3 }],
+
+    // Require an explicit delay argument in setTimeout/setInterval
+    // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/explicit-timer-delay
+    'unicorn/explicit-timer-delay': ['error', 'always'],
 
     // Prefer new Date(date) for cloning dates
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/consistent-date-clone

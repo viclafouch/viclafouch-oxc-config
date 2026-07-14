@@ -40,7 +40,14 @@ export default {
 
     // Enforce valid anchor elements
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/anchor-is-valid
-    'jsx-a11y/anchor-is-valid': ['error', { validHrefs: [] }],
+    'jsx-a11y/anchor-is-valid': [
+      'error',
+      {
+        components: [],
+        specialLink: [],
+        aspects: ['noHref', 'invalidHref', 'preferButton']
+      }
+    ],
 
     // Enforce aria-activedescendant has tabindex
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/aria-activedescendant-has-tabindex

@@ -8,7 +8,7 @@ Sources: [oxc#481](https://github.com/oxc-project/oxc/issues/481) (meta), [oxc#4
 
 ## Core rules — [oxc#479](https://github.com/oxc-project/oxc/issues/479)
 
-**ESLint: 82 active** | **oxlint: 126 rules (73 migrated + 53 new)** | **Not migrated: 9**
+**ESLint: 82 active** | **oxlint: 127 rules (73 migrated + 54 new)** | **Not migrated: 9**
 
 | Rule                              | Status                                                          |
 | --------------------------------- | --------------------------------------------------------------- |
@@ -91,9 +91,9 @@ Type-aware rules (commented out in `typescript.ts`, activate with `typeAware: tr
 
 ## Unicorn rules — [oxc#493](https://github.com/oxc-project/oxc/issues/493)
 
-**ESLint: 29 active** | **oxlint: 43 rules (29 migrated + 14 new)** | **Not migrated: 0**
+**ESLint: 29 active** | **oxlint: 47 rules (29 migrated + 18 new)** | **Not migrated: 0**
 
-All active unicorn rules have been migrated plus 14 new rules added.
+All active unicorn rules have been migrated plus 18 new rules added.
 
 ## React rules — [oxc#1022](https://github.com/oxc-project/oxc/issues/1022)
 
