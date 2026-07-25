@@ -303,6 +303,10 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/padding-around-after-all-blocks
     'vitest/padding-around-after-all-blocks': 'error',
 
+    // Enforce blank line padding around test/it blocks
+    // https://oxc.rs/docs/guide/usage/linter/rules/vitest/padding-around-test-blocks
+    'vitest/padding-around-test-blocks': 'error',
+
     // Ensure expect() is properly formed (arg + matcher called)
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/valid-expect
     'vitest/valid-expect': [

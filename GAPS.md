@@ -24,13 +24,15 @@ Sources: [oxc#481](https://github.com/oxc-project/oxc/issues/481) (meta), [oxc#4
 
 ## TypeScript rules — [oxc#1117](https://github.com/oxc-project/oxc/issues/1117)
 
-**ESLint: 22 active** | **Migrated: 8** | **Type-aware: 50 deferred (49/50 implemented in tsgolint, waiting on typeAware stability)** | **Not migrated: 1**
+**ESLint: 22 active** | **Migrated: 8** | **Type-aware: 50 available (opt-in)** | **Not migrated: 1**
 
 | Rule                                   | Status                                           |
 | -------------------------------------- | ------------------------------------------------ |
 | `@typescript-eslint/naming-convention` | Not implemented (not in oxlint, not in tsgolint) |
 
-Type-aware rules (commented out in `typescript.ts`, activate with `typeAware: true`):
+Type-aware linting is **stable** since oxlint 1.75.0 / tsgolint v7 ([announcement](https://oxc.rs/blog/2026-07-22-type-aware-linting-stable)) — 59 of 61 typescript-eslint type-aware rules are implemented.
+
+The 50 rules below are already declared in `typescript.ts` and stay inert while `typeAware` is false. `typeAware` and `typeCheck` are root-config-only fields, so this package cannot enable them; consumers opt in from their own `oxlint.config.ts` (see README). Requires TypeScript 7 and `oxlint-tsgolint`.
 
 | Rule                                     | Severity | Options                                                                                                          |
 | ---------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
@@ -97,22 +99,21 @@ All active unicorn rules have been migrated plus 18 new rules added.
 
 ## React rules — [oxc#1022](https://github.com/oxc-project/oxc/issues/1022)
 
-**ESLint: 35 active** | **oxlint: 33 rules (24 migrated + 9 new)** | **Not migrated: 11**
+**ESLint: 35 active** | **oxlint: 34 rules (25 migrated + 9 new)** | **Not migrated: 10**
 
-| Rule                                  | Status                                                 |
-| ------------------------------------- | ------------------------------------------------------ |
-| `react/jsx-no-bind`                   | Not started                                            |
-| `react/no-deprecated`                 | Not started                                            |
-| `react/destructuring-assignment`      | Not started                                            |
-| `react/no-arrow-function-lifecycle`   | Not started                                            |
-| `react/no-invalid-html-attribute`     | Not started                                            |
-| `react/function-component-definition` | Not started                                            |
-| `react/jsx-no-leaked-render`          | Not started                                            |
-| `react/prefer-stateless-function`     | Not started                                            |
-| `react/no-unused-prop-types`          | Will not implement (oxc#1022)                          |
-| `react/no-unused-state`               | Will not implement (oxc#1022)                          |
-| `react/jsx-newline`                   | Will not implement (oxc#1022)                          |
-| `react/jsx-uses-vars`                 | Will not implement (deprecated with new JSX transform) |
+| Rule                                | Status                                                 |
+| ----------------------------------- | ------------------------------------------------------ |
+| `react/jsx-no-bind`                 | Not started                                            |
+| `react/no-deprecated`               | Not started                                            |
+| `react/destructuring-assignment`    | Not started                                            |
+| `react/no-arrow-function-lifecycle` | Not started                                            |
+| `react/no-invalid-html-attribute`   | Not started                                            |
+| `react/jsx-no-leaked-render`        | Not started                                            |
+| `react/prefer-stateless-function`   | Not started                                            |
+| `react/no-unused-prop-types`        | Will not implement (oxc#1022)                          |
+| `react/no-unused-state`             | Will not implement (oxc#1022)                          |
+| `react/jsx-newline`                 | Will not implement (oxc#1022)                          |
+| `react/jsx-uses-vars`               | Will not implement (deprecated with new JSX transform) |
 
 ## React Hooks
 
@@ -134,12 +135,18 @@ All 21 recommended Next.js rules have been migrated. No gaps.
 
 ## Import rules — [oxc#1141](https://github.com/oxc-project/oxc/issues/1141)
 
-**ESLint: 4 active** | **oxlint: 7 rules (3 migrated + 4 new)** | **Handled by oxfmt: 2**
+**ESLint: 4 active** | **oxlint: 8 rules (3 migrated + 5 new)** | **Handled by oxfmt: 2**
 
 | Rule                         | Status           |
 | ---------------------------- | ---------------- |
 | `simple-import-sort/imports` | Handled by oxfmt |
 | `simple-import-sort/exports` | Handled by oxfmt |
+
+## Node plugin — not adopted
+
+oxlint ships a `node` plugin (11 rules), not enabled by any config here. Its rules target the CommonJS era and are irrelevant to a modern ESM/TypeScript stack: `callback-return`, `global-require`, `handle-callback-err`, `no-exports-assign`, `no-mixed-requires`, `no-new-require`, `no-path-concat`, `no-process-env`, `no-process-exit`, `no-sync`, `no-top-level-await`.
+
+`node/no-top-level-await` (added in oxlint 1.75.0) was evaluated and declined: top-level `await` is a legitimate ESM feature and the restriction only matters for libraries still shipping CJS builds.
 
 ## Formatting (handled by oxfmt)
 

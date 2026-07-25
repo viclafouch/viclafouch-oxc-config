@@ -185,6 +185,16 @@ export default {
       { allowErrorBoundary: true, allowJsxUtilityClass: false }
     ],
 
+    // Enforce arrow functions for component definitions
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/function-component-definition
+    'react/function-component-definition': [
+      'error',
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function'
+      }
+    ],
+
     // Prevent setState in componentDidUpdate (infinite re-render risk)
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-did-update-set-state
     'react/no-did-update-set-state': ['error', 'disallow-in-func'],

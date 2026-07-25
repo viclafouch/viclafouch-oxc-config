@@ -1210,7 +1210,7 @@ export default {
       }
     ],
 
-    // Enforce type-only imports — disabled, handled by import/consistent-type-specifier-style (prefer-inline)
+    // Enforce type-only imports — disabled, handled by import/consistent-type-specifier-style
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/consistent-type-imports
     '@typescript-eslint/consistent-type-imports': 'off',
 
@@ -1221,7 +1221,8 @@ export default {
       { fixMixedExportsWithInlineTypeSpecifier: true }
     ],
 
-    // Disabled — conflicts with import/consistent-type-specifier-style: 'prefer-inline'
+    // Disabled — redundant with import/consistent-type-specifier-style, which already
+    // forces type-only imports to the top-level form
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-import-type-side-effects
     '@typescript-eslint/no-import-type-side-effects': 'off',
 

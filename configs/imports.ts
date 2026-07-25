@@ -168,9 +168,12 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-unassigned-import
     'import/no-unassigned-import': 'off',
 
-    // Both inline (import { type T }) and top-level (import type { T }) are valid
+    // Top-level (import type { T }) when only types, inline (import { type T, value }) when mixed
     // https://oxc.rs/docs/guide/usage/linter/rules/import/consistent-type-specifier-style
-    'import/consistent-type-specifier-style': 'off',
+    'import/consistent-type-specifier-style': [
+      'error',
+      'prefer-top-level-if-only-type-imports'
+    ],
 
     // Force files to be unambiguously ESM — TS/bundler handles
     // https://oxc.rs/docs/guide/usage/linter/rules/import/unambiguous

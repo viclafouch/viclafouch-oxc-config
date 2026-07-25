@@ -263,14 +263,42 @@ If your project also runs `tsc`:
 3. `imports`
 4. `vitest` / `playwright` / `testingLibrary` (testing)
 
+## Type-Aware Linting (opt-in)
+
+The `typescript` config already declares ~50 type-aware rules (`no-floating-promises`, `no-misused-promises`, `strict-boolean-expressions`, `no-unnecessary-condition`, …). They stay inert until type-aware linting is turned on.
+
+`typeAware` and `typeCheck` are only supported in a **root** config, so this package cannot set them for you. Enable them in your own `oxlint.config.ts`:
+
+```bash
+npm install -D oxlint-tsgolint@latest typescript@^7
+```
+
+```typescript
+// oxlint.config.ts
+import { defineConfig } from 'oxlint'
+import { typescript, react, hooks, imports } from '@viclafouch/oxc-config'
+
+export default defineConfig({
+  extends: [typescript, react, hooks, imports],
+  options: {
+    typeAware: true,
+    typeCheck: true
+  }
+})
+```
+
+`typeAware` activates the type-aware rules. `typeCheck` additionally reports TypeScript compiler errors, which can replace a separate `tsc --noEmit` step.
+
+Caveats: TypeScript 7 is required, some legacy `tsconfig` options are unsupported (`baseUrl`), monorepos need dependencies installed and `.d.ts` files available beforehand, and overly broad `include` patterns can drive up memory usage on large codebases.
+
 ## Requirements
 
-| Dependency   | Minimum version | Notes                      |
-| ------------ | --------------- | -------------------------- |
-| `oxlint`     | >= 1.74         | Flat config, `extends` API |
-| `oxfmt`      | >= 0.59         | `sortImports` support      |
-| `typescript` | >= 5            |                            |
-| Node.js      | >= 22.18        | For `.config.ts` support   |
+| Dependency   | Minimum version | Notes                       |
+| ------------ | --------------- | --------------------------- |
+| `oxlint`     | >= 1.75         | Flat config, `extends` API  |
+| `oxfmt`      | >= 0.60         | `sortImports` support       |
+| `typescript` | >= 5            | >= 7 for type-aware linting |
+| Node.js      | >= 22.18        | For `.config.ts` support    |
 
 > Ensure your `package.json` has `"type": "module"` to avoid ESM warnings with `.config.ts` files.
 
