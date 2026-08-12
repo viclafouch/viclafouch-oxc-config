@@ -71,8 +71,8 @@ async function runOxlintPrintConfig(name: string): Promise<string> {
     )
     return ''
   } catch (error: unknown) {
-    const err = error as { stdout: string; stderr: string }
-    return err.stdout || err.stderr
+    const execError = error as { stdout: string; stderr: string }
+    return execError.stdout || execError.stderr
   } finally {
     await fs.unlink(tmpPath).catch(() => {})
   }

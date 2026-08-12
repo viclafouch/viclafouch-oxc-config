@@ -8,12 +8,11 @@ Sources: [oxc#481](https://github.com/oxc-project/oxc/issues/481) (meta), [oxc#4
 
 ## Core rules — [oxc#479](https://github.com/oxc-project/oxc/issues/479)
 
-**ESLint: 82 active** | **oxlint: 127 rules (73 migrated + 54 new)** | **Not migrated: 9**
+**ESLint: 82 active** | **oxlint: 129 rules (74 migrated + 55 new)** | **Not migrated: 8**
 
 | Rule                              | Status                                                          |
 | --------------------------------- | --------------------------------------------------------------- |
 | `no-restricted-syntax`            | Partial via `no-restricted-imports` (AST selectors lost)        |
-| `id-denylist`                     | Not started                                                     |
 | `camelcase`                       | Will not implement (use `@typescript-eslint/naming-convention`) |
 | `lines-between-class-members`     | Will not implement (deprecated stylistic)                       |
 | `padding-line-between-statements` | Will not implement (deprecated stylistic)                       |
@@ -144,9 +143,17 @@ All 21 recommended Next.js rules have been migrated. No gaps.
 
 ## Node plugin — not adopted
 
-oxlint ships a `node` plugin (11 rules), not enabled by any config here. Its rules target the CommonJS era and are irrelevant to a modern ESM/TypeScript stack: `callback-return`, `global-require`, `handle-callback-err`, `no-exports-assign`, `no-mixed-requires`, `no-new-require`, `no-path-concat`, `no-process-env`, `no-process-exit`, `no-sync`, `no-top-level-await`.
+oxlint ships a `node` plugin (12 rules), not enabled by any config here. Its rules target the CommonJS era and are irrelevant to a modern ESM/TypeScript stack: `callback-return`, `exports-style`, `global-require`, `handle-callback-err`, `no-exports-assign`, `no-mixed-requires`, `no-new-require`, `no-path-concat`, `no-process-env`, `no-process-exit`, `no-sync`, `no-top-level-await`.
 
 `node/no-top-level-await` (added in oxlint 1.75.0) was evaluated and declined: top-level `await` is a legitimate ESM feature and the restriction only matters for libraries still shipping CJS builds.
+
+`node/exports-style` (added in oxlint 1.76.0) was evaluated and declined: it arbitrates between `module.exports` and `exports`, a CommonJS-only concern.
+
+## JSDoc plugin — not adopted
+
+oxlint ships a `jsdoc` plugin, not enabled by any config here. This package does not make JSDoc a mandatory convention, so enforcing its shape adds noise without value.
+
+`jsdoc/no-blank-blocks` (added in oxlint 1.78.0) was evaluated and declined: an empty JSDoc block is a marginal accident, not worth opening a whole plugin surface for. Revisit as a group if JSDoc ever becomes a documented convention here.
 
 ## Formatting (handled by oxfmt)
 

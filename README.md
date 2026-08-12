@@ -295,8 +295,8 @@ Caveats: TypeScript 7 is required, some legacy `tsconfig` options are unsupporte
 
 | Dependency   | Minimum version | Notes                       |
 | ------------ | --------------- | --------------------------- |
-| `oxlint`     | >= 1.75         | Flat config, `extends` API  |
-| `oxfmt`      | >= 0.60         | `sortImports` support       |
+| `oxlint`     | >= 1.78         | Flat config, `extends` API  |
+| `oxfmt`      | >= 0.63         | `sortImports` support       |
 | `typescript` | >= 5            | >= 7 for type-aware linting |
 | Node.js      | >= 22.18        | For `.config.ts` support    |
 

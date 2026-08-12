@@ -416,6 +416,29 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-var
     'no-var': 'error',
 
+    // Require one declaration per variable, never comma-chained
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/one-var
+    'one-var': ['error', 'never'],
+
+    // Most common naming that is not always understandable
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/id-denylist
+    'id-denylist': [
+      'error',
+      'err',
+      'cb',
+      'arr',
+      'acc',
+      'idx',
+      'ctx',
+      'res',
+      'val',
+      'obj',
+      'el',
+      'elem',
+      'req',
+      'str'
+    ],
+
     // Suggest using const for variables that are never modified after declared
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/prefer-const
     'prefer-const': [
@@ -542,6 +565,10 @@ export default {
     // Detect charAt() compared to multi-char string (always false)
     // https://oxc.rs/docs/guide/usage/linter/rules/oxc/bad-char-at-comparison
     'oxc/bad-char-at-comparison': 'error',
+
+    // Detect matchAll() called without the global flag (throws at runtime)
+    // https://oxc.rs/docs/guide/usage/linter/rules/oxc/bad-match-all-arg
+    'oxc/bad-match-all-arg': 'error',
 
     // Detect operations that always erase the value (x * 0, x & 0, x && false)
     // https://oxc.rs/docs/guide/usage/linter/rules/oxc/erasing-op
