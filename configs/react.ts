@@ -250,9 +250,37 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/react/forward-ref-uses-ref
     'react/forward-ref-uses-ref': 'error',
 
-    // React Compiler lint-only mode — detects Rules of React violations
-    // https://oxc.rs/docs/guide/usage/linter/rules/react/react-compiler
-    'react/react-compiler': ['error', { reportAllBailouts: true }],
+    // react/react-compiler was removed in oxlint 1.79.0 and split into 22
+    // category-specific rules. The 12 correctness ones (purity, refs,
+    // immutability, set-state-in-render, …) are already on via
+    // categories.correctness. Hook-related ones live in hooks.ts.
+    // https://oxc.rs/blog/2026-08-18-react-compiler-support
+
+    // Disallow calling a component as a function instead of rendering it
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/capitalized-calls
+    'react/capitalized-calls': 'error',
+
+    // Report syntax the React Compiler cannot optimize (eval and friends)
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/unsupported-syntax
+    'react/unsupported-syntax': 'error',
+
+    // Report invalid JavaScript seen by the React Compiler
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/syntax
+    'react/syntax': 'error',
+
+    // Reports what the compiler cannot analyze yet — output shifts between
+    // oxlint releases on unchanged code, so it cannot gate CI
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/todo
+    'react/todo': 'off',
+
+    // Reports React Compiler internal bugs, not user code — no fix available
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/invariant
+    'react/invariant': 'off',
+
+    // Flags oxlint-disable of React rules inside components — escape hatches
+    // must stay usable
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/rule-suppression
+    'react/rule-suppression': 'off',
 
     // Only export components — too many false positives with framework conventions (loaders, routes)
     // https://oxc.rs/docs/guide/usage/linter/rules/react/only-export-components

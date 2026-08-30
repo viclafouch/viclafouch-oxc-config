@@ -33,6 +33,7 @@ export const oxfmtConfig = {
   arrowParens: 'always',
   quoteProps: 'as-needed',
   insertFinalNewline: true,
+  experimentalOperatorPosition: 'end',
   sortPackageJson: {
     sortScripts: false
   },

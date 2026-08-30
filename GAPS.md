@@ -100,6 +100,27 @@ All active unicorn rules have been migrated plus 18 new rules added.
 
 **ESLint: 35 active** | **oxlint: 34 rules (25 migrated + 9 new)** | **Not migrated: 10**
 
+oxlint 1.79.0 removed `react/react-compiler` and split it into 22 category-specific rules ([announcement](https://oxc.rs/blog/2026-08-18-react-compiler-support)). The old name is now a hard config parse error, hence the `oxlint >= 1.80` requirement.
+
+The 12 `correctness` rules (`error-boundaries`, `globals`, `immutability`, `incompatible-library`, `preserve-manual-memoization`, `purity`, `refs`, `set-state-in-effect`, `set-state-in-render`, `static-components`, `use-memo`, `void-use-memo`) are active through `categories.correctness` and are not declared individually. None of the 22 accept options.
+
+The 10 remaining rules were interviewed individually:
+
+| Rule                                   | Category    | Severity | Reason                                                            |
+| -------------------------------------- | ----------- | -------- | ----------------------------------------------------------------- |
+| `react/hooks`                          | suspicious  | error    | Supersedes `rules-of-hooks` (`hooks.ts`)                          |
+| `react/exhaustive-effect-dependencies` | suspicious  | error    | Supersedes `exhaustive-deps` for effects (`hooks.ts`)             |
+| `react/memo-dependencies`              | suspicious  | error    | Supersedes `exhaustive-deps` for useMemo/useCallback (`hooks.ts`) |
+| `react/no-deriving-state-in-effects`   | perf        | error    | Derived state in an effect — extra render (`hooks.ts`)            |
+| `react/capitalized-calls`              | suspicious  | error    | `Child()` instead of `<Child />` breaks hook isolation            |
+| `react/unsupported-syntax`             | restriction | error    | Tiny surface (`eval`), preserves old `reportAllBailouts` intent   |
+| `react/syntax`                         | restriction | error    | Invalid JS seen by the compiler                                   |
+| `react/todo`                           | restriction | off      | Output shifts between oxlint releases on unchanged code           |
+| `react/invariant`                      | restriction | off      | Reports compiler bugs, not user code — no fix available           |
+| `react/rule-suppression`               | restriction | off      | Escape hatches inside components must stay usable                 |
+
+`reportAllBailouts: true` has no direct equivalent. Bailout reporting is now spread across the `restriction` rules above.
+
 | Rule                                | Status                                                 |
 | ----------------------------------- | ------------------------------------------------------ |
 | `react/jsx-no-bind`                 | Not started                                            |
@@ -119,6 +140,10 @@ All active unicorn rules have been migrated plus 18 new rules added.
 **ESLint: 2 active** | **Migrated: 2** | **Not migrated: 0**
 
 All 2 active hooks rules have been migrated. No gaps.
+
+Since oxlint 1.79.0 they run on the React Compiler engine: `react/rules-of-hooks` → `react/hooks`, and `react/exhaustive-deps` → `react/exhaustive-effect-dependencies` + `react/memo-dependencies`. The legacy ports stay declared as `'off'` so the swap is documented rather than silent.
+
+One regression: `exhaustive-deps` had an `additionalHooks` option to cover custom hooks. The React Compiler rules take no options, so projects wrapping `useEffect` in their own hooks lose dependency checking there.
 
 ## jsx-a11y rules — [oxc#492](https://github.com/oxc-project/oxc/issues/492)
 
@@ -162,6 +187,17 @@ oxlint ships a `jsdoc` plugin, not enabled by any config here. This package does
 ---
 
 ## Known issues & workarounds
+
+### `vitest/prefer-called-once` vs `vitest/prefer-called-times` — mutually exclusive
+
+The two rules are exact inverses. `prefer-called-once` demands `toHaveBeenCalledOnce()`, `prefer-called-times` demands `toHaveBeenCalledTimes(1)`. With both enabled, every spelling is rejected and `--fix` oscillates between them:
+
+```
+error vitest(prefer-called-once): ... Prefer `toHaveBeenCalledOnce()`.
+error vitest(prefer-called-times): Use `toHaveBeenCalledTimes(1)` instead of `toHaveBeenCalledOnce()`
+```
+
+Both shipped enabled here until this was caught. `prefer-called-once` is now `'off'`; `prefer-called-times` is kept so a single form covers every call count, including 1. Do not re-enable both.
 
 ### `unicorn/prefer-top-level-await` — false positives with Zod `.catch()`
 

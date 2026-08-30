@@ -57,11 +57,12 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-import-in-mock
     'vitest/prefer-import-in-mock': ['error', { fixable: false }],
 
-    // Prefer toHaveBeenCalledOnce() over toHaveBeenCalledTimes(1)
+    // Exact inverse of prefer-called-times — enabling both rejects every
+    // spelling, leaving no valid way to assert a single call
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-called-once
-    'vitest/prefer-called-once': 'error',
+    'vitest/prefer-called-once': 'off',
 
-    // Prefer toHaveBeenCalledTimes(n) over repeated toHaveBeenCalled()
+    // Prefer toHaveBeenCalledTimes(1) over toHaveBeenCalledOnce()
     // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-called-times
     'vitest/prefer-called-times': 'error',
 

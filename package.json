@@ -55,8 +55,8 @@
   },
   "devDependencies": {
     "@types/node": "^26.0.0",
-    "oxfmt": "^0.63.0",
-    "oxlint": "^1.78.0",
+    "oxfmt": "^0.65.0",
+    "oxlint": "^1.80.0",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
     "vitest": "^4.1.9"
@@ -66,8 +66,8 @@
     "eslint-plugin-playwright": ">= 2",
     "eslint-plugin-react-native": ">= 5",
     "eslint-plugin-testing-library": ">= 7",
-    "oxfmt": ">= 0.63",
-    "oxlint": ">= 1.78",
+    "oxfmt": ">= 0.65",
+    "oxlint": ">= 1.80",
     "typescript": ">= 5"
   },
   "peerDependenciesMeta": {

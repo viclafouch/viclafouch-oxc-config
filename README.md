@@ -96,7 +96,7 @@ export default defineConfig({
 | ---------------- | ------------------------------------------------------- |
 | `typescript`     | **Required base.** TypeScript, core, unicorn, oxc rules |
 | `react`          | React rules (JSX, components, patterns)                 |
-| `hooks`          | React Hooks (rules-of-hooks, exhaustive-deps)           |
+| `hooks`          | React Hooks, powered by the React Compiler              |
 | `jsxA11y`        | Web accessibility (jsx-a11y) — for web projects         |
 | `next`           | Next.js specific rules                                  |
 | `reactNative`    | React Native rules (via jsPlugins)                      |
@@ -295,8 +295,8 @@ Caveats: TypeScript 7 is required, some legacy `tsconfig` options are unsupporte
 
 | Dependency   | Minimum version | Notes                       |
 | ------------ | --------------- | --------------------------- |
-| `oxlint`     | >= 1.78         | Flat config, `extends` API  |
-| `oxfmt`      | >= 0.63         | `sortImports` support       |
+| `oxlint`     | >= 1.80         | React Compiler rules        |
+| `oxfmt`      | >= 0.65         | `sortImports` support       |
 | `typescript` | >= 5            | >= 7 for type-aware linting |
 | Node.js      | >= 22.18        | For `.config.ts` support    |
 
