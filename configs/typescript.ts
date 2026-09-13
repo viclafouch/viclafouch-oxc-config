@@ -257,7 +257,10 @@ export default {
 
     // Disallow unmodified conditions of loops
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unmodified-loop-condition
-    'no-unmodified-loop-condition': 'error',
+    'no-unmodified-loop-condition': [
+      'error',
+      { checkConditionalExpressions: true }
+    ],
 
     // Disallow loops that can only ever run one iteration (nursery)
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unreachable-loop

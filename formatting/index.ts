@@ -50,10 +50,9 @@ export const oxfmtConfig = {
         groupName: 'frameworks',
         elementNamePattern: ['next', 'next/**', '@remix**', 'expo', 'expo-**']
       },
-      {
-        groupName: 'builtin',
-        elementNamePattern: ['node:*', 'node:**']
-      },
+      // No custom group for Node builtins: `builtin` is a reserved predefined
+      // name since oxfmt 0.66 and the predefined group already covers both
+      // `node:fs` and bare `fs`.
       // aliases BEFORE unscoped — prevents alias paths from matching [!@]*
       {
         groupName: 'aliases',

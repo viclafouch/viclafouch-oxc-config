@@ -100,7 +100,7 @@ All active unicorn rules have been migrated plus 18 new rules added.
 
 **ESLint: 35 active** | **oxlint: 34 rules (25 migrated + 9 new)** | **Not migrated: 10**
 
-oxlint 1.79.0 removed `react/react-compiler` and split it into 22 category-specific rules ([announcement](https://oxc.rs/blog/2026-08-18-react-compiler-support)). The old name is now a hard config parse error, hence the `oxlint >= 1.80` requirement.
+oxlint 1.79.0 removed `react/react-compiler` and split it into 22 category-specific rules ([announcement](https://oxc.rs/blog/2026-08-18-react-compiler-support)). The old name is now a hard config parse error, which is what first pushed the `oxlint` floor to 1.80. The floor is now 1.82 for the `no-unmodified-loop-condition` `checkConditionalExpressions` option.
 
 The 12 `correctness` rules (`error-boundaries`, `globals`, `immutability`, `incompatible-library`, `preserve-manual-memoization`, `purity`, `refs`, `set-state-in-effect`, `set-state-in-render`, `static-components`, `use-memo`, `void-use-memo`) are active through `categories.correctness` and are not declared individually. None of the 22 accept options.
 
@@ -187,6 +187,19 @@ oxlint ships a `jsdoc` plugin, not enabled by any config here. This package does
 ---
 
 ## Known issues & workarounds
+
+### oxfmt 0.66 — reserved `sortImports` group names
+
+oxfmt 0.66 started validating `sortImports.customGroups` against the predefined group names. A custom group named `builtin` is now a hard config parse error:
+
+```
+Invalid `sortImports` configuration: `customGroups` name `builtin` conflicts with a
+predefined group name; predefined names and `unknown` cannot be used as `groupName`
+```
+
+This is not in the 0.66 changelog. Every version of this package up to `1.0.0-alpha.27` shipped that custom group, so they all fail to load under oxfmt >= 0.66.
+
+The custom group was removed. `'builtin'` in `groups` now resolves to the predefined group, which covers both `node:fs` and bare `fs` — the old pattern only matched the `node:` prefix, so bare builtins used to fall into `unscoped`. Their placement changes, which is a formatting diff on upgrade.
 
 ### `vitest/prefer-called-once` vs `vitest/prefer-called-times` — mutually exclusive
 

@@ -293,12 +293,12 @@ Caveats: TypeScript 7 is required, some legacy `tsconfig` options are unsupporte
 
 ## Requirements
 
-| Dependency   | Minimum version | Notes                       |
-| ------------ | --------------- | --------------------------- |
-| `oxlint`     | >= 1.80         | React Compiler rules        |
-| `oxfmt`      | >= 0.65         | `sortImports` support       |
-| `typescript` | >= 5            | >= 7 for type-aware linting |
-| Node.js      | >= 22.18        | For `.config.ts` support    |
+| Dependency   | Minimum version | Notes                                |
+| ------------ | --------------- | ------------------------------------ |
+| `oxlint`     | >= 1.82         | `checkConditionalExpressions` option |
+| `oxfmt`      | >= 0.67         | `sortImports` support                |
+| `typescript` | >= 5            | >= 7 for type-aware linting          |
+| Node.js      | >= 22.18        | For `.config.ts` support             |
 
 > Ensure your `package.json` has `"type": "module"` to avoid ESM warnings with `.config.ts` files.
 
