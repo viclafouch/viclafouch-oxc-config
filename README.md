@@ -92,19 +92,32 @@ export default defineConfig({
 
 ## Available Configurations
 
-| Config           | Description                                             |
-| ---------------- | ------------------------------------------------------- |
-| `typescript`     | **Required base.** TypeScript, core, unicorn, oxc rules |
-| `react`          | React rules (JSX, components, patterns)                 |
-| `hooks`          | React Hooks, powered by the React Compiler              |
-| `jsxA11y`        | Web accessibility (jsx-a11y) — for web projects         |
-| `next`           | Next.js specific rules                                  |
-| `reactNative`    | React Native rules (via jsPlugins)                      |
-| `imports`        | Import rules (no-cycle, no-duplicates, etc.)            |
-| `tanstackQuery`  | TanStack Query rules (via jsPlugins)                    |
-| `playwright`     | Playwright e2e testing (via jsPlugins)                  |
-| `testingLibrary` | Testing Library rules (via jsPlugins)                   |
-| `vitest`         | Vitest testing rules (native plugin)                    |
+| Config           | Description                                                                             |
+| ---------------- | --------------------------------------------------------------------------------------- |
+| `typescript`     | **Required base.** TypeScript, core, unicorn, oxc, node, promise and `viclafouch` rules |
+| `react`          | React rules (JSX, components, patterns), `viclafouch` rules and React Doctor            |
+| `hooks`          | React Hooks, powered by the React Compiler                                              |
+| `jsxA11y`        | Web accessibility (jsx-a11y) — for web projects                                         |
+| `next`           | Next.js specific rules, and React Doctor rules for the App Router                       |
+| `reactNative`    | React Native rules (via jsPlugins)                                                      |
+| `imports`        | Import rules (no-cycle, no-duplicates, etc.)                                            |
+| `tanstackQuery`  | TanStack Query rules (via jsPlugins)                                                    |
+| `turbo`          | Turborepo env-var validation (via jsPlugins)                                            |
+| `vitest`         | Vitest rules on the test files (native plugin)                                          |
+| `testingLibrary` | Testing Library rules (via jsPlugins)                                                   |
+| `playwright`     | Playwright e2e testing (via jsPlugins)                                                  |
+| `TEST_FILES`     | The globs of the test files that `vitest` covers                                        |
+| `OxlintConfig`   | The type of an oxlint config, from `oxlint`                                             |
+
+### `@viclafouch/oxc-config/plugins/viclafouch`
+
+The jsPlugin that the `typescript` and `react` configs load. It ships with this package, so you install nothing more. Read [its README](plugins/viclafouch/README.md).
+
+### React Doctor
+
+The `react` and `next` configs load [`oxlint-plugin-react-doctor`](https://www.react.doctor), a dependency of this package. It catches the Effects that the React Compiler rules do not see (data passed to a parent, Effect chains, state adjusted on a prop change), the secrets that ship to the browser, and the Next.js routes that break (`useSearchParams` without Suspense, `redirect()` in a `try`).
+
+React Doctor skips a file under a `scripts`, `tools`, `tooling`, `cli` or `bin` folder: set `settings['react-doctor'].rootDirectory` to change it.
 
 ## Playwright E2E Testing
 
@@ -128,27 +141,29 @@ export default defineConfig({
 
 ## Vitest
 
-Add `vitest` and configure `consistent-test-filename` with a regex that matches your project convention:
+`vitest` turns its rules on in the test files only (`TEST_FILES`): `*.test.ts`, `*.spec.ts`, `*.test-d.ts`, `*.fixture.ts` and the files under `tests/`, `__tests__/` and `__mocks__/`. To configure a vitest rule, reuse `TEST_FILES` in your own override, for example `consistent-test-filename` with a regex that matches your project convention:
 
 ```typescript
 import { defineConfig } from 'oxlint'
-import { typescript, imports, vitest } from '@viclafouch/oxc-config'
+import { typescript, imports, vitest, TEST_FILES } from '@viclafouch/oxc-config'
 
 export default defineConfig({
   extends: [typescript, imports, vitest],
-  rules: {
-    'vitest/consistent-test-filename': [
-      'error',
-      {
-        // *.test.ts(x) only
-        pattern: '.*\\.test\\.tsx?$'
-        // *.spec.ts(x) only
-        // pattern: '.*\\.spec\\.tsx?$'
-        // Both *.test.ts(x) and *.spec.ts(x)
-        // pattern: '.*\\.(test|spec)\\.tsx?$'
+  overrides: [
+    {
+      files: TEST_FILES,
+      rules: {
+        'vitest/consistent-test-filename': [
+          'error',
+          {
+            // *.test.ts(x) only
+            pattern: '.*\\.test\\.tsx?$',
+            allTestPattern: '.*\\.(test|spec)\\.tsx?$'
+          }
+        ]
       }
-    ]
-  }
+    }
+  ]
 })
 ```
 
@@ -261,11 +276,14 @@ If your project also runs `tsc`:
 1. `typescript` (always first — base rules)
 2. `react` / `hooks` / `jsxA11y` / `next` / `reactNative` / `tanstackQuery`
 3. `imports`
-4. `vitest` / `playwright` / `testingLibrary` (testing)
+4. `turbo`
+5. `vitest` / `playwright` / `testingLibrary` (testing)
+
+Only `typescript` declares `categories`. `extends` merges them left to right, so a later preset that set one would win on every file.
 
 ## Type-Aware Linting (opt-in)
 
-The `typescript` config already declares ~50 type-aware rules (`no-floating-promises`, `no-misused-promises`, `strict-boolean-expressions`, `no-unnecessary-condition`, …). They stay inert until type-aware linting is turned on.
+The `typescript` config already declares ~60 type-aware rules (`no-floating-promises`, `no-misused-promises`, `strict-boolean-expressions`, `no-unnecessary-condition`, …). They stay inert until type-aware linting is turned on.
 
 `typeAware` and `typeCheck` are only supported in a **root** config, so this package cannot set them for you. Enable them in your own `oxlint.config.ts`:
 
@@ -293,12 +311,12 @@ Caveats: TypeScript 7 is required, some legacy `tsconfig` options are unsupporte
 
 ## Requirements
 
-| Dependency   | Minimum version | Notes                                |
-| ------------ | --------------- | ------------------------------------ |
-| `oxlint`     | >= 1.82         | `checkConditionalExpressions` option |
-| `oxfmt`      | >= 0.67         | `sortImports` support                |
-| `typescript` | >= 5            | >= 7 for type-aware linting          |
-| Node.js      | >= 22.18        | For `.config.ts` support             |
+| Dependency   | Minimum version | Notes                       |
+| ------------ | --------------- | --------------------------- |
+| `oxlint`     | >= 1.88         | `allowWithVariables` option |
+| `oxfmt`      | >= 0.73         | `sortImports` support       |
+| `typescript` | >= 5            | >= 7 for type-aware linting |
+| Node.js      | >= 22.18        | For `.config.ts` support    |
 
 > Ensure your `package.json` has `"type": "module"` to avoid ESM warnings with `.config.ts` files.
 
@@ -308,13 +326,25 @@ See [GAPS.md](./GAPS.md) for rules not available in oxlint.
 
 ## jsPlugins
 
-Four configs use external plugins (install only the ones you need):
+Five configs use external plugins (install only the ones you need):
 
 ```bash
-npm install -D @tanstack/eslint-plugin-query    # for tanstackQuery
-npm install -D eslint-plugin-react-native       # for reactNative
-npm install -D eslint-plugin-playwright         # for playwright
-npm install -D eslint-plugin-testing-library    # for testingLibrary
+npm install -D @tanstack/eslint-plugin-query                 # for tanstackQuery
+npm install -D eslint-plugin-react-native                    # for reactNative
+npm install -D eslint-plugin-turbo                           # for turbo
+npm install -D eslint-plugin-playwright                      # for playwright
+npm install -D eslint-plugin-testing-library                 # for testingLibrary
 ```
 
 These are listed as optional `peerDependencies`.
+
+## Breaking changes
+
+### 1.0.0
+
+- Requires `oxlint >= 1.88` and `oxfmt >= 0.73`. The package now builds with tsdown and ships `.mjs` files through `exports` only.
+- `vitest` turns its rules on in `TEST_FILES` only, and no preset but `typescript` declares `categories` anymore.
+- `typescript` turns on the `node` and `promise` plugins, the `viclafouch` plugin (`no-chained-type-assertions`, `no-unknown-returns`, `no-known-value-widening`) and ~70 more rules. `no-console` is now `error` and allows `console.warn` and `console.error`.
+- `react` turns on `jsx-key`, `no-unescaped-entities`, `only-export-components`, the React Compiler rules, the `viclafouch` plugin (`no-leaked-render`, `no-context-provider`, `no-forward-ref`, `component-props-name`), React Doctor, and bans `FC`.
+- `imports` turns on `no-unassigned-import` (style sheets and `server-only` stay allowed) and `no-named-default`, prefers inline type specifiers in `no-duplicates`, and puts absolute imports first in `first`.
+- `next` turns off `import/no-default-export` in the route folders (`app/`, `pages/`).

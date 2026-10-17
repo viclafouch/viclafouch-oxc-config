@@ -1,19 +1,21 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2023",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "strict": true,
-    "esModuleInterop": true,
+    "noUncheckedIndexedAccess": true,
     "skipLibCheck": true,
     "declaration": true,
     "outDir": "dist",
-    "types": ["node", "vitest/globals"]
+    "types": ["vitest/globals", "node"],
+    "rewriteRelativeImportExtensions": true
   },
   "include": [
     "index.ts",
     "configs/**/*.ts",
     "formatting/**/*.ts",
+    "plugins/**/*.ts",
     "tests/**/*.ts"
   ]
 }

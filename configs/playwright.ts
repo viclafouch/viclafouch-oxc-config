@@ -28,7 +28,7 @@ export default {
 
     // Enforce a maximum depth to nested describe calls
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/max-nested-describe.md
-    'playwright/max-nested-describe': ['error', { max: 5 }],
+    'playwright/max-nested-describe': ['error', { max: 3 }],
 
     // Enforce Playwright APIs to be awaited
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/missing-playwright-await.md
@@ -36,7 +36,7 @@ export default {
       'error',
       {
         customMatchers: [],
-        includePageLocatorMethods: false
+        includePageLocatorMethods: true
       }
     ],
 
@@ -90,7 +90,7 @@ export default {
       'error',
       {
         allowConditional: false,
-        disallowFixme: false
+        disallowFixme: true
       }
     ],
 
@@ -260,19 +260,36 @@ export default {
     ],
 
     // Disallow using getByTitle()
+    // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-get-by-title.md
     'playwright/no-get-by-title': 'off',
 
     // Disallow setup and teardown hooks
+    // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-hooks.md
     'playwright/no-hooks': ['off', { allow: [] }],
 
     // Require assertions to use expect.soft()
+    // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/require-soft-assertions.md
     'playwright/require-soft-assertions': 'off',
 
     // Require test blocks to have tags
+    // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/require-tags.md
     'playwright/require-tags': 'off',
 
     // Require a timeout option for toPass()
-    'playwright/require-to-pass-timeout': 'off'
+    // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/require-to-pass-timeout.md
+    'playwright/require-to-pass-timeout': 'error',
+
+    // Disallow specific locator methods
+    // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-restricted-locators.md
+    'playwright/no-restricted-locators': 'off',
+
+    // Disallow specific matchers & modifiers
+    // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-restricted-matchers.md
+    'playwright/no-restricted-matchers': ['error', {}],
+
+    // Disallow specific roles in getByRole()
+    // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-restricted-roles.md
+    'playwright/no-restricted-roles': 'off'
   },
   overrides: [
     {

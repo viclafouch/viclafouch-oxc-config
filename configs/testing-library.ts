@@ -68,18 +68,11 @@ export default {
 
     // Disallow the use of render in testing frameworks setup functions
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-render-in-lifecycle.md
-    'testing-library/no-render-in-lifecycle': [
-      'error',
-      { allowTestingFrameworkSetupHook: '' }
-    ],
+    'testing-library/no-render-in-lifecycle': 'error',
 
     // Disallow unnecessary act wrapping of Testing Library calls
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-unnecessary-act.md
     'testing-library/no-unnecessary-act': ['error', { isStrict: true }],
-
-    // Disallow empty callbacks for waitFor and waitForElementToBeRemoved
-    // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-wait-for-empty-callback.md
-    'testing-library/no-wait-for-empty-callback': 'error',
 
     // Disallow the use of multiple expect calls inside waitFor
     // https://github.com/testing-library/eslint-plugin-testing-library/blob/main/docs/rules/no-wait-for-multiple-assertions.md

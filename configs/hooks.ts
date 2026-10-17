@@ -15,9 +15,6 @@ import type { OxlintConfig } from 'oxlint'
  */
 export default {
   plugins: ['react'],
-  categories: {
-    correctness: 'error'
-  },
   rules: {
     // Enforce rules of hooks — unconditional calls, stable order, top level
     // https://oxc.rs/docs/guide/usage/linter/rules/react/hooks

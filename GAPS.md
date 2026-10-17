@@ -23,7 +23,7 @@ Sources: [oxc#481](https://github.com/oxc-project/oxc/issues/481) (meta), [oxc#4
 
 ## TypeScript rules — [oxc#1117](https://github.com/oxc-project/oxc/issues/1117)
 
-**ESLint: 22 active** | **Migrated: 8** | **Type-aware: 50 available (opt-in)** | **Not migrated: 1**
+**ESLint: 22 active** | **Migrated: 8** | **Type-aware: 58 declared (opt-in)** | **Not migrated: 1**
 
 | Rule                                   | Status                                           |
 | -------------------------------------- | ------------------------------------------------ |
@@ -31,64 +31,68 @@ Sources: [oxc#481](https://github.com/oxc-project/oxc/issues/481) (meta), [oxc#4
 
 Type-aware linting is **stable** since oxlint 1.75.0 / tsgolint v7 ([announcement](https://oxc.rs/blog/2026-07-22-type-aware-linting-stable)) — 59 of 61 typescript-eslint type-aware rules are implemented.
 
-The 50 rules below are already declared in `typescript.ts` and stay inert while `typeAware` is false. `typeAware` and `typeCheck` are root-config-only fields, so this package cannot enable them; consumers opt in from their own `oxlint.config.ts` (see README). Requires TypeScript 7 and `oxlint-tsgolint`.
+The 58 rules below are already declared in `typescript.ts` and stay inert while `typeAware` is false. `typeAware` and `typeCheck` are root-config-only fields, so this package cannot enable them; consumers opt in from their own `oxlint.config.ts` (see README). Requires TypeScript 7 and `oxlint-tsgolint`.
 
-| Rule                                     | Severity | Options                                                                                                          |
-| ---------------------------------------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
-| `consistent-return`                      | error    | `{ treatUndefinedAsUnspecified: true }`                                                                          |
-| `dot-notation`                           | error    | `{ allowKeywords: true }`                                                                                        |
-| `return-await`                           | error    | `'in-try-catch'`                                                                                                 |
-| `no-floating-promises`                   | error    | `{ ignoreVoid: true }`                                                                                           |
-| `no-array-delete`                        | error    | -                                                                                                                |
-| `prefer-find`                            | error    | -                                                                                                                |
-| `prefer-string-starts-ends-with`         | error    | -                                                                                                                |
-| `prefer-reduce-type-parameter`           | error    | -                                                                                                                |
-| `no-duplicate-type-constituents`         | error    | -                                                                                                                |
-| `no-deprecated`                          | error    | -                                                                                                                |
-| `no-misused-spread`                      | error    | -                                                                                                                |
-| `no-useless-default-assignment`          | error    | -                                                                                                                |
-| `no-unnecessary-type-conversion`         | error    | -                                                                                                                |
-| `no-unnecessary-type-parameters`         | error    | -                                                                                                                |
-| `no-unnecessary-qualifier`               | error    | -                                                                                                                |
-| `prefer-readonly-parameter-types`        | error    | `{ allow: [], checkParameterProperties: true, ignoreInferredTypes: false, treatMethodsAsReadonly: false }`       |
-| `prefer-optional-chain`                  | error    | `{ checkAny: true, ... requireNullish: false }`                                                                  |
-| `no-unsafe-type-assertion`               | error    | -                                                                                                                |
-| `no-unnecessary-template-expression`     | error    | -                                                                                                                |
-| `related-getter-setter-pairs`            | error    | -                                                                                                                |
-| `await-thenable`                         | error    | -                                                                                                                |
-| `no-base-to-string`                      | error    | `{ checkUnknown: false, ignoredTypeNames: ['Error', 'RegExp', 'URL', 'URLSearchParams'] }`                       |
-| `no-confusing-void-expression`           | error    | `{ ignoreArrowShorthand: true }`                                                                                 |
-| `no-for-in-array`                        | error    | -                                                                                                                |
-| `no-meaningless-void-operator`           | error    | `{ checkNever: false }`                                                                                          |
-| `no-misused-promises`                    | error    | `{ checksConditionals: true, checksSpreads: true, checksVoidReturn: { ... all true } }`                          |
-| `no-mixed-enums`                         | error    | -                                                                                                                |
-| `no-redundant-type-constituents`         | error    | -                                                                                                                |
-| `no-unnecessary-boolean-literal-compare` | error    | `{ allowComparingNullableBooleansToTrue: false, allowComparingNullableBooleansToFalse: false }`                  |
-| `no-unnecessary-condition`               | error    | `{ allowConstantLoopConditions: false, checkTypePredicates: true }`                                              |
-| `no-unnecessary-type-arguments`          | error    | -                                                                                                                |
-| `no-unnecessary-type-assertion`          | error    | `{ checkLiteralConstAssertions: false, typesToIgnore: [] }`                                                      |
-| `no-unsafe-argument`                     | error    | -                                                                                                                |
-| `no-unsafe-assignment`                   | error    | -                                                                                                                |
-| `no-unsafe-call`                         | error    | -                                                                                                                |
-| `no-unsafe-enum-comparison`              | error    | -                                                                                                                |
-| `no-unsafe-member-access`                | error    | `{ allowOptionalChaining: false }`                                                                               |
-| `no-unsafe-return`                       | error    | -                                                                                                                |
-| `no-unsafe-unary-minus`                  | error    | -                                                                                                                |
-| `only-throw-error`                       | error    | `{ allowThrowingAny: false, allowThrowingUnknown: false }`                                                       |
-| `prefer-nullish-coalescing`              | error    | `{ ignoreConditionalTests: true }`                                                                               |
-| `prefer-return-this-type`                | error    | -                                                                                                                |
-| `require-array-sort-compare`             | error    | `{ ignoreStringArrays: false }`                                                                                  |
-| `restrict-plus-operands`                 | error    | `{ allowAny: false, allowBoolean: false, allowNullish: false, allowNumberAndString: false, allowRegExp: false }` |
-| `restrict-template-expressions`          | error    | `{ allowAny: false, allowBoolean: false, allowNullish: false, allowNumber: true, allowRegExp: false }`           |
-| `strict-boolean-expressions`             | error    | `{ allowNullableObject: true, allowNumber: false, allowString: false }`                                          |
-| `switch-exhaustiveness-check`            | error    | `{ requireDefaultForNonUnion: true }`                                                                            |
-| `unbound-method`                         | error    | `{ ignoreStatic: false }`                                                                                        |
-| `use-unknown-in-catch-callback-variable` | error    | -                                                                                                                |
-| `strict-void-return`                     | off      | -                                                                                                                |
-| `require-await`                          | off      | -                                                                                                                |
-| `non-nullable-type-assertion-style`      | off      | Conflicts with no-non-null-assertion                                                                             |
-| `promise-function-async`                 | off      | Legitimate non-async Promise returns                                                                             |
-| `naming-convention`                      | -        | Not implemented in tsgolint                                                                                      |
+| Rule                                     | Severity | Options                                                                                                                                                                                                                                   |
+| ---------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `consistent-return`                      | off      | `{ treatUndefinedAsUnspecified: true }`                                                                                                                                                                                                   |
+| `dot-notation`                           | error    | `{ allowKeywords: true }`                                                                                                                                                                                                                 |
+| `return-await`                           | error    | `'in-try-catch'`                                                                                                                                                                                                                          |
+| `no-floating-promises`                   | error    | `{ ignoreVoid: true }`                                                                                                                                                                                                                    |
+| `no-misused-promises`                    | error    | `{ checksConditionals: true, checksSpreads: true, checksVoidReturn: {arguments: true, attributes: true, inheritedMethods: true, properties: true, returns: true, variables: true} }`                                                      |
+| `use-unknown-in-catch-callback-variable` | error    |                                                                                                                                                                                                                                           |
+| `prefer-promise-reject-errors`           | error    | `{ allowEmptyReject: true }`                                                                                                                                                                                                              |
+| `only-throw-error`                       | error    | `{ allow: [], allowRethrowing: true, allowThrowingAny: false, allowThrowingUnknown: false }`                                                                                                                                              |
+| `no-array-delete`                        | error    |                                                                                                                                                                                                                                           |
+| `prefer-find`                            | error    |                                                                                                                                                                                                                                           |
+| `prefer-string-starts-ends-with`         | error    |                                                                                                                                                                                                                                           |
+| `prefer-includes`                        | error    |                                                                                                                                                                                                                                           |
+| `prefer-reduce-type-parameter`           | error    |                                                                                                                                                                                                                                           |
+| `prefer-nullish-coalescing`              | error    | `{ ignoreBooleanCoercion: false, ignoreConditionalTests: true, ignoreIfStatements: false, ignoreMixedLogicalExpressions: false, ignorePrimitives: {bigint: true, boolean: true, number: true, string: true}, ignoreTernaryTests: false }` |
+| `no-duplicate-type-constituents`         | error    |                                                                                                                                                                                                                                           |
+| `no-deprecated`                          | error    |                                                                                                                                                                                                                                           |
+| `no-misused-spread`                      | error    |                                                                                                                                                                                                                                           |
+| `no-unsafe-argument`                     | error    |                                                                                                                                                                                                                                           |
+| `no-unsafe-assignment`                   | error    |                                                                                                                                                                                                                                           |
+| `no-unsafe-call`                         | error    |                                                                                                                                                                                                                                           |
+| `no-unsafe-member-access`                | error    | `{ allowOptionalChaining: false }`                                                                                                                                                                                                        |
+| `no-unsafe-return`                       | error    |                                                                                                                                                                                                                                           |
+| `no-unsafe-enum-comparison`              | error    |                                                                                                                                                                                                                                           |
+| `no-unsafe-type-assertion`               | error    |                                                                                                                                                                                                                                           |
+| `no-useless-default-assignment`          | error    |                                                                                                                                                                                                                                           |
+| `no-unnecessary-type-conversion`         | error    |                                                                                                                                                                                                                                           |
+| `no-unnecessary-type-assertion`          | error    | `{ checkLiteralConstAssertions: false, typesToIgnore: [] }`                                                                                                                                                                               |
+| `no-unnecessary-type-arguments`          | error    |                                                                                                                                                                                                                                           |
+| `no-unnecessary-boolean-literal-compare` | error    | `{ allowComparingNullableBooleansToTrue: true, allowComparingNullableBooleansToFalse: true }`                                                                                                                                             |
+| `no-unnecessary-template-expression`     | error    |                                                                                                                                                                                                                                           |
+| `no-unnecessary-type-parameters`         | error    |                                                                                                                                                                                                                                           |
+| `no-unnecessary-qualifier`               | error    |                                                                                                                                                                                                                                           |
+| `prefer-optional-chain`                  | error    | `{ checkAny: true, checkBigInt: true, checkBoolean: true, checkNumber: true, checkString: true, checkUnknown: true, requireNullish: false, allowPotentiallyUnsafeFixesThatModifyTheReturnTypeIKnowWhatImDoing: false }`                   |
+| `related-getter-setter-pairs`            | error    |                                                                                                                                                                                                                                           |
+| `await-thenable`                         | error    |                                                                                                                                                                                                                                           |
+| `no-base-to-string`                      | error    | `{ checkUnknown: false, ignoredTypeNames: ['Error', 'RegExp', 'URL', 'URLSearchParams'] }`                                                                                                                                                |
+| `no-confusing-void-expression`           | error    | `{ ignoreArrowShorthand: true, ignoreVoidOperator: false, ignoreVoidReturningFunctions: false }`                                                                                                                                          |
+| `no-for-in-array`                        | error    |                                                                                                                                                                                                                                           |
+| `no-meaningless-void-operator`           | error    | `{ checkNever: false }`                                                                                                                                                                                                                   |
+| `no-mixed-enums`                         | error    |                                                                                                                                                                                                                                           |
+| `no-redundant-type-constituents`         | error    |                                                                                                                                                                                                                                           |
+| `no-unnecessary-condition`               | error    | `{ allowConstantLoopConditions: false, checkTypePredicates: true }`                                                                                                                                                                       |
+| `no-unsafe-unary-minus`                  | error    |                                                                                                                                                                                                                                           |
+| `non-nullable-type-assertion-style`      | off      |                                                                                                                                                                                                                                           |
+| `prefer-return-this-type`                | error    |                                                                                                                                                                                                                                           |
+| `promise-function-async`                 | off      |                                                                                                                                                                                                                                           |
+| `require-array-sort-compare`             | error    | `{ ignoreStringArrays: false }`                                                                                                                                                                                                           |
+| `restrict-plus-operands`                 | error    | `{ allowAny: false, allowBoolean: false, allowNullish: false, allowNumberAndString: false, allowRegExp: false, skipCompoundAssignments: false }`                                                                                          |
+| `restrict-template-expressions`          | error    | `{ allowAny: false, allowArray: false, allowBoolean: false, allowNever: false, allowNullish: false, allowNumber: true, allowRegExp: false }`                                                                                              |
+| `strict-boolean-expressions`             | error    | `{ allowAny: false, allowNullableBoolean: false, allowNullableEnum: false, allowNullableNumber: false, allowNullableObject: true, allowNullableString: false, allowNumber: false, allowString: false }`                                   |
+| `unbound-method`                         | error    | `{ ignoreStatic: false }`                                                                                                                                                                                                                 |
+| `no-generated-empty-object-type`         | error    |                                                                                                                                                                                                                                           |
+| `switch-exhaustiveness-check`            | error    | `{ allowDefaultCaseForExhaustiveSwitch: true, considerDefaultExhaustiveForUnions: false, defaultCaseCommentPattern: 'no default', requireDefaultForNonUnion: true }`                                                                      |
+| `prefer-readonly-parameter-types`        | off      |                                                                                                                                                                                                                                           |
+| `strict-void-return`                     | error    |                                                                                                                                                                                                                                           |
+| `require-await`                          | off      |                                                                                                                                                                                                                                           |
+| `ban-types`                              | off      |                                                                                                                                                                                                                                           |
+| `no-empty-interface`                     | off      |                                                                                                                                                                                                                                           |
 
 ## Unicorn rules — [oxc#493](https://github.com/oxc-project/oxc/issues/493)
 
@@ -166,13 +170,17 @@ All 21 recommended Next.js rules have been migrated. No gaps.
 | `simple-import-sort/imports` | Handled by oxfmt |
 | `simple-import-sort/exports` | Handled by oxfmt |
 
-## Node plugin — not adopted
+## Node plugin — adopted
 
-oxlint ships a `node` plugin (12 rules), not enabled by any config here. Its rules target the CommonJS era and are irrelevant to a modern ESM/TypeScript stack: `callback-return`, `exports-style`, `global-require`, `handle-callback-err`, `no-exports-assign`, `no-mixed-requires`, `no-new-require`, `no-path-concat`, `no-process-env`, `no-process-exit`, `no-sync`, `no-top-level-await`.
+The `typescript` config turns on the `node` plugin. `global-require`, `handle-callback-err`, `no-exports-assign`, `no-new-require`, `no-path-concat`, `no-process-env` and `exports-style` (`module.exports` in the remaining `.cjs` files) are `error`.
 
-`node/no-top-level-await` (added in oxlint 1.75.0) was evaluated and declined: top-level `await` is a legitimate ESM feature and the restriction only matters for libraries still shipping CJS builds.
+Declined, written `'off'` with their reason: `no-sync` (intentional sync calls in scripts), `no-mixed-requires` and `callback-return` (CommonJS and callback era), `no-top-level-await` (a legitimate ESM feature, the restriction only matters for CJS builds).
 
-`node/exports-style` (added in oxlint 1.76.0) was evaluated and declined: it arbitrates between `module.exports` and `exports`, a CommonJS-only concern.
+`node/no-process-env` is `error`: read the environment in one module (such as a validated `env.ts`) and turn the rule off there with an override.
+
+## Promise plugin — adopted
+
+The `typescript` config turns on the `promise` plugin. `promise/prefer-await-to-then` stays off in `TEST_FILES`, where a `.then()` chain checks a promise on purpose. `no-promise-in-callback` (flags each TanStack Query `onError`) and `avoid-new` (`new Promise()` bridges a callback API) are `'off'`.
 
 ## JSDoc plugin — not adopted
 

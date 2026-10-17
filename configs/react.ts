@@ -1,5 +1,15 @@
 import type { OxlintConfig } from 'oxlint'
 
+const FUNCTION_COMPONENT_MESSAGE =
+  'Type the props parameter instead: `({ label }: ButtonProps) =>`. `FC` adds nothing, see https://github.com/facebook/create-react-app/pull/8177'
+
+export const restrictedComponentTypes = {
+  FC: { message: FUNCTION_COMPONENT_MESSAGE },
+  'React.FC': { message: FUNCTION_COMPONENT_MESSAGE },
+  FunctionComponent: { message: FUNCTION_COMPONENT_MESSAGE },
+  'React.FunctionComponent': { message: FUNCTION_COMPONENT_MESSAGE }
+}
+
 /**
  * React rules for JSX, components, and patterns.
  * Formatting rules (jsx-indent, jsx-spacing, etc.) are handled by oxfmt.
@@ -11,6 +21,17 @@ import type { OxlintConfig } from 'oxlint'
  */
 export default {
   plugins: ['react'],
+  jsPlugins: [
+    {
+      name: 'viclafouch',
+      specifier: '@viclafouch/oxc-config/plugins/viclafouch'
+    },
+    // React Doctor skips a file under a scripts, tools, tooling, cli or bin folder: set settings['react-doctor'].rootDirectory
+    {
+      name: 'react-doctor',
+      specifier: import.meta.resolve('oxlint-plugin-react-doctor')
+    }
+  ],
   settings: {
     react: {
       componentWrapperFunctions: [],
@@ -30,10 +51,10 @@ export default {
       }
     ],
 
-    // Validate JSX has key prop when in array or iterator (disabled - too many false positives)
+    // Validate JSX has key prop when in array or iterator
     // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-key
     'react/jsx-key': [
-      'off',
+      'error',
       {
         checkFragmentShorthand: true,
         checkKeyMustBeforeSpread: true,
@@ -101,9 +122,9 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/react/style-prop-object
     'react/style-prop-object': ['error', { allow: [] }],
 
-    // Prevent invalid characters from appearing in markup (disabled)
+    // Prevent invalid characters from appearing in markup
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-unescaped-entities
-    'react/no-unescaped-entities': 'off',
+    'react/no-unescaped-entities': 'error',
 
     // Prevent passing of children as props
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-children-prop
@@ -185,7 +206,7 @@ export default {
       { allowErrorBoundary: true, allowJsxUtilityClass: false }
     ],
 
-    // Enforce arrow functions for component definitions
+    // Enforce arrow functions for components — matches the dominant convention
     // https://oxc.rs/docs/guide/usage/linter/rules/react/function-component-definition
     'react/function-component-definition': [
       'error',
@@ -250,45 +271,31 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/react/forward-ref-uses-ref
     'react/forward-ref-uses-ref': 'error',
 
-    // react/react-compiler was removed in oxlint 1.79.0 and split into 22
-    // category-specific rules. The 12 correctness ones (purity, refs,
-    // immutability, set-state-in-render, …) are already on via
-    // categories.correctness. Hook-related ones live in hooks.ts.
-    // https://oxc.rs/blog/2026-08-18-react-compiler-support
-
-    // Disallow calling a component as a function instead of rendering it
-    // https://oxc.rs/docs/guide/usage/linter/rules/react/capitalized-calls
-    'react/capitalized-calls': 'error',
-
-    // Report syntax the React Compiler cannot optimize (eval and friends)
-    // https://oxc.rs/docs/guide/usage/linter/rules/react/unsupported-syntax
-    'react/unsupported-syntax': 'error',
-
-    // Report invalid JavaScript seen by the React Compiler
-    // https://oxc.rs/docs/guide/usage/linter/rules/react/syntax
-    'react/syntax': 'error',
-
-    // Reports what the compiler cannot analyze yet — output shifts between
-    // oxlint releases on unchanged code, so it cannot gate CI
-    // https://oxc.rs/docs/guide/usage/linter/rules/react/todo
-    'react/todo': 'off',
-
-    // Reports React Compiler internal bugs, not user code — no fix available
-    // https://oxc.rs/docs/guide/usage/linter/rules/react/invariant
-    'react/invariant': 'off',
-
-    // Flags oxlint-disable of React rules inside components — escape hatches
-    // must stay usable
-    // https://oxc.rs/docs/guide/usage/linter/rules/react/rule-suppression
-    'react/rule-suppression': 'off',
-
-    // Only export components — too many false positives with framework conventions (loaders, routes)
+    // Only export components, to keep Fast Refresh (HMR). An object of components such as `{ Root, Item }` counts as one
+    // allowExportNames: the route exports of Next.js, React Router and TanStack Router (`Route`)
     // https://oxc.rs/docs/guide/usage/linter/rules/react/only-export-components
     'react/only-export-components': [
-      'off',
+      'error',
       {
-        allowConstantExport: true,
-        allowExportNames: [],
+        allowCompoundComponents: true,
+        allowConstantExport: false,
+        allowExportNames: [
+          'metadata',
+          'generateMetadata',
+          'generateStaticParams',
+          'loader',
+          'action',
+          'revalidate',
+          'dynamic',
+          'dynamicParams',
+          'fetchCache',
+          'runtime',
+          'preferredRegion',
+          'maxDuration',
+          'generateViewport',
+          'viewport',
+          'Route'
+        ],
         checkJS: false,
         customHOCs: []
       }
@@ -312,18 +319,9 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-multi-comp
     'react/no-multi-comp': ['off', { ignoreStateless: false }],
 
-    // Enforce on*/handle* naming for event handler props
+    // Too many false positives with hook accessors (field.onChange, form.handleSubmit) and third-party component APIs
     // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-handler-names
-    'react/jsx-handler-names': [
-      'error',
-      {
-        checkInlineFunction: false,
-        checkLocalVariables: false,
-        eventHandlerPrefix: 'handle',
-        eventHandlerPropPrefix: 'on',
-        ignoreComponentNames: []
-      }
-    ],
+    'react/jsx-handler-names': 'off',
 
     // Disallow JSX prop spreading — too restrictive for wrappers/design systems
     // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-props-no-spreading
@@ -357,6 +355,10 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/react/prefer-es6-class
     'react/prefer-es6-class': ['off', 'always'],
 
+    // react/prefer-function-component allows an error boundary alone, which never needs shouldComponentUpdate
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/no-redundant-should-component-update
+    'react/no-redundant-should-component-update': 'off',
+
     // Enforce state initialization location — stylistic, class components only
     // https://oxc.rs/docs/guide/usage/linter/rules/react/state-in-constructor
     'react/state-in-constructor': ['off', 'always'],
@@ -364,20 +366,6 @@ export default {
     // Forbid specific props on custom components — too project-specific
     // https://oxc.rs/docs/guide/usage/linter/rules/react/forbid-component-props
     'react/forbid-component-props': ['off', { forbid: [] }],
-
-    // Disallow string literals in JSX — only for i18n-mandatory projects
-    // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-no-literals
-    'react/jsx-no-literals': [
-      'off',
-      {
-        allowedStrings: [],
-        elementOverrides: {},
-        ignoreProps: false,
-        noAttributeStrings: false,
-        noStrings: false,
-        restrictedAttributes: []
-      }
-    ],
 
     // Disallow destructured imports from React and ReactDOM
     // Use `import React from 'react'` instead of `import { useState } from 'react'`
@@ -444,7 +432,163 @@ export default {
           }
         ]
       }
-    ]
+    ],
+
+    // --- React Compiler family (replaces react/react-compiler, removed in oxlint 1.79) ---
+    // The full compiler pass runs once per file as soon as ONE rule below is
+    // enabled, then is shared by the others. Cost is all-or-nothing.
+    // None of these rules accept options.
+
+    // Disallow setting state during render — infinite render loops
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/set-state-in-render
+    'react/set-state-in-render': 'error',
+
+    // Disallow synchronous setState inside an effect — extra render pass
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/set-state-in-effect
+    'react/set-state-in-effect': 'error',
+
+    // Disallow reading or writing ref.current during render — silently stale UI
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/refs
+    'react/refs': 'error',
+
+    // Disallow known-impure calls during render (Math.random, Date.now) — hydration mismatches
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/purity
+    'react/purity': 'error',
+
+    // Disallow mutating props, state and hook values — stale UI and lost updates
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/immutability
+    'react/immutability': 'error',
+
+    // Disallow assigning to or mutating module-scope values during render
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/globals
+    'react/globals': 'error',
+
+    // Disallow components recreated on every render — catches factory-built components
+    // that no-unstable-nested-components cannot see
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/static-components
+    'react/static-components': 'error',
+
+    // Disallow useMemo callbacks with no returned or unused value — side effect in disguise
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/void-use-memo
+    'react/void-use-memo': 'error',
+
+    // Disallow async or generator useMemo callbacks — memoizes a Promise
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/use-memo
+    'react/use-memo': 'error',
+
+    // Require error boundaries over try/catch around JSX — the catch never fires
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/error-boundaries
+    'react/error-boundaries': 'error',
+
+    // Disallow calling capitalized functions instead of rendering them as JSX
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/capitalized-calls
+    'react/capitalized-calls': 'error',
+
+    // Only meaningful when the React Compiler runs at build time — reports code the
+    // compiler declines to optimize, not runtime bugs
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/preserve-manual-memoization
+    'react/preserve-manual-memoization': 'off',
+
+    // Flags every legitimate use of TanStack Table/Virtual and react-hook-form watch()
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/incompatible-library
+    'react/incompatible-library': 'off',
+
+    // react/hooks, exhaustive-effect-dependencies, memo-dependencies and
+    // no-deriving-state-in-effects are declared in hooks.ts
+
+    // Reports React Compiler bugs, not user code — nothing actionable
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/invariant
+    'react/invariant': 'off',
+
+    // Suppression hygiene is already covered by unicorn/no-abusive-eslint-disable
+    // and options.reportUnusedDisableDirectives
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/rule-suppression
+    'react/rule-suppression': 'off',
+
+    // Report invalid JavaScript seen by the React Compiler
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/syntax
+    'react/syntax': 'error',
+
+    // Compiler bail-outs, not violations — upstream ships it off by default
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/todo
+    'react/todo': 'off',
+
+    // Report syntax the React Compiler cannot optimize (eval and friends)
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/unsupported-syntax
+    'react/unsupported-syntax': 'error',
+
+    // Disallow string literals in JSX — only for i18n-mandatory projects
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-no-literals
+    'react/jsx-no-literals': [
+      'off',
+      {
+        allowedStrings: [],
+        elementOverrides: {},
+        ignoreProps: false,
+        noAttributeStrings: false,
+        noStrings: false,
+        restrictedAttributes: []
+      }
+    ],
+
+    // Type the props parameter of a component, never the component through `FC`
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-restricted-types
+    '@typescript-eslint/no-restricted-types': [
+      'error',
+      { types: restrictedComponentTypes }
+    ],
+
+    // Render a conditional child with `cond ? <X /> : null`, never `&&`: a falsy `0` renders
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#no-leaked-render
+    'viclafouch/no-leaked-render': 'error',
+
+    // Render a context as `<ThemeContext value={x}>`, never `<ThemeContext.Provider>`
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#no-context-provider
+    'viclafouch/no-context-provider': 'error',
+
+    // Pass `ref` as a prop, never through `forwardRef` from react
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#no-forward-ref
+    'viclafouch/no-forward-ref': 'error',
+
+    // --- React Doctor: the Effects that the React Compiler rules do not see ---
+
+    // Disallow an Effect that hands the data of the child to a parent callback
+    // https://www.react.doctor/prompts/rules/react-doctor/no-pass-data-to-parent.md
+    'react-doctor/no-pass-data-to-parent': 'error',
+
+    // Disallow an Effect that pushes a local state to a parent callback
+    // https://www.react.doctor/prompts/rules/react-doctor/no-pass-live-state-to-parent.md
+    'react-doctor/no-pass-live-state-to-parent': 'error',
+
+    // Disallow an Effect that resets or adjusts a state when a prop changes: use a key or derive it
+    // https://www.react.doctor/prompts/rules/react-doctor/no-adjust-state-on-prop-change.md
+    'react-doctor/no-adjust-state-on-prop-change': 'error',
+
+    // Misses a cleanup that runs in a loop or clears a reassigned timer id, thus flags correct Effects
+    // https://www.react.doctor/prompts/rules/react-doctor/effect-needs-cleanup.md
+    'react-doctor/effect-needs-cleanup': 'off',
+
+    // Disallow an Effect that sets the state another Effect watches: compute the next state in the handler
+    // https://www.react.doctor/prompts/rules/react-doctor/no-effect-chain.md
+    'react-doctor/no-effect-chain': 'error',
+
+    // Repeats no-pass-data-to-parent and no-pass-live-state-to-parent on the same Effect
+    // https://www.react.doctor/prompts/rules/react-doctor/no-prop-callback-in-effect.md
+    'react-doctor/no-prop-callback-in-effect': 'off',
+
+    // Repeats react/no-deriving-state-in-effects of the hooks config
+    // https://www.react.doctor/prompts/rules/react-doctor/no-derived-state-effect.md
+    'react-doctor/no-derived-state-effect': 'off',
+
+    // --- React Doctor: the secrets that ship to the browser ---
+
+    // Disallow a secret in a file that ships to the browser
+    // https://www.react.doctor/prompts/rules/react-doctor/no-secrets-in-client-code.md
+    'react-doctor/no-secrets-in-client-code': 'error',
+
+    // Disallow an auth token in localStorage or sessionStorage: any XSS reads it
+    // https://www.react.doctor/prompts/rules/react-doctor/auth-token-in-web-storage.md
+    'react-doctor/auth-token-in-web-storage': 'error'
   },
   overrides: [
     {
@@ -452,6 +596,14 @@ export default {
       files: ['**/*.ts', '**/*.tsx'],
       rules: {
         'react/jsx-filename-extension': ['error', { extensions: ['.tsx'] }]
+      }
+    },
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        // Name the props type of a component after it: `ButtonProps` for `Button`
+        // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#component-props-name
+        'viclafouch/component-props-name': 'error'
       }
     }
   ]

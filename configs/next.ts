@@ -1,4 +1,5 @@
 import type { OxlintConfig } from 'oxlint'
+import { NEXT_ROUTE_FILES } from './globs/index.ts'
 
 /**
  * Next.js specific rules (App Router, pages, fonts, scripts).
@@ -10,9 +11,13 @@ import type { OxlintConfig } from 'oxlint'
  */
 export default {
   plugins: ['nextjs'],
-  categories: {
-    correctness: 'error'
-  },
+  jsPlugins: [
+    // React Doctor skips a file under a scripts, tools, tooling, cli or bin folder: set settings['react-doctor'].rootDirectory
+    {
+      name: 'react-doctor',
+      specifier: import.meta.resolve('oxlint-plugin-react-doctor')
+    }
+  ],
   rules: {
     // Enforce font-display property on Google Fonts
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/google-font-display
@@ -98,6 +103,14 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-unwanted-polyfillio
     'nextjs/no-unwanted-polyfillio': 'error',
 
+    // Require a Suspense boundary around useSearchParams, or Next.js renders the whole route on the client
+    // https://www.react.doctor/prompts/rules/react-doctor/nextjs-no-use-search-params-without-suspense.md
+    'react-doctor/nextjs-no-use-search-params-without-suspense': 'error',
+
+    // Disallow redirect() and notFound() in a try block: the catch swallows the navigation
+    // https://www.react.doctor/prompts/rules/react-doctor/nextjs-no-redirect-in-try-catch.md
+    'react-doctor/nextjs-no-redirect-in-try-catch': 'error',
+
     // Override anchor-is-valid for Next Link component
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/anchor-is-valid
     'jsx-a11y/anchor-is-valid': [
@@ -108,5 +121,14 @@ export default {
         aspects: ['invalidHref', 'preferButton']
       }
     ]
-  }
+  },
+  overrides: [
+    {
+      // Next.js loads each route file of the App Router and of the Pages Router through the default export
+      files: [...NEXT_ROUTE_FILES],
+      rules: {
+        'import/no-default-export': 'off'
+      }
+    }
+  ]
 } satisfies OxlintConfig

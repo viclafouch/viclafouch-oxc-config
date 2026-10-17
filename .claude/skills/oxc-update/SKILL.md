@@ -124,7 +124,8 @@ Order matters: bump versions first, install, then edit configs, then verify.
 
 - `npx oxlint` — catches unknown rules after breaking changes
 - `npx oxfmt --check`
-- `npx tsup` — build must pass
+- `npx tsdown` — build must pass
+- `npx vitest run` — every preset validated by oxlint, plugin rules tested
 
 If verification fails, fix the issue before continuing.
 

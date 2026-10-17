@@ -1,12 +1,13 @@
 # CLAUDE.md
 
-Oxlint + oxfmt config package. Built by tsup (ESM + dts) because Node doesn't strip types in node_modules.
+Oxlint + oxfmt config package. Built by tsdown (ESM + dts) because Node doesn't strip types in node_modules. Ships the `viclafouch` jsPlugin (`plugins/viclafouch/`), loaded by `typescript` and `react` through the self-reference `@viclafouch/oxc-config/plugins/viclafouch`: run `npm run build` before linting or testing.
 
 ## Coding Conventions
 
 - Every value explicit — even defaults. Categories, options, settings: all declared.
 - Rule options always explicit, even when empty/default. If a rule accepts options, write them out (e.g. `['error', { allowlist: { variables: [], types: [] } }]`). Serves as living documentation and surfaces hidden options.
-- `'error'` or `'off'`. Never `'warn'` except `no-console`, `react/no-danger`, and `vitest/warn-todo`.
+- `'error'` or `'off'`. Never `'warn'` except `react/no-danger` and `vitest/warn-todo`.
+- Only `typescript` declares `categories`. `extends` merges them left to right, so a later preset that sets one wins on every file.
 
 ## Documentation
 

@@ -1,4 +1,9 @@
 import type { OxlintConfig } from 'oxlint'
+import {
+  COMMONJS_CONFIG_FILES,
+  STORY_FILES,
+  TOOL_CONFIG_FILES
+} from './globs/index.ts'
 
 /**
  * Import hygiene rules (cycles, duplicates, ordering).
@@ -14,7 +19,7 @@ export default {
   rules: {
     // Ensure all imports appear before other statements
     // https://oxc.rs/docs/guide/usage/linter/rules/import/first
-    'import/first': ['error', 'disable-absolute-first'],
+    'import/first': ['error', 'absolute-first'],
 
     // Disallow duplicate imports
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-duplicates
@@ -22,9 +27,13 @@ export default {
       'error',
       {
         considerQueryString: false,
-        preferInline: false
+        preferInline: true
       }
     ],
+
+    // Disallow import { default as X }, write import X
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-named-default
+    'import/no-named-default': 'error',
 
     // Disallow circular imports
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-cycle
@@ -57,38 +66,36 @@ export default {
       }
     ],
 
-    // Enforce blank line after the last import statement
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/newline-after-import
-    'import/newline-after-import': [
+    // Disallow dynamic require() with expressions
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-dynamic-require
+    'import/no-dynamic-require': ['error', { esmodule: false }],
+
+    // Disallow side-effect imports without assignment
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-unassigned-import
+    'import/no-unassigned-import': [
       'error',
       {
-        count: 1,
-        exactCount: false,
-        considerComments: false
+        allow: ['server-only', '**/*.css', '**/*.scss']
       }
     ],
 
-    // Disallow default import named after a named export of the same module
+    // Allow namespace imports — Sentry.captureException() is more readable than captureException()
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-namespace
+    'import/no-namespace': 'off',
+
+    // Disallow default exports
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-default-export
+    'import/no-default-export': 'error',
+
+    // Disallow default import using a named export's identifier
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-named-as-default
     'import/no-named-as-default': 'error',
 
-    // Disallow accessing named export via default import property
+    // Disallow accessing named export as property of default import
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-named-as-default-member
     'import/no-named-as-default-member': 'error',
 
-    // Disallow empty named import blocks
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-empty-named-blocks
-    'import/no-empty-named-blocks': 'error',
-
-    // Verify namespace import properties exist
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/namespace
-    'import/namespace': ['error', { allowComputed: false }],
-
-    // Disallow webpack loader syntax in imports
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-webpack-loader-syntax
-    'import/no-webpack-loader-syntax': 'error',
-
-    // Disallow anonymous default exports (grepability)
+    // Disallow anonymous default exports
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-anonymous-default-export
     'import/no-anonymous-default-export': [
       'error',
@@ -104,9 +111,36 @@ export default {
       }
     ],
 
-    // Disallow default exports — named exports only
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-default-export
-    'import/no-default-export': 'error',
+    // Limit maximum dependencies per file — too arbitrary
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/max-dependencies
+    'import/max-dependencies': 'off',
+
+    // Disallow relative parent imports (../) — not all projects have aliases
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-relative-parent-imports
+    'import/no-relative-parent-imports': 'off',
+
+    // File extensions in imports — too dependent on bundler/runtime (Vite, node16, etc.)
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/extensions
+    'import/extensions': 'off',
+
+    // Top-level (import type { T }) when only types, inline (import { type T, value }) when mixed
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/consistent-type-specifier-style
+    'import/consistent-type-specifier-style': [
+      'error',
+      'prefer-top-level-if-only-type-imports'
+    ],
+
+    // Disallow empty named import blocks
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-empty-named-blocks
+    'import/no-empty-named-blocks': 'error',
+
+    // Verify namespace import properties exist
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/namespace
+    'import/namespace': ['error', { allowComputed: false }],
+
+    // Disallow webpack loader syntax in imports
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-webpack-loader-syntax
+    'import/no-webpack-loader-syntax': 'error',
 
     // Allow named exports — coherent with no-default-export
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-named-export
@@ -124,14 +158,6 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/import/group-exports
     'import/group-exports': 'off',
 
-    // Allow namespace imports — Sentry.captureException() is more readable than captureException()
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-namespace
-    'import/no-namespace': 'off',
-
-    // File extensions in imports — too dependent on bundler/runtime (Vite, node16, etc.)
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/extensions
-    'import/extensions': 'off',
-
     // Disallow CommonJS require/module.exports
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-commonjs
     'import/no-commonjs': 'error',
@@ -140,15 +166,7 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-amd
     'import/no-amd': 'error',
 
-    // Limit number of imports per file — too arbitrary
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/max-dependencies
-    'import/max-dependencies': 'off',
-
-    // Disallow dynamic require()
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-dynamic-require
-    'import/no-dynamic-require': 'error',
-
-    // Verify imports exist in package.json — TypeScript + bundler check
+    // Verify imports exist in package.json — TypeScript checks
     // https://oxc.rs/docs/guide/usage/linter/rules/import/named
     'import/named': 'off',
 
@@ -160,31 +178,34 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-nodejs-modules
     'import/no-nodejs-modules': 'off',
 
-    // Disallow relative parent imports (../) — not all projects have aliases
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-relative-parent-imports
-    'import/no-relative-parent-imports': 'off',
-
-    // Disallow side-effect imports — CSS/polyfills need them
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-unassigned-import
-    'import/no-unassigned-import': 'off',
-
-    // Top-level (import type { T }) when only types, inline (import { type T, value }) when mixed
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/consistent-type-specifier-style
-    'import/consistent-type-specifier-style': [
-      'error',
-      'prefer-top-level-if-only-type-imports'
-    ],
-
     // Force files to be unambiguously ESM — TS/bundler handles
     // https://oxc.rs/docs/guide/usage/linter/rules/import/unambiguous
-    'import/unambiguous': 'off'
+    'import/unambiguous': 'off',
+
+    // Enforce a blank line after the last import
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/newline-after-import
+    'import/newline-after-import': [
+      'error',
+      {
+        count: 1,
+        exactCount: false,
+        considerComments: false
+      }
+    ]
   },
   overrides: [
     {
-      // Config files require default exports by convention
-      files: ['**/*.config.*', '**/vite.config.*', '**/vitest.config.*'],
+      // A tool loads its config file, and Storybook loads a story, through the default export
+      files: [...TOOL_CONFIG_FILES, ...STORY_FILES],
       rules: {
         'import/no-default-export': 'off'
+      }
+    },
+    {
+      // A tool still loads some JavaScript config files as CommonJS
+      files: [...COMMONJS_CONFIG_FILES],
+      rules: {
+        'import/no-commonjs': 'off'
       }
     }
   ]

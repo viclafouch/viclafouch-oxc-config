@@ -36,6 +36,7 @@ export default {
     '@tanstack/query/infinite-query-property-order': 'error',
 
     // Ensure queryFn returns a non-undefined value
+    // Silent until oxlint gives type information to JS plugins
     // https://tanstack.com/query/latest/docs/eslint/no-void-query-fn
     '@tanstack/query/no-void-query-fn': 'error',
 
