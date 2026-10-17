@@ -80,7 +80,7 @@ For each **new or graduated rule**:
 
 1. Rule name and plugin
 2. Code example: what it catches and the fix
-3. List all available options by fetching the rule's doc page (WebFetch). Never guess option names from the changelog or commit messages. Present options even if defaults are empty.
+3. List all available options by reading the rule's source on GitHub (`gh api repos/oxc-project/oxc/contents/crates/oxc_linter/src/rules/{plugin}/{rule_name}.rs --jq '.content' | base64 -d`). Look for the config struct and its serde fields. Never guess option names from the changelog or commit messages. Present options even if defaults are empty.
 4. Recommendation with reasoning
 5. Ask via **AskUserQuestion** with concrete options — one rule at a time
 
@@ -102,7 +102,7 @@ Order matters: bump versions first, install, then edit configs, then verify.
 
 ### 1. Versions
 
-- Bump `devDependencies` and `peerDependencies` in `package.json`
+- Bump `oxlint`, `oxfmt` and `@oxlint/plugins` to the new minor in `dependencies`, `devDependencies` and `peerDependencies` of `package.json`, keeping the `~` range
 - Run `npm install`
 
 ### 2. Configs
@@ -114,7 +114,7 @@ Order matters: bump versions first, install, then edit configs, then verify.
 
 ### 3. Documentation
 
-- Update `README.md` (config table, usage section, hierarchy, requirements). A type-aware rule raises the minimum of the `oxlint-tsgolint` row in **Requirements** to the first release that ships it
+- Update `README.md` (config table, usage section, hierarchy, requirements). A version bump updates the `oxlint` and `oxfmt` rows of **Requirements**. A type-aware rule raises the minimum of the `oxlint-tsgolint` row in **Requirements** to the first release that ships it
 
 ### 4. Verification (run in parallel)
 
@@ -127,7 +127,7 @@ If verification fails, fix the issue before continuing.
 
 ### 5. Link verification
 
-For every new doc URL added in comments, verify it's not a 404 using WebFetch. Fix any broken links before finishing.
+Doc URLs for oxc.rs follow a deterministic pattern: `https://oxc.rs/docs/guide/usage/linter/rules/{plugin}/{rule-name}`. The oxc.rs site is a client-side SPA, so curl and WebFetch return 404 even for valid pages. Confirm instead that the rule source file exists at `crates/oxc_linter/src/rules/{plugin}/{rule_name}.rs` on GitHub: then the doc URL is correct.
 
 ## Step 7: Summary
 

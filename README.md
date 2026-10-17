@@ -280,13 +280,15 @@ Only `typescript` declares `categories`. `extends` merges them left to right, so
 
 ## Requirements
 
-| Dependency        | Minimum version | Notes                                                       |
-| ----------------- | --------------- | ----------------------------------------------------------- |
-| `oxlint`          | >= 1.88         | `allowWithVariables` option                                 |
-| `oxfmt`           | >= 0.73         | `sortImports` support                                       |
-| `oxlint-tsgolint` | >= 7.0.2004     | Type-aware rules (`typeAware: true`); bundles its TS engine |
-| `typescript`      | >= 5            |                                                             |
-| Node.js           | >= 22.18        | For `.config.ts` support                                    |
+| Dependency        | Version     | Notes                                                       |
+| ----------------- | ----------- | ----------------------------------------------------------- |
+| `oxlint`          | 1.88 only   | `allowWithVariables` option                                 |
+| `oxfmt`           | 0.73 only   | `sortImports` support                                       |
+| `oxlint-tsgolint` | >= 7.0.2004 | Type-aware rules (`typeAware: true`); bundles its TS engine |
+| `typescript`      | >= 5        |                                                             |
+| Node.js           | >= 22.18    | For `.config.ts` support                                    |
+
+> This package pins `oxlint` and `oxfmt` to one minor version. oxc publishes no patch, so every oxc release can report more code. Your lockfile keeps the version of this package, so a new oxc version arrives only in the pull request that updates it.
 
 > Ensure your `package.json` has `"type": "module"` to avoid ESM warnings with `.config.ts` files.
 

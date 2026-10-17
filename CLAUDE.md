@@ -18,9 +18,9 @@ Keep `README.md` up to date when making changes:
 - Document breaking changes
 - Keep installation instructions current
 
-## On Every Session
+## oxc versions
 
-**Proactively run `/oxc-update` before anything else.** This skill detects missed releases, fetches changelogs, interviews on each new rule, and applies decisions to configs + docs.
+`oxlint`, `oxfmt` and `@oxlint/plugins` stay pinned to one minor version (`~`), in `dependencies`, `devDependencies` and `peerDependencies`. Suggest `/oxc-update` when the work touches the oxlint or oxfmt version or a new rule.
 
 ## Adding Rules
 
