@@ -5,7 +5,7 @@ Oxlint + Oxfmt configuration for modern TypeScript projects.
 ## Installation
 
 ```bash
-npm install -D @viclafouch/oxc-config oxlint oxfmt
+npm install -D @viclafouch/oxc-config oxlint oxfmt oxlint-tsgolint
 ```
 
 ## Quick Setup (React Web)
@@ -23,7 +23,9 @@ import {
 } from '@viclafouch/oxc-config'
 
 export default defineConfig({
-  extends: [typescript, react, hooks, jsxA11y, imports, tanstackQuery]
+  extends: [typescript, react, hooks, jsxA11y, imports, tanstackQuery],
+  // Turns on the type-aware rules, which need oxlint-tsgolint
+  options: { typeAware: true }
 })
 ```
 
@@ -45,7 +47,9 @@ import { defineConfig } from 'oxlint'
 import { typescript, imports } from '@viclafouch/oxc-config'
 
 export default defineConfig({
-  extends: [typescript, imports]
+  extends: [typescript, imports],
+  // Turns on the type-aware rules, which need oxlint-tsgolint
+  options: { typeAware: true }
 })
 ```
 
@@ -65,7 +69,9 @@ import {
 } from '@viclafouch/oxc-config'
 
 export default defineConfig({
-  extends: [typescript, react, hooks, jsxA11y, next, imports, tanstackQuery]
+  extends: [typescript, react, hooks, jsxA11y, next, imports, tanstackQuery],
+  // Turns on the type-aware rules, which need oxlint-tsgolint
+  options: { typeAware: true }
 })
 ```
 
@@ -86,7 +92,9 @@ import {
 } from '@viclafouch/oxc-config'
 
 export default defineConfig({
-  extends: [typescript, react, hooks, reactNative, imports, tanstackQuery]
+  extends: [typescript, react, hooks, reactNative, imports, tanstackQuery],
+  // Turns on the type-aware rules, which need oxlint-tsgolint
+  options: { typeAware: true }
 })
 ```
 
@@ -243,17 +251,6 @@ export default defineConfig({
 }
 ```
 
-If your project also runs `tsc`:
-
-```json
-{
-  "scripts": {
-    "lint": "tsc --noEmit && oxlint",
-    "lint:fix": "tsc --noEmit && oxlint --fix && oxfmt"
-  }
-}
-```
-
 > `oxfmt` formats everything (JS, TS, JSON, CSS, MD, etc.). To exclude files, use `ignorePatterns` in `oxfmt.config.ts` — not globs in the CLI.
 
 ## VS Code
@@ -281,48 +278,17 @@ If your project also runs `tsc`:
 
 Only `typescript` declares `categories`. `extends` merges them left to right, so a later preset that set one would win on every file.
 
-## Type-Aware Linting (opt-in)
-
-The `typescript` config already declares ~60 type-aware rules (`no-floating-promises`, `no-misused-promises`, `strict-boolean-expressions`, `no-unnecessary-condition`, …). They stay inert until type-aware linting is turned on.
-
-`typeAware` and `typeCheck` are only supported in a **root** config, so this package cannot set them for you. Enable them in your own `oxlint.config.ts`:
-
-```bash
-npm install -D oxlint-tsgolint@latest typescript@^7
-```
-
-```typescript
-// oxlint.config.ts
-import { defineConfig } from 'oxlint'
-import { typescript, react, hooks, imports } from '@viclafouch/oxc-config'
-
-export default defineConfig({
-  extends: [typescript, react, hooks, imports],
-  options: {
-    typeAware: true,
-    typeCheck: true
-  }
-})
-```
-
-`typeAware` activates the type-aware rules. `typeCheck` additionally reports TypeScript compiler errors, which can replace a separate `tsc --noEmit` step.
-
-Caveats: TypeScript 7 is required, some legacy `tsconfig` options are unsupported (`baseUrl`), monorepos need dependencies installed and `.d.ts` files available beforehand, and overly broad `include` patterns can drive up memory usage on large codebases.
-
 ## Requirements
 
-| Dependency   | Minimum version | Notes                       |
-| ------------ | --------------- | --------------------------- |
-| `oxlint`     | >= 1.88         | `allowWithVariables` option |
-| `oxfmt`      | >= 0.73         | `sortImports` support       |
-| `typescript` | >= 5            | >= 7 for type-aware linting |
-| Node.js      | >= 22.18        | For `.config.ts` support    |
+| Dependency        | Minimum version | Notes                                                       |
+| ----------------- | --------------- | ----------------------------------------------------------- |
+| `oxlint`          | >= 1.88         | `allowWithVariables` option                                 |
+| `oxfmt`           | >= 0.73         | `sortImports` support                                       |
+| `oxlint-tsgolint` | >= 7.0.2004     | Type-aware rules (`typeAware: true`); bundles its TS engine |
+| `typescript`      | >= 5            |                                                             |
+| Node.js           | >= 22.18        | For `.config.ts` support                                    |
 
 > Ensure your `package.json` has `"type": "module"` to avoid ESM warnings with `.config.ts` files.
-
-## Gaps
-
-See [GAPS.md](./GAPS.md) for rules not available in oxlint.
 
 ## jsPlugins
 
@@ -337,14 +303,3 @@ npm install -D eslint-plugin-testing-library                 # for testingLibrar
 ```
 
 These are listed as optional `peerDependencies`.
-
-## Breaking changes
-
-### 1.0.0
-
-- Requires `oxlint >= 1.88` and `oxfmt >= 0.73`. The package now builds with tsdown and ships `.mjs` files through `exports` only.
-- `vitest` turns its rules on in `TEST_FILES` only, and no preset but `typescript` declares `categories` anymore.
-- `typescript` turns on the `node` and `promise` plugins, the `viclafouch` plugin (`no-chained-type-assertions`, `no-unknown-returns`, `no-known-value-widening`) and ~70 more rules. `no-console` is now `error` and allows `console.warn` and `console.error`.
-- `react` turns on `jsx-key`, `no-unescaped-entities`, `only-export-components`, the React Compiler rules, the `viclafouch` plugin (`no-leaked-render`, `no-context-provider`, `no-forward-ref`, `component-props-name`), React Doctor, and bans `FC`.
-- `imports` turns on `no-unassigned-import` (style sheets and `server-only` stay allowed) and `no-named-default`, prefers inline type specifiers in `no-duplicates`, and puts absolute imports first in `first`.
-- `next` turns off `import/no-default-export` in the route folders (`app/`, `pages/`).

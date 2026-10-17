@@ -17,7 +17,6 @@ Keep `README.md` up to date when making changes:
 - Update the list of available configurations
 - Document breaking changes
 - Keep installation instructions current
-- Update `GAPS.md` when rules are added or oxlint implements new rules
 
 ## On Every Session
 
@@ -27,8 +26,6 @@ Keep `README.md` up to date when making changes:
 
 Always via interactive interview: rule name, code example (what it catches + fix), recommendation, yes/no. Never bulk-activate. Rejected rules are written `'off'` in the config (with comment + doc URL) so they are not re-proposed in future interviews.
 
-## Future
+## Type-aware
 
-- tsgolint: uncomment 14 type-aware rules at bottom of `typescript.ts` when stable.
-- `naming-convention`: only true gap, no workaround. Waiting on tsgolint.
-- `oxlint-plugin-eslint`: tested, works for AST selectors. Available as escape hatch, not used yet.
+Every consumer lints with `typeAware: true` and `oxlint-tsgolint`, which bundles its own TypeScript engine. A type-aware rule lives in the type-aware section at the bottom of `typescript.ts`, at `'error'` or `'off'` like any other rule.

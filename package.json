@@ -42,11 +42,7 @@
     "lint:fix": "tsdown && oxlint --fix && oxfmt",
     "prepublishOnly": "tsdown",
     "bump": "npm version minor",
-    "release": "npm publish",
-    "bump:alpha": "npm version prerelease --preid alpha",
-    "release:alpha": "npm publish --tag alpha",
-    "bump:beta": "npm version prerelease --preid beta",
-    "release:beta": "npm publish --tag beta"
+    "release": "npm publish"
   },
   "dependencies": {
     "@oxlint/plugins": "^1.88.0",

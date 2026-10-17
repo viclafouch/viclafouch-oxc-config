@@ -10,7 +10,7 @@ export default defineConfig({
     reportUnusedDisableDirectives: 'error',
     maxWarnings: 0
   },
-  ignorePatterns: ['dist/**', 'templates/**', 'node_modules/**'],
+  ignorePatterns: ['dist/**', 'node_modules/**'],
   rules: {
     'import/no-default-export': 'off',
     'import/extensions': 'off'

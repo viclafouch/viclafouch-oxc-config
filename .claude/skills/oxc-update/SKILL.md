@@ -12,7 +12,6 @@ Audit oxlint and oxfmt for updates. If the user provides a release URL, start fr
 Read these files in parallel:
 
 - `package.json` — current `devDependencies` versions of `oxlint` and `oxfmt`
-- `GAPS.md` — rules waiting to be implemented upstream
 - All files in `configs/` — to know exactly which rules and options are currently enabled
 
 ## Step 2: Detect updates
@@ -56,7 +55,6 @@ This step is critical. Go through EVERY line of the changelog and cross-referenc
 
 ### 4b. Cross-check
 
-- Cross-check with `GAPS.md` — flag any gap that is now implemented.
 - For each bug fix in the changelog, grep the rule name in `configs/` to confirm whether it's enabled or not.
 - For new options, check the rule's current config in our files to see if the new option is relevant.
 
@@ -71,7 +69,6 @@ Present ALL findings in a structured report with these sections:
 5. **Breaking changes** — impact assessment
 6. **oxfmt changes** — features and fixes
 7. **LSP / tooling** — notable changes for the dev experience
-8. **GAPS.md updates** — gaps that can now be closed
 
 After presenting the full report, ask the user via **AskUserQuestion**: "Ready to start the rule interview?" before proceeding to Step 5.
 
@@ -117,8 +114,7 @@ Order matters: bump versions first, install, then edit configs, then verify.
 
 ### 3. Documentation
 
-- Update `README.md` (config table, usage section, hierarchy, requirements)
-- Update `GAPS.md` (remove implemented rules, add new gaps)
+- Update `README.md` (config table, usage section, hierarchy, requirements). A type-aware rule raises the minimum of the `oxlint-tsgolint` row in **Requirements** to the first release that ships it
 
 ### 4. Verification (run in parallel)
 
@@ -149,5 +145,4 @@ For every new doc URL added in comments, verify it's not a 404 using WebFetch. F
 - **Match the user's language.**
 - **One rule at a time.** Never bulk-activate.
 - **Check for duplicates.** Before adding a rule, verify it doesn't overlap with an existing rule in another plugin.
-- **Respect type-aware boundaries.** Rules requiring `typeAware: true` stay commented out until tsgolint ships. Do NOT propose them as activable rules during the interview.
-- **Verify type-aware status.** For every new or graduated rule, check its doc page (WebFetch) to see if it requires type information. The oxlint docs show a 💭 icon and explicit text when a rule needs `typeAware: true`. If it does, add it to the commented-out type-aware section in `typescript.ts` and update `GAPS.md` (type-aware deferred count + table). Never activate a type-aware rule when `typeAware: false`.
+- **Type-aware rules go in the type-aware section of `typescript.ts`.** For every new or graduated rule, read the rule source on GitHub (`gh api repos/oxc-project/oxc/contents/crates/oxc_linter/src/rules/{plugin}/{rule_name}.rs --jq '.content' | base64 -d`): a `(tsgolint)` marker in `declare_oxc_lint!` makes it type-aware. The interview of a type-aware rule names the first `oxlint-tsgolint` release that ships it.
