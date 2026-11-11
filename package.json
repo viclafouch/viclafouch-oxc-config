@@ -73,7 +73,7 @@
     "oxlint-tsgolint": "^7.0.2006",
     "publint": "^0.3.25",
     "tsdown": "^0.23.4",
-    "typescript": "^7.0.2",
+    "typescript": "7.1.0-beta",
     "vitest": "^5.1.0"
   },
   "peerDependencies": {
@@ -86,6 +86,7 @@
     "eslint-plugin-turbo": ">= 2",
     "oxfmt": "~0.78.0",
     "oxlint": "~1.93.0",
+    "oxlint-tsgolint": ">= 7.0.2006",
     "typescript": ">= 5"
   },
   "peerDependenciesMeta": {

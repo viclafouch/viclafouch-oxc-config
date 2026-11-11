@@ -7,7 +7,7 @@ export default defineConfig({
     'plugins/viclafouch/index': 'plugins/viclafouch/index.ts'
   },
   sourcemap: true,
-  dts: { sourcemap: true },
+  dts: true,
   exports: true,
   publint: true,
   attw: { profile: 'esm-only' }

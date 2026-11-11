@@ -81,3 +81,4 @@ Run `pnpm lint` to check the project.
 
 - Node.js >= 24.21
 - `oxlint` 1.93 and `oxfmt` 0.78
+- `oxlint-tsgolint` 7.0.2006 or later, for the type-aware rules
