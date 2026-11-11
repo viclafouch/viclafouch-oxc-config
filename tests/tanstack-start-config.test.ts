@@ -161,8 +161,7 @@ describe('tanstackStart config on thrown values', () => {
       "import typescript from '../configs/typescript.ts'",
       '',
       'export default defineConfig({',
-      '  extends: [typescript, tanstackStart],',
-      '  options: { typeAware: true }',
+      '  extends: [typescript, tanstackStart]',
       '})'
     ])
     const routerCore = join(workDir, 'node_modules/@tanstack/router-core')

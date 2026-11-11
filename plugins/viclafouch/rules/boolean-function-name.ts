@@ -1,11 +1,11 @@
 import { defineRule } from '@oxlint/plugins'
 import {
   getFunctionName,
+  matchIsBooleanFunctionName,
   matchIsPascalCase,
   type FunctionNode
 } from './helpers/ast'
 
-const BOOLEAN_FUNCTION_NAME = /^match(?:Is|As|Has)[A-Z]/u
 const HOOK_PREFIX = 'use'
 
 const matchIsTypeGuard = (node: FunctionNode) => {
@@ -36,7 +36,7 @@ export const booleanFunctionName = defineRule({
         return
       }
 
-      if (matchIsTypeGuard(node) && !BOOLEAN_FUNCTION_NAME.test(name)) {
+      if (matchIsTypeGuard(node) && !matchIsBooleanFunctionName(name)) {
         context.report({ node: node.id ?? node, messageId: 'booleanFunction' })
       }
     }

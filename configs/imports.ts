@@ -18,52 +18,39 @@ export default {
   plugins: ['import'],
   rules: {
     // Ensure all imports appear before other statements
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/first
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/first.md
     'import/first': ['error', 'absolute-first'],
 
     // Disallow duplicate imports
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-duplicates
-    'import/no-duplicates': [
-      'error',
-      {
-        considerQueryString: false,
-        preferInline: true
-      }
-    ],
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-duplicates.md
+    'import/no-duplicates': ['error', { preferInline: true }],
 
     // Disallow import { default as X }, write import X
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-named-default
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-named-default.md
     'import/no-named-default': 'error',
 
     // Disallow circular imports
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-cycle
-    'import/no-cycle': ['error', { ignoreTypes: true }],
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-cycle.md
+    'import/no-cycle': 'error',
 
     // Disallow a module from importing itself
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-self-import
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-self-import.md
     'import/no-self-import': 'error',
 
     // Disallow mutable exports (export let, export var)
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-mutable-exports
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-mutable-exports.md
     'import/no-mutable-exports': 'error',
 
     // Disallow absolute path imports
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-absolute-path
-    'import/no-absolute-path': [
-      'error',
-      {
-        amd: false,
-        commonjs: true,
-        esmodule: true
-      }
-    ],
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-absolute-path.md
+    'import/no-absolute-path': 'error',
 
     // Disallow dynamic require() with expressions
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-dynamic-require
-    'import/no-dynamic-require': ['error', { esmodule: false }],
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-dynamic-require.md
+    'import/no-dynamic-require': 'error',
 
     // Disallow side-effect imports without assignment
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-unassigned-import
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-unassigned-import.md
     'import/no-unassigned-import': [
       'error',
       {
@@ -73,53 +60,39 @@ export default {
 
     // Disallow namespace (wildcard) imports
     // Radix UI excluded: shadcn convention is import * as XPrimitive from "@radix-ui/react-x"
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-namespace
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-namespace.md
     'import/no-namespace': ['error', { ignore: ['@radix-ui/*'] }],
 
     // Disallow default exports
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-default-export
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-default-export.md
     'import/no-default-export': 'error',
 
     // Disallow default import using a named export's identifier
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-named-as-default
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-named-as-default.md
     'import/no-named-as-default': 'error',
 
     // Disallow accessing named export as property of default import
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-named-as-default-member
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-named-as-default-member.md
     'import/no-named-as-default-member': 'error',
 
     // Disallow anonymous default exports
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-anonymous-default-export
-    'import/no-anonymous-default-export': [
-      'error',
-      {
-        allowAnonymousClass: false,
-        allowAnonymousFunction: false,
-        allowArray: false,
-        allowArrowFunction: false,
-        allowCallExpression: true,
-        allowLiteral: false,
-        allowNew: false,
-        allowObject: false
-      }
-    ],
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-anonymous-default-export.md
+    'import/no-anonymous-default-export': 'error',
 
-    // Limit maximum dependencies per file — too arbitrary
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/max-dependencies
+    // Limit maximum dependencies per file: too arbitrary
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/max-dependencies.md
     'import/max-dependencies': 'off',
 
     // Disallow relative parent imports (force aliases)
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-relative-parent-imports
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-relative-parent-imports.md
     'import/no-relative-parent-imports': 'error',
 
     // Disallow the extension of a script import, and require it on an asset import (styles, images, fonts, JSON)
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/extensions
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/extensions.md
     'import/extensions': [
       'error',
       'never',
       {
-        checkTypeImports: false,
-        ignorePackages: false,
         pathGroupOverrides: [],
         pattern: {
           css: 'always',
@@ -134,74 +107,71 @@ export default {
     ],
 
     // Top-level (import type { T }) when only types, inline (import { type T, value }) when mixed
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/consistent-type-specifier-style
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/consistent-type-specifier-style.md
     'import/consistent-type-specifier-style': [
       'error',
       'prefer-top-level-if-only-type-imports'
     ],
 
     // Disallow empty named import blocks
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-empty-named-blocks
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-empty-named-blocks.md
     'import/no-empty-named-blocks': 'error',
 
     // Verify namespace import properties exist
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/namespace
-    'import/namespace': ['error', { allowComputed: false }],
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/namespace.md
+    'import/namespace': 'error',
 
     // Disallow webpack loader syntax in imports
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-webpack-loader-syntax
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-webpack-loader-syntax.md
     'import/no-webpack-loader-syntax': 'error',
 
-    // Allow named exports — coherent with no-default-export
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-named-export
+    // Allow named exports: coherent with no-default-export
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-named-export.md
     'import/no-named-export': 'off',
 
-    // Prefer default when single export — contradicts no-default-export
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/prefer-default-export
+    // Prefer default when single export: contradicts no-default-export
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/prefer-default-export.md
     'import/prefer-default-export': 'off',
 
-    // Force exports at end of file — colocation is better
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/exports-last
+    // Force exports at end of file: colocation is better
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/exports-last.md
     'import/exports-last': 'off',
 
-    // Force grouped exports — too restrictive
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/group-exports
+    // Force grouped exports: too restrictive
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/group-exports.md
     'import/group-exports': 'off',
 
     // Disallow CommonJS require/module.exports
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-commonjs
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-commonjs.md
     'import/no-commonjs': 'error',
 
     // Disallow AMD define/require
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-amd
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-amd.md
     'import/no-amd': 'error',
 
-    // Verify imports exist in package.json — TypeScript checks
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/named
+    // Verify imports exist in package.json: TypeScript checks
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/named.md
     'import/named': 'off',
 
-    // Verify default export exists — TypeScript checks
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/default
+    // Verify default export exists: TypeScript checks
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/default.md
     'import/default': 'off',
 
-    // Disallow Node.js built-in module imports — needed in backend/tooling
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-nodejs-modules
+    // Disallow Node.js built-in module imports: needed in backend/tooling
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/no-nodejs-modules.md
     'import/no-nodejs-modules': 'off',
 
-    // Force files to be unambiguously ESM — TS/bundler handles
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/unambiguous
+    // Force files to be unambiguously ESM: TS/bundler handles
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/unambiguous.md
     'import/unambiguous': 'off',
 
     // Enforce a blank line after the last import
-    // https://oxc.rs/docs/guide/usage/linter/rules/import/newline-after-import
-    'import/newline-after-import': [
-      'error',
-      {
-        count: 1,
-        exactCount: false,
-        considerComments: false
-      }
-    ]
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/newline-after-import.md
+    'import/newline-after-import': 'error',
+
+    // The tsc compiler already reports a duplicate export, and the rule is in nursery
+    // https://oxc.rs/docs/guide/usage/linter/rules/import/export.md
+    'import/export': 'off'
   },
   overrides: [
     {

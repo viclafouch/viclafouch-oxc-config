@@ -1,5 +1,6 @@
 import { defineRule, type ESTree } from '@oxlint/plugins'
-import { matchIsFunction, matchIsViCall } from './helpers/ast'
+import { findEnclosingFunction, matchIsViCall } from './helpers/ast'
+import { createClockReport } from './helpers/clock-report'
 
 const TIMER_FUNCTIONS = new Set(['setImmediate', 'setInterval', 'setTimeout'])
 const TIMER_PROMISES_MODULES = new Set([
@@ -23,15 +24,12 @@ function matchIsTimer(node: ESTree.Node | undefined) {
 }
 
 function matchIsInsidePromiseExecutor(node: ESTree.Node) {
-  for (let current = node.parent; current; current = current.parent) {
-    if (matchIsFunction(current)) {
-      return (
-        matchIsPromiseConstructor(current.parent) &&
-        current.parent.arguments[0] === current
-      )
-    }
-  }
-  return false
+  const executor = findEnclosingFunction(node)
+  return (
+    executor !== null &&
+    matchIsPromiseConstructor(executor.parent) &&
+    executor.parent.arguments[0] === executor
+  )
 }
 
 export const noRealTimeWaitInTests = defineRule({
@@ -44,22 +42,11 @@ export const noRealTimeWaitInTests = defineRule({
     schema: []
   },
   createOnce(context) {
-    let isFakingTimers = false
-    let waits: ESTree.Node[] = []
-
-    function reportWaits() {
-      if (isFakingTimers) {
-        return
-      }
-      for (const node of waits) {
-        context.report({ node, messageId: 'realTimeWait' })
-      }
-    }
+    const waits = createClockReport(context, 'realTimeWait')
 
     return {
       before() {
-        isFakingTimers = false
-        waits = []
+        waits.reset()
       },
       ImportDeclaration(node) {
         if (!TIMER_PROMISES_MODULES.has(node.source.value)) {
@@ -72,7 +59,7 @@ export const noRealTimeWaitInTests = defineRule({
               specifier.imported.type === 'Identifier' &&
               TIMER_FUNCTIONS.has(specifier.imported.name))
           ) {
-            waits.push(specifier)
+            waits.collect(specifier)
           }
         }
       },
@@ -81,19 +68,19 @@ export const noRealTimeWaitInTests = defineRule({
           matchIsPromiseConstructor(node) &&
           matchIsTimer(node.arguments[0])
         ) {
-          waits.push(node)
+          waits.collect(node)
         }
       },
       CallExpression(node) {
         if (matchIsViCall(node, FAKE_TIMERS_CALLS)) {
-          isFakingTimers = true
+          waits.markClockFaked()
           return
         }
         if (matchIsTimer(node.callee) && matchIsInsidePromiseExecutor(node)) {
-          waits.push(node)
+          waits.collect(node)
         }
       },
-      'Program:exit': reportWaits
+      'Program:exit': waits.report
     }
   }
 })

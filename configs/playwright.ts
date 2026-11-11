@@ -31,10 +31,7 @@ export default {
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/missing-playwright-await.md
     'playwright/missing-playwright-await': [
       'error',
-      {
-        customMatchers: [],
-        includePageLocatorMethods: true
-      }
+      { includePageLocatorMethods: true }
     ],
 
     // Disallow calling expect conditionally
@@ -83,13 +80,7 @@ export default {
 
     // Disallow usage of the .skip annotation
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-skipped-test.md
-    'playwright/no-skipped-test': [
-      'error',
-      {
-        allowConditional: false,
-        disallowFixme: true
-      }
-    ],
+    'playwright/no-skipped-test': ['error', { disallowFixme: true }],
 
     // Disallow using expect outside of test blocks
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-standalone-expect.md
@@ -157,35 +148,19 @@ export default {
 
     // Enforce valid expect() usage
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/valid-expect.md
-    'playwright/valid-expect': ['error', { minArgs: 1, maxArgs: 2 }],
+    'playwright/valid-expect': 'error',
 
     // Enforce valid tag format in test blocks
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/valid-test-tags.md
-    'playwright/valid-test-tags': [
-      'error',
-      {
-        allowedTags: [],
-        disallowedTags: []
-      }
-    ],
+    'playwright/valid-test-tags': 'error',
 
     // Enforce valid titles
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/valid-title.md
-    'playwright/valid-title': [
-      'error',
-      {
-        ignoreSpaces: false,
-        ignoreTypeOfStepName: true,
-        ignoreTypeOfDescribeName: false,
-        disallowedWords: [],
-        mustNotMatch: {},
-        mustMatch: {}
-      }
-    ],
+    'playwright/valid-title': 'error',
 
     // Enforce a maximum number of assertion calls in a test body
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/max-expects.md
-    'playwright/max-expects': ['error', { max: 5 }],
+    'playwright/max-expects': 'error',
 
     // Disallow commented out tests
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-commented-out-tests.md
@@ -197,7 +172,7 @@ export default {
 
     // Disallow using raw locators
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-raw-locators.md
-    'playwright/no-raw-locators': ['error', { allowed: [] }],
+    'playwright/no-raw-locators': 'error',
 
     // Disallow usage of the .slow annotation
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-slowed-test.md
@@ -213,21 +188,11 @@ export default {
 
     // Enforce lowercase test names
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/prefer-lowercase-title.md
-    'playwright/prefer-lowercase-title': [
-      'error',
-      {
-        ignore: [],
-        allowedPrefixes: [],
-        ignoreTopLevelDescribe: false
-      }
-    ],
+    'playwright/prefer-lowercase-title': 'error',
 
     // Suggest built-in locators over page.locator()
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/prefer-native-locators.md
-    'playwright/prefer-native-locators': [
-      'error',
-      { testIdAttribute: 'data-testid' }
-    ],
+    'playwright/prefer-native-locators': 'error',
 
     // Suggest using toStrictEqual()
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/prefer-strict-equal.md
@@ -243,7 +208,7 @@ export default {
 
     // Require setup and teardown code to be within a hook
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/require-hook.md
-    'playwright/require-hook': ['error', { allowedFunctionCalls: [] }],
+    'playwright/require-hook': 'error',
 
     // Require a message for toThrow()
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/require-to-throw-message.md
@@ -259,7 +224,7 @@ export default {
 
     // Disallow setup and teardown hooks
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-hooks.md
-    'playwright/no-hooks': ['off', { allow: [] }],
+    'playwright/no-hooks': 'off',
 
     // Require assertions to use expect.soft()
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/require-soft-assertions.md
@@ -279,11 +244,47 @@ export default {
 
     // Disallow specific matchers & modifiers
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-restricted-matchers.md
-    'playwright/no-restricted-matchers': ['error', {}],
+    'playwright/no-restricted-matchers': 'error',
 
     // Disallow specific roles in getByRole()
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-restricted-roles.md
-    'playwright/no-restricted-roles': 'off'
+    'playwright/no-restricted-roles': 'off',
+
+    // Disallow the timeout option on an action: set the timeouts once in playwright.config.ts
+    // https://github.com/mskelton/eslint-plugin-playwright/blob/main/docs/rules/no-action-timeout.md
+    'playwright/no-action-timeout': 'error',
+
+    // Disallow an export in a test file
+    // https://github.com/mskelton/eslint-plugin-playwright/blob/main/docs/rules/no-export.md
+    'playwright/no-export': 'error',
+
+    // Disallow two tests with the same title
+    // https://github.com/mskelton/eslint-plugin-playwright/blob/main/docs/rules/no-identical-title.md
+    'playwright/no-identical-title': 'error',
+
+    // Repeats no-magic-numbers, which already reports a timeout written as a number
+    // https://github.com/mskelton/eslint-plugin-playwright/blob/main/docs/rules/no-magic-timeouts.md
+    'playwright/no-magic-timeouts': 'off',
+
+    // A parameterized title in a loop needs a template literal
+    // https://github.com/mskelton/eslint-plugin-playwright/blob/main/docs/rules/no-template-literal-title.md
+    'playwright/no-template-literal-title': 'off',
+
+    // Disallow a return statement in a test
+    // https://github.com/mskelton/eslint-plugin-playwright/blob/main/docs/rules/no-test-return-statement.md
+    'playwright/no-test-return-statement': 'error',
+
+    // Disallow an assertion on a Locator that can never fail
+    // https://github.com/mskelton/eslint-plugin-playwright/blob/main/docs/rules/no-unnecessary-assertions.md
+    'playwright/no-unnecessary-assertions': 'error',
+
+    // Playwright/expect-expect already requires an assertion, and a final cleanup step is legitimate
+    // https://github.com/mskelton/eslint-plugin-playwright/blob/main/docs/rules/prefer-ending-with-an-expect.md
+    'playwright/prefer-ending-with-an-expect': 'off',
+
+    // Require a reason on test.skip() and test.fixme()
+    // https://github.com/mskelton/eslint-plugin-playwright/blob/main/docs/rules/require-annotation-reason.md
+    'playwright/require-annotation-reason': 'error'
   },
   overrides: [
     {

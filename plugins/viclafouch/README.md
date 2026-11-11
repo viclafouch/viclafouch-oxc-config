@@ -132,13 +132,13 @@ function getPrice({ id, currency }: GetPriceParams) {
 A file reads `import.meta.env` in `src/env.ts` only, where one schema checks each variable of the client.
 
 ```ts
-// Fails, in src/lib/naboo.ts
-const endpoint = import.meta.env.VITE_NABOO_API_URL
+// Fails, in src/lib/api.ts
+const endpoint = import.meta.env.VITE_API_URL
 
-// Passes, in src/lib/naboo.ts
+// Passes, in src/lib/api.ts
 import { env } from '#/env'
 
-const endpoint = env.VITE_NABOO_API_URL
+const endpoint = env.VITE_API_URL
 ```
 
 ## functional-update
@@ -438,7 +438,7 @@ export const getEvent = createServerFn().handler(() => findEvent())
 2. Test the rule in `tests/`, with the `RuleTester` of `oxlint/plugins-dev`.
 3. Add the rule to `index.ts`.
 4. Enable the rule at `'error'` in the shared config that owns the convention.
-5. Document the rule in this file, with one failing and one passing example.
+5. Document the rule in this file: its row in **Rules**, and its section with one failing and one passing example.
 
 ## Credits
 

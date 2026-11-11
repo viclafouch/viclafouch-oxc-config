@@ -1,8 +1,7 @@
 import { defineRule, type ESTree } from '@oxlint/plugins'
-import { matchIsUseStateCall } from './helpers/ast'
+import { matchIsBooleanFunctionName, matchIsUseStateCall } from './helpers/ast'
 
 const BOOLEAN_NAME = /^(?:is|has|should|can)[A-Z]|^(?:IS|HAS|SHOULD|CAN)_/u
-const BOOLEAN_CALLEE = /^(?:matchIs|matchAs|matchHas|Boolean$)/u
 const COMPARISON_OPERATORS = new Set<ESTree.BinaryOperator>([
   '===',
   '!==',
@@ -44,7 +43,8 @@ const matchIsBooleanExpression = (node: ESTree.Expression | null): boolean => {
   return (
     node.type === 'CallExpression' &&
     node.callee.type === 'Identifier' &&
-    BOOLEAN_CALLEE.test(node.callee.name)
+    (node.callee.name === 'Boolean' ||
+      matchIsBooleanFunctionName(node.callee.name))
   )
 }
 

@@ -1,0 +1,11 @@
+minimumReleaseAgeExclude:
+  - knip@6.45.1
+peerDependencyRules:
+  allowedVersions:
+    '@typescript-eslint/utils>typescript': '7'
+    '@typescript-eslint/typescript-estree>typescript': '7'
+    '@typescript-eslint/project-service>typescript': '7'
+    '@typescript-eslint/tsconfig-utils>typescript': '7'
+permissions:
+  tsdown:
+    skills: true

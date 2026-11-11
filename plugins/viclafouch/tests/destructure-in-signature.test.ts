@@ -19,6 +19,10 @@ ruleTester.run('destructure-in-signature', destructureInSignature, {
     {
       code: 'const build = (params: BuildParams) => { const { name } = params; return name }',
       errors: [{ messageId: 'destructure' }]
+    },
+    {
+      code: 'const build = (params: BuildParams) => { const { name } = params; const { size } = params; return name + size }',
+      errors: [{ messageId: 'destructure' }, { messageId: 'destructure' }]
     }
   ]
 })

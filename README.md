@@ -1,18 +1,41 @@
 # @viclafouch/oxc-config
 
-Oxlint and oxfmt configuration for a TanStack Start project.
+Oxlint and oxfmt configuration for my TypeScript projects.
 
 ## Setup
 
 1. Install the packages:
 
    ```bash
-   npm install -D @viclafouch/oxc-config oxlint oxfmt oxlint-tsgolint @tanstack/eslint-plugin-query @tanstack/eslint-plugin-router @inlang/paraglide-js
+   pnpm add -D @viclafouch/oxc-config oxlint oxfmt oxlint-tsgolint
    ```
 
 2. Set `"type": "module"` in `package.json`.
 
-3. Create `oxlint.config.ts`:
+3. Pick the configs of your stack:
+
+   | Stack                      | Configs                                                               |
+   | -------------------------- | --------------------------------------------------------------------- |
+   | Next.js                    | `typescript`, `react`, `hooks`, `jsxA11y`, `next`, `imports`          |
+   | React Router or Vite React | `typescript`, `react`, `hooks`, `jsxA11y`, `imports`                  |
+   | TanStack Start             | `typescript`, `react`, `hooks`, `jsxA11y`, `tanstackStart`, `imports` |
+   | React Native               | `typescript`, `react`, `hooks`, `reactNative`, `imports`              |
+   | Node.js or a library       | `typescript`, `imports`                                               |
+
+   Add the config of each tool that the project uses, before `imports`:
+
+   | Tool            | Config           | Plugin to install               |
+   | --------------- | ---------------- | ------------------------------- |
+   | TanStack Query  | `tanstackQuery`  | `@tanstack/eslint-plugin-query` |
+   | Paraglide JS    | `paraglide`      | `@inlang/paraglide-js`          |
+   | Turborepo       | `turbo`          | `eslint-plugin-turbo`           |
+   | Vitest          | `vitest`         |                                 |
+   | Testing Library | `testingLibrary` | `eslint-plugin-testing-library` |
+   | Playwright      | `playwright`     | `eslint-plugin-playwright`      |
+
+   `tanstackStart` needs `@tanstack/eslint-plugin-router`, and `reactNative` needs `eslint-plugin-react-native`.
+
+4. Create `oxlint.config.ts`, here for Next.js:
 
    ```typescript
    import { defineConfig } from 'oxlint'
@@ -21,31 +44,16 @@ Oxlint and oxfmt configuration for a TanStack Start project.
      react,
      hooks,
      jsxA11y,
-     tanstackQuery,
-     tanstackStart,
-     paraglide,
-     imports,
-     vitest
+     next,
+     imports
    } from '@viclafouch/oxc-config'
 
    export default defineConfig({
-     extends: [
-       typescript,
-       react,
-       hooks,
-       jsxA11y,
-       tanstackQuery,
-       tanstackStart,
-       paraglide,
-       imports,
-       vitest
-     ],
-     options: { typeAware: true },
-     ignorePatterns: ['src/routeTree.gen.ts', 'src/paraglide/**']
+     extends: [typescript, react, hooks, jsxA11y, next, imports]
    })
    ```
 
-4. Create `oxfmt.config.ts`:
+5. Create `oxfmt.config.ts`:
 
    ```typescript
    import { defineConfig } from 'oxfmt'
@@ -54,7 +62,7 @@ Oxlint and oxfmt configuration for a TanStack Start project.
    export default defineConfig(oxfmtConfig)
    ```
 
-5. Add the scripts to `package.json`:
+6. Add the scripts to `package.json`:
 
    ```json
    {
@@ -67,9 +75,9 @@ Oxlint and oxfmt configuration for a TanStack Start project.
    }
    ```
 
-Run `npm run lint` to check the project.
+Run `pnpm lint` to check the project.
 
 ## Requirements
 
 - Node.js >= 24.21
-- `oxlint` 1.90 and `oxfmt` 0.75
+- `oxlint` 1.93 and `oxfmt` 0.78

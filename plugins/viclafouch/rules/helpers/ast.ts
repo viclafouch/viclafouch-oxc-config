@@ -44,6 +44,7 @@ export function matchIsViCall(
 export type FunctionNode = ESTree.ArrowFunctionExpression | ESTree.Function
 
 const PASCAL_CASE = /^[A-Z]/u
+const BOOLEAN_FUNCTION_NAME = /^match(?:Is|As|Has)[A-Z]/u
 
 export function matchIsFunction(node: ESTree.Node): node is FunctionNode {
   return (
@@ -55,6 +56,10 @@ export function matchIsFunction(node: ESTree.Node): node is FunctionNode {
 
 export function matchIsPascalCase(name: string) {
   return PASCAL_CASE.test(name)
+}
+
+export function matchIsBooleanFunctionName(name: string) {
+  return BOOLEAN_FUNCTION_NAME.test(name)
 }
 
 export function findEnclosingFunction(node: ESTree.Node) {
@@ -90,11 +95,8 @@ export function getCalleeName(callee: ESTree.Expression) {
   if (callee.type === 'Identifier') {
     return callee.name
   }
-  if (
-    callee.type === 'MemberExpression' &&
-    callee.property.type === 'Identifier'
-  ) {
-    return callee.property.name
+  if (callee.type === 'MemberExpression') {
+    return getPropertyName(callee)
   }
   return null
 }

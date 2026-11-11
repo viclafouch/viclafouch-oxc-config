@@ -39,21 +39,21 @@ export default {
 
     // Detect raw text outside of Text component
     // https://github.com/Intellicode/eslint-plugin-react-native/blob/master/docs/rules/no-raw-text.md
-    'react-native/no-raw-text': ['error', { skip: [] }],
+    'react-native/no-raw-text': 'error',
 
     // Detect single element style arrays
     // https://github.com/Intellicode/eslint-plugin-react-native/blob/master/docs/rules/no-single-element-style-arrays.md
     'react-native/no-single-element-style-arrays': 'error',
 
     // Disable web-specific React rules for React Native
-    // https://oxc.rs/docs/guide/usage/linter/rules/react/button-has-type
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/button-has-type.md
     'react/button-has-type': 'off',
-    // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-no-target-blank
+    // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-no-target-blank.md
     'react/jsx-no-target-blank': 'off',
 
     // Allow useMemo and useCallback in React Native (performance is more critical on mobile)
     // Override no-restricted-imports to remove useMemo/useCallback from the banned list
-    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-restricted-imports
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-restricted-imports.md
     'no-restricted-imports': [
       'error',
       {
@@ -114,6 +114,10 @@ export default {
           }
         ]
       }
-    ]
+    ],
+
+    // An alphabetical order of the style keys adds noise and no value
+    // https://github.com/Intellicode/eslint-plugin-react-native/blob/master/docs/rules/sort-styles.md
+    'react-native/sort-styles': 'off'
   }
 } satisfies OxlintConfig

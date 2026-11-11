@@ -1,5 +1,6 @@
 import { defineRule, type ESTree } from '@oxlint/plugins'
 import { getPropertyName, matchIsViCall } from './helpers/ast'
+import { createClockReport } from './helpers/clock-report'
 
 const WALL_CLOCK_CALLS = new Set([
   'Date.now',
@@ -67,32 +68,21 @@ export const noWallClockInTests = defineRule({
     schema: []
   },
   createOnce(context) {
-    let isFakingClock = false
-    let readings: ESTree.Node[] = []
+    const readings = createClockReport(context, 'wallClock')
 
     function collect(node: ESTree.Node) {
       if (!matchIsMockArgument(node)) {
-        readings.push(node)
-      }
-    }
-
-    function reportReadings() {
-      if (isFakingClock) {
-        return
-      }
-      for (const node of readings) {
-        context.report({ node, messageId: 'wallClock' })
+        readings.collect(node)
       }
     }
 
     return {
       before() {
-        isFakingClock = false
-        readings = []
+        readings.reset()
       },
       CallExpression(node) {
         if (matchIsViCall(node, FAKE_CLOCK_CALLS)) {
-          isFakingClock = true
+          readings.markClockFaked()
           return
         }
         const path = getMemberPath(node.callee)
@@ -109,7 +99,7 @@ export const noWallClockInTests = defineRule({
           collect(node)
         }
       },
-      'Program:exit': reportReadings
+      'Program:exit': readings.report
     }
   }
 })

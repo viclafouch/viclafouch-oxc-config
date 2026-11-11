@@ -23,7 +23,7 @@ ruleTester.run('env-file', envFile, {
     },
     {
       name: 'the parsed env of the app',
-      filename: '/app/src/lib/naboo.ts',
+      filename: '/app/src/lib/api.ts',
       code: "import { env } from '#/env'\nexport const apiUrl = env.VITE_API_URL"
     }
   ],

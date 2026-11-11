@@ -1,5 +1,14 @@
-import { defineRule } from '@oxlint/plugins'
+import { defineRule, type ESTree } from '@oxlint/plugins'
 import { findEnclosingFunction, resolveVariable } from './helpers/ast'
+
+function matchIsDestructuringInit(identifier: ESTree.Node) {
+  const { parent } = identifier
+  return (
+    parent?.type === 'VariableDeclarator' &&
+    parent.init === identifier &&
+    parent.id.type === 'ObjectPattern'
+  )
+}
 
 export const destructureInSignature = defineRule({
   meta: {
@@ -39,10 +48,13 @@ export const destructureInSignature = defineRule({
         }
 
         const variable = resolveVariable(context.sourceCode, initializer)
-        const isReadElsewhere =
-          variable !== null && variable.references.length > 1
+        const isOnlyDestructured =
+          variable === null ||
+          variable.references.every((reference) => {
+            return matchIsDestructuringInit(reference.identifier)
+          })
 
-        if (!isReadElsewhere) {
+        if (isOnlyDestructured) {
           context.report({ node, messageId: 'destructure' })
         }
       }

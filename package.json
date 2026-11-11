@@ -16,15 +16,15 @@
     "tanstack-start",
     "typescript"
   ],
-  "homepage": "https://github.com/viclafouch/oxc-config#readme",
+  "homepage": "https://github.com/viclafouch/viclafouch-oxc-config#readme",
   "bugs": {
-    "url": "https://github.com/viclafouch/oxc-config/issues"
+    "url": "https://github.com/viclafouch/viclafouch-oxc-config/issues"
   },
   "license": "MIT",
   "author": "Victor de la Fouchardiere <victor.delafouchardiere@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/viclafouch/oxc-config.git"
+    "url": "git+https://github.com/viclafouch/viclafouch-oxc-config.git"
   },
   "files": [
     "dist",
@@ -48,13 +48,14 @@
     "typecheck": "tsc --noEmit",
     "lint": "tsdown && oxlint && oxfmt --check",
     "lint:fix": "tsdown && oxlint --fix && oxfmt",
-    "prepublishOnly": "tsdown",
-    "bump": "npm version minor",
-    "release": "npm publish"
+    "knip": "knip && knip --strict",
+    "prepublishOnly": "pnpm lint && pnpm typecheck && pnpm knip && pnpm test",
+    "bump": "pnpm version minor",
+    "release": "pnpm publish"
   },
   "dependencies": {
-    "@oxlint/plugins": "~1.90.0",
-    "oxlint-plugin-react-doctor": "^0.9.18"
+    "@oxlint/plugins": "~1.93.0",
+    "oxlint-plugin-react-doctor": "^0.9.22"
   },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.5",
@@ -66,9 +67,10 @@
     "eslint-plugin-react-native": "^5.0.0",
     "eslint-plugin-testing-library": "^7.16.2",
     "eslint-plugin-turbo": "^2.11.10",
-    "oxfmt": "~0.75.0",
-    "oxlint": "~1.90.0",
-    "oxlint-tsgolint": "^7.0.2005",
+    "knip": "^6.45.1",
+    "oxfmt": "~0.78.0",
+    "oxlint": "~1.93.0",
+    "oxlint-tsgolint": "^7.0.2006",
     "publint": "^0.3.25",
     "tsdown": "^0.23.4",
     "typescript": "^7.0.2",
@@ -82,8 +84,8 @@
     "eslint-plugin-react-native": ">= 5",
     "eslint-plugin-testing-library": ">= 7",
     "eslint-plugin-turbo": ">= 2",
-    "oxfmt": "~0.75.0",
-    "oxlint": "~1.90.0",
+    "oxfmt": "~0.78.0",
+    "oxlint": "~1.93.0",
     "typescript": ">= 5"
   },
   "peerDependenciesMeta": {
@@ -114,5 +116,6 @@
   },
   "engines": {
     "node": ">=24.21"
-  }
+  },
+  "packageManager": "pnpm@12.16.1"
 }

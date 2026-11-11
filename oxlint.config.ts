@@ -6,7 +6,6 @@ import vitest from './configs/vitest.ts'
 export default defineConfig({
   extends: [typescript, imports, vitest],
   options: {
-    typeAware: true,
     reportUnusedDisableDirectives: 'error',
     maxWarnings: 0
   },
@@ -19,7 +18,8 @@ export default defineConfig({
     {
       files: ['configs/**', 'formatting/**'],
       rules: {
-        'viclafouch/comment-policy': 'off'
+        'viclafouch/comment-policy': 'off',
+        'max-lines': 'off'
       }
     },
     {

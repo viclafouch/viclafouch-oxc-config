@@ -50,7 +50,7 @@ export const oxfmtConfig = {
         groupName: 'frameworks',
         elementNamePattern: ['next', 'next/**', '@remix**', 'expo', 'expo-**']
       },
-      // aliases BEFORE unscoped — prevents alias paths from matching [!@]*
+      // Aliases come before unscoped packages, so an alias path never matches [!@]*
       {
         groupName: 'aliases',
         elementNamePattern: ['@/*', '@/**', '~/*', '~**/*', '#/*', '#/**']

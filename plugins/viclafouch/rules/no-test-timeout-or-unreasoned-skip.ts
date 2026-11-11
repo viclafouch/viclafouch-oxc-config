@@ -1,6 +1,7 @@
 import { defineRule, type ESTree } from '@oxlint/plugins'
 import { getPropertyName, matchIsFunction, matchIsViCall } from './helpers/ast'
-import { TICKET_REFERENCE } from './helpers/ticket-reference'
+
+const TICKET_REFERENCE = /[A-Z][A-Z0-9]+-\d+|#\d+|https?:\/\/\S+/u
 
 const TEST_FUNCTIONS = new Set(['describe', 'it', 'suite', 'test'])
 const HOOK_FUNCTIONS = new Set([
