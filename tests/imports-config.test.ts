@@ -67,5 +67,37 @@ describe('imports config', () => {
 
       expect(diagnostics).toStrictEqual([])
     })
+
+    it('passes a markdown import with the raw suffix of Vite', () => {
+      const diagnostics = lintFile(workDir, {
+        rule: EXTENSIONS,
+        filename: 'legal-page.ts',
+        code: "import terms from './legal/terms.md?raw'\n\nexport const TERMS = terms\n"
+      })
+
+      expect(diagnostics).toStrictEqual([])
+    })
+
+    it('passes a worker script import with the url suffix of Vite', () => {
+      const diagnostics = lintFile(workDir, {
+        rule: EXTENSIONS,
+        filename: 'player.ts',
+        code: "import workerUrl from './hls.worker.js?url'\n\nexport const WORKER_URL = workerUrl\n"
+      })
+
+      expect(diagnostics).toStrictEqual([])
+    })
+
+    it('fails a script import that keeps its extension', () => {
+      const diagnostics = lintFile(workDir, {
+        rule: EXTENSIONS,
+        filename: 'cart.ts',
+        code: "import { formatPrice } from './price.js'\n\nexport const PRICE = formatPrice(1)\n"
+      })
+
+      expect(diagnostics).toStrictEqual([
+        expect.objectContaining({ code: EXTENSIONS, severity: 'error' })
+      ])
+    })
   })
 })

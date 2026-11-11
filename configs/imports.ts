@@ -87,22 +87,20 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-relative-parent-imports.md
     'import/no-relative-parent-imports': 'error',
 
-    // Disallow the extension of a script import, and require it on an asset import (styles, images, fonts, JSON)
+    // Disallow the extension of a script import, and require it on an asset import (styles, images, fonts, JSON), except an import with a Vite suffix such as ?raw or ?url. The extensions sit at the root of the options: under pattern, oxlint drops pathGroupOverrides
     // https://oxc.rs/docs/guide/usage/linter/rules/import/extensions.md
     'import/extensions': [
       'error',
       'never',
       {
-        pathGroupOverrides: [],
-        pattern: {
-          css: 'always',
-          json: 'always',
-          png: 'always',
-          scss: 'always',
-          svg: 'always',
-          webp: 'always',
-          woff2: 'always'
-        }
+        css: 'always',
+        json: 'always',
+        png: 'always',
+        scss: 'always',
+        svg: 'always',
+        webp: 'always',
+        woff2: 'always',
+        pathGroupOverrides: [{ pattern: '**/*[?]*', action: 'ignore' }]
       }
     ],
 

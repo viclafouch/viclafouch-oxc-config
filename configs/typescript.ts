@@ -158,9 +158,9 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-import-assign.md
     'no-import-assign': 'error',
 
-    // Disallow variable or function declarations in nested blocks
+    // Disallow function declarations in nested blocks: no-var already rejects a var, and a declare global needs one
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-inner-declarations.md
-    'no-inner-declarations': ['error', 'both'],
+    'no-inner-declarations': 'error',
 
     // Disallow usage of __iterator__ property
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-iterator.md
@@ -1948,9 +1948,12 @@ export default {
       { allowEmptyReject: true }
     ],
 
-    // Require an Error as a thrown value: any other value carries no stack trace
+    // Require an Error as a thrown value, an any or unknown value included: any other value carries no stack trace
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/only-throw-error.md
-    '@typescript-eslint/only-throw-error': 'error',
+    '@typescript-eslint/only-throw-error': [
+      'error',
+      { allowThrowingAny: false, allowThrowingUnknown: false }
+    ],
 
     // Forbid delete on arrays (use splice instead)
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-array-delete.md

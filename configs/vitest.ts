@@ -1,5 +1,5 @@
 import type { OxlintConfig } from 'oxlint'
-import { TEST_FILES } from './globs/index.ts'
+import { E2E_FILES, TEST_FILES } from './globs/index.ts'
 import { VICLAFOUCH_PLUGIN } from './js-plugins/index.ts'
 
 /**
@@ -15,9 +15,10 @@ export default {
   jsPlugins: [VICLAFOUCH_PLUGIN],
   overrides: [
     {
-      // Vitest rules apply to test files only, so a script or a CLI keeps its top-level calls
+      // Vitest rules apply to test files only, so a script or a CLI keeps its top-level calls, and a Playwright spec of E2E_FILES gets the playwright config instead
       // A local override on TEST_FILES needs plugins: ['vitest'], else oxlint ignores its vitest rules
       files: [...TEST_FILES],
+      excludeFiles: [...E2E_FILES],
       plugins: ['vitest'],
       rules: {
         // Disallow conditional logic in tests: tests must be deterministic

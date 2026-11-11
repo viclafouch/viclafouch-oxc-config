@@ -51,7 +51,9 @@ export default {
             package: '@tanstack/router-core',
             name: ['Redirect', 'NotFoundError']
           }
-        ]
+        ],
+        allowThrowingAny: false,
+        allowThrowingUnknown: false
       }
     ],
 

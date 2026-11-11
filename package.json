@@ -1,6 +1,6 @@
 {
   "name": "@viclafouch/oxc-config",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Oxlint and Oxfmt configuration for modern TypeScript, React, Next.js, TanStack Start, and React Native projects.",
   "keywords": [
     "config",

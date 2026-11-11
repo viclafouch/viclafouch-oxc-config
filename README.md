@@ -35,6 +35,8 @@ Oxlint and oxfmt configuration for my TypeScript projects.
 
    `tanstackStart` needs `@tanstack/eslint-plugin-router`, and `reactNative` needs `eslint-plugin-react-native`.
 
+   `vitest` lints the `*.test.ts` files, and `playwright` lints the `*.spec.ts` files and the `e2e/` folder.
+
 4. Create `oxlint.config.ts`, here for Next.js:
 
    ```typescript

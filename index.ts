@@ -15,4 +15,4 @@ export { default as vitest } from './configs/vitest'
 export { default as testingLibrary } from './configs/testing-library'
 export { default as playwright } from './configs/playwright'
 
-export { TEST_FILES } from './configs/globs'
+export { E2E_FILES, TEST_FILES } from './configs/globs'

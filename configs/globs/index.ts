@@ -23,8 +23,13 @@ export const COMMONJS_CONFIG_FILES = [
 ] as const satisfies readonly string[]
 
 export const TEST_FILES: OxlintOverride['files'] = [
-  '**/*.{test,spec,test-d,fixture}.{ts,tsx,mts,cts}',
+  '**/*.{test,test-d,fixture}.{ts,tsx,mts,cts}',
   '**/tests/**',
   '**/__tests__/**',
   '**/__mocks__/**'
+]
+
+export const E2E_FILES: OxlintOverride['files'] = [
+  '**/*.spec.{ts,tsx,mts,cts}',
+  '**/e2e/**'
 ]

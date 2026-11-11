@@ -26,7 +26,7 @@ describe('vitest config', () => {
     rmSync(workDir, { recursive: true, force: true })
   })
 
-  it.each(['sum.test.ts', 'sum.spec.tsx', 'sum.fixture.ts'])(
+  it.each(['sum.test.ts', 'sum.fixture.ts', 'tests/sum.ts'])(
     'checks the test file %s',
     (filename) => {
       const diagnostics = lintFile(workDir, {
@@ -38,6 +38,19 @@ describe('vitest config', () => {
       expect(diagnostics).toStrictEqual([
         expect.objectContaining({ code: PREFER_TO_BE, severity: 'error' })
       ])
+    }
+  )
+
+  it.each(['home.spec.ts', 'e2e/home.ts', 'tests/home.spec.tsx'])(
+    'leaves the Playwright spec %s to the playwright config',
+    (filename) => {
+      const diagnostics = lintFile(workDir, {
+        rule: NO_WALL_CLOCK,
+        filename,
+        code: WALL_CLOCK_READING
+      })
+
+      expect(diagnostics).toStrictEqual([])
     }
   )
 

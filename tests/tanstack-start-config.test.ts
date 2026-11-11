@@ -1,5 +1,5 @@
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { join } from 'node:path'
 import { createLintWorkDir, lintFile } from './lint-file'
 
 const FILENAME_CASE = 'unicorn(filename-case)'
@@ -20,7 +20,6 @@ describe('tanstackStart config', () => {
   let workDir: string
 
   const lintAppFile = (rule: string, filename: string, code: string) => {
-    mkdirSync(join(workDir, dirname(filename)), { recursive: true })
     return lintFile(workDir, { rule, filename, code })
   }
 

@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process'
-import { mkdtempSync, writeFileSync } from 'node:fs'
-import { join, resolve } from 'node:path'
+import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
+import { dirname, join, resolve } from 'node:path'
 
 const ROOT = resolve(import.meta.dirname, '..')
 
@@ -56,7 +56,9 @@ export function lintFile(
   workDir: string,
   { rule, filename, code }: LintFileParams
 ): Diagnostic[] {
-  writeFileSync(join(workDir, filename), code)
+  const filePath = join(workDir, filename)
+  mkdirSync(dirname(filePath), { recursive: true })
+  writeFileSync(filePath, code)
   try {
     execFileSync(
       'oxlint',
