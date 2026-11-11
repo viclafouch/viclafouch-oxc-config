@@ -16,14 +16,11 @@ export default {
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/consistent-spacing-between-blocks.md
     'playwright/consistent-spacing-between-blocks': 'error',
 
-    // Enforce assertion to be made in a test body
+    // Enforce an assertion in each test body: a helper named expect* counts as one
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/expect-expect.md
     'playwright/expect-expect': [
       'error',
-      {
-        assertFunctionNames: [],
-        assertFunctionPatterns: []
-      }
+      { assertFunctionPatterns: ['^expect[A-Z]'] }
     ],
 
     // Enforce a maximum depth to nested describe calls
@@ -204,7 +201,7 @@ export default {
 
     // Disallow usage of the .slow annotation
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-slowed-test.md
-    'playwright/no-slowed-test': ['error', { allowConditional: false }],
+    'playwright/no-slowed-test': 'error',
 
     // Suggest using the built-in comparison matchers
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/prefer-comparison-matcher.md
@@ -254,10 +251,7 @@ export default {
 
     // Require test cases and hooks to be inside a test.describe block
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/require-top-level-describe.md
-    'playwright/require-top-level-describe': [
-      'error',
-      { maxTopLevelDescribes: 4_294_967_295 }
-    ],
+    'playwright/require-top-level-describe': 'error',
 
     // Disallow using getByTitle()
     // https://github.com/playwright-community/eslint-plugin-playwright/blob/main/docs/rules/no-get-by-title.md

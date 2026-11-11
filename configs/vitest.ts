@@ -1,5 +1,6 @@
 import type { OxlintConfig } from 'oxlint'
 import { TEST_FILES } from './globs/index.ts'
+import { VICLAFOUCH_PLUGIN } from './js-plugins/index.ts'
 
 /**
  * Vitest testing rules (test quality, mocking patterns, assertion style).
@@ -11,6 +12,7 @@ import { TEST_FILES } from './globs/index.ts'
  * ```
  */
 export default {
+  jsPlugins: [VICLAFOUCH_PLUGIN],
   overrides: [
     {
       // Vitest rules apply to test files only, so a script or a CLI keeps its top-level calls
@@ -279,7 +281,7 @@ export default {
         // https://oxc.rs/docs/guide/usage/linter/rules/vitest/prefer-todo
         'vitest/prefer-todo': 'error',
 
-        // Disallow .skip and xdescribe — legitimate during development
+        // Superseded by viclafouch/no-test-timeout-or-unreasoned-skip, which accepts a skip with its ticket
         // https://oxc.rs/docs/guide/usage/linter/rules/vitest/no-disabled-tests
         'vitest/no-disabled-tests': 'off',
 
@@ -381,7 +383,23 @@ export default {
 
         // A test attaches catch() to a pending promise, then drives the promise with act() before the promise settles
         // https://oxc.rs/docs/guide/usage/linter/rules/promise/prefer-await-to-then
-        'promise/prefer-await-to-then': 'off'
+        'promise/prefer-await-to-then': 'off',
+
+        // Disallow a per-test timeout or retry, and a skip without its ticket
+        // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#no-test-timeout-or-unreasoned-skip
+        'viclafouch/no-test-timeout-or-unreasoned-skip': 'error',
+
+        // Disallow a real clock reading, such as Date.now(), new Date() or process.hrtime(), in a test that does not fake the clock
+        // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#no-wall-clock-in-tests
+        'viclafouch/no-wall-clock-in-tests': 'error',
+
+        // Disallow a sleep on a real timer in a test that does not fake the timers
+        // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#no-real-time-wait-in-tests
+        'viclafouch/no-real-time-wait-in-tests': 'error',
+
+        // Disallow a per-file environment and a DOM emulator: a DOM test runs in Vitest browser mode
+        // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#no-dom-test-environment
+        'viclafouch/no-dom-test-environment': 'error'
       }
     }
   ]

@@ -112,8 +112,8 @@ export function createTypeBindings() {
   const collectTypeParameterNames = (use: ESTree.Node) => {
     const names = new Set<string>()
     let descendant = use
-    let current: ESTree.Node = use
-    while (current.type !== 'Program') {
+    let current: ESTree.Node | null = use
+    while (current && current.type !== 'Program') {
       if ('typeParameters' in current) {
         for (const parameter of current.typeParameters?.params ?? []) {
           names.add(parameter.name.name)
@@ -177,12 +177,9 @@ export function createTypeBindings() {
       resolvingAliases: ReadonlySet<ESTree.TSTypeAliasDeclaration>
     ): boolean => {
       const name = getTypeReferenceName(current)
-      if (current.type === 'TSTypeReference' && name !== null) {
+      if (current.type === 'TSTypeReference' && name) {
         const substitution = substitutions.get(name)
-        if (
-          substitution !== undefined &&
-          (current.typeArguments?.params.length ?? 0) === 0
-        ) {
+        if (substitution && !current.typeArguments?.params.length) {
           return evaluate(
             substitution.type,
             substitution.substitutions,

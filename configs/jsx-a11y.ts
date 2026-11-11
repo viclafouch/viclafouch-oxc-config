@@ -149,7 +149,7 @@ export default {
 
     // Enforce redundant roles are not used
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-redundant-roles
-    'jsx-a11y/no-redundant-roles': ['error', { allowedRedundantRoles: [] }],
+    'jsx-a11y/no-redundant-roles': 'error',
 
     // Enforce non-interactive elements have no role
     // https://oxc.rs/docs/guide/usage/linter/rules/jsx_a11y/no-static-element-interactions

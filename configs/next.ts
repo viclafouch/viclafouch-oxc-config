@@ -43,33 +43,33 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-async-client-component
     'nextjs/no-async-client-component': 'error',
 
-    // Disallow next/script's beforeInteractive strategy outside of _document
+    // Disallow next/script's beforeInteractive strategy outside of _document (disabled - App Router only)
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-before-interactive-script-outside-document
-    'nextjs/no-before-interactive-script-outside-document': 'error',
+    'nextjs/no-before-interactive-script-outside-document': 'off',
 
     // Disallow manual stylesheet tags
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-css-tags
     'nextjs/no-css-tags': 'error',
 
-    // Disallow importing next/document outside of pages/_document.js
+    // Disallow importing next/document outside of pages/_document.js (disabled - App Router only)
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-document-import-in-page
-    'nextjs/no-document-import-in-page': 'error',
+    'nextjs/no-document-import-in-page': 'off',
 
-    // Disallow duplicate usage of <Head> in pages/_document.js
+    // Disallow duplicate usage of <Head> in pages/_document.js (disabled - App Router only)
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-duplicate-head
-    'nextjs/no-duplicate-head': 'error',
+    'nextjs/no-duplicate-head': 'off',
 
-    // Disallow using <head> element
+    // Disallow using <head> element (disabled - App Router uses metadata export)
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-head-element
-    'nextjs/no-head-element': 'error',
+    'nextjs/no-head-element': 'off',
 
-    // Disallow importing next/head in pages/_document.js
+    // Disallow importing next/head in pages/_document.js (disabled - App Router only)
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-head-import-in-document
-    'nextjs/no-head-import-in-document': 'error',
+    'nextjs/no-head-import-in-document': 'off',
 
-    // Disallow using <a> for internal Next.js links
+    // Disallow using <a> for internal Next.js links (disabled - too many false positives)
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-html-link-for-pages
-    'nextjs/no-html-link-for-pages': 'error',
+    'nextjs/no-html-link-for-pages': 'off',
 
     // Disallow using <img> element
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-img-element
@@ -79,21 +79,21 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-page-custom-font
     'nextjs/no-page-custom-font': 'off',
 
-    // Disallow using next/script inside next/head
+    // Disallow using next/script inside next/head (disabled - App Router uses metadata)
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-script-component-in-head
-    'nextjs/no-script-component-in-head': 'error',
+    'nextjs/no-script-component-in-head': 'off',
 
-    // Disallow using styled-jsx in pages/_document.js
+    // Disallow using styled-jsx in pages/_document.js (disabled - no _document, no styled-jsx)
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-styled-jsx-in-document
-    'nextjs/no-styled-jsx-in-document': 'error',
+    'nextjs/no-styled-jsx-in-document': 'off',
 
-    // Disallow synchronous scripts
+    // Disallow synchronous scripts (disabled - next/script handles this)
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-sync-scripts
-    'nextjs/no-sync-scripts': 'error',
+    'nextjs/no-sync-scripts': 'off',
 
-    // Disallow using <title> with Head component outside of pages/_document.js
+    // Disallow using <title> with Head component outside of pages/_document.js (disabled - App Router only)
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-title-in-document-head
-    'nextjs/no-title-in-document-head': 'error',
+    'nextjs/no-title-in-document-head': 'off',
 
     // Disallow common typos in Next.js data fetching functions
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-typos
@@ -103,9 +103,9 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/nextjs/no-unwanted-polyfillio
     'nextjs/no-unwanted-polyfillio': 'error',
 
-    // Require a Suspense boundary around useSearchParams, or Next.js renders the whole route on the client
+    // Flags a dynamic route, where useSearchParams renders on the server, and next build already fails a prerendered one
     // https://www.react.doctor/prompts/rules/react-doctor/nextjs-no-use-search-params-without-suspense.md
-    'react-doctor/nextjs-no-use-search-params-without-suspense': 'error',
+    'react-doctor/nextjs-no-use-search-params-without-suspense': 'off',
 
     // Disallow redirect() and notFound() in a try block: the catch swallows the navigation
     // https://www.react.doctor/prompts/rules/react-doctor/nextjs-no-redirect-in-try-catch.md

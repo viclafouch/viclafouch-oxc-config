@@ -1,5 +1,6 @@
 import type { OxlintConfig } from 'oxlint'
 import { COMMONJS_CONFIG_FILES } from './globs/index.ts'
+import { VICLAFOUCH_PLUGIN } from './js-plugins/index.ts'
 
 /**
  * Required base config. TypeScript, core, unicorn, oxc, node and promise rules.
@@ -11,12 +12,7 @@ import { COMMONJS_CONFIG_FILES } from './globs/index.ts'
  */
 export default {
   plugins: ['typescript', 'unicorn', 'node', 'promise'],
-  jsPlugins: [
-    {
-      name: 'viclafouch',
-      specifier: '@viclafouch/oxc-config/plugins/viclafouch'
-    }
-  ],
+  jsPlugins: [VICLAFOUCH_PLUGIN],
   env: {
     browser: true,
     node: true,
@@ -183,11 +179,7 @@ export default {
 
     // Disallow variable or function declarations in nested blocks
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-inner-declarations
-    'no-inner-declarations': [
-      'error',
-      'both',
-      { blockScopedFunctions: 'allow', namespaces: 'allow' }
-    ],
+    'no-inner-declarations': ['error', 'both'],
 
     // Disallow usage of __iterator__ property
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-iterator
@@ -289,9 +281,9 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unreachable
     'no-unreachable': 'error',
 
-    // Disallow loops that can only ever run one iteration (nursery)
+    // Disallow loops whose body allows only one iteration (usually accidental)
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unreachable-loop
-    'no-unreachable-loop': ['error', { ignore: [] }],
+    'no-unreachable-loop': 'error',
 
     // Disallow unused labels
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-labels
@@ -445,7 +437,7 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/one-var
     'one-var': ['error', 'never'],
 
-    // Most common naming that is not always understandable
+    // Disallow the short names that hide their meaning: err, cb, arr, acc, idx, ctx, res, val, obj, el, elem, req, str
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/id-denylist
     'id-denylist': [
       'error',
@@ -553,6 +545,23 @@ export default {
     // Disallow @nocommit comments to prevent committing temporary code
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-warning-comments
     'no-warning-comments': ['error', { terms: ['@nocommit'] }],
+
+    // Name each number but -1, 0, 1 and 2 in a constant: an index, a default value, an enum and a numeric type stay literal
+    // https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-magic-numbers
+    'no-magic-numbers': [
+      'error',
+      {
+        ignore: [-1, 0, 1, 2],
+        ignoreArrayIndexes: true,
+        ignoreDefaultValues: true,
+        ignoreClassFieldInitialValues: true,
+        ignoreEnums: true,
+        ignoreNumericLiteralTypes: true,
+        ignoreReadonlyClassProperties: true,
+        ignoreTypeIndexes: true,
+        enforceConst: true
+      }
+    ],
 
     // Require a getter for each setter
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/accessor-pairs
@@ -770,12 +779,11 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/oxc/branches-sharing-code
     'oxc/branches-sharing-code': 'error',
 
-    // Enforce kebab-case for filenames
+    // Name each file in kebab-case, except the route files of a framework: $param.tsx, [slug].tsx, [...catchAll].tsx
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/filename-case
-    // ignore: framework conventions ($param.tsx, [slug].tsx, [...catchAll].tsx)
     'unicorn/filename-case': [
       'error',
-      { case: 'kebabCase', ignore: ['^[\\[$]'] }
+      { case: 'kebabCase', ignore: [String.raw`^[\[$]`] }
     ],
 
     // Disallow creating a variable and immediately mutating it
@@ -790,11 +798,11 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-class-fields
     'unicorn/prefer-class-fields': 'error',
 
-    // Prefer Array#toReversed() over Array#reverse() to avoid mutation
+    // Prefer Array#toReversed() over Array#reverse(), which mutates the array
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-array-reverse
     'unicorn/no-array-reverse': ['error', { allowExpressionStatement: true }],
 
-    // Prefer Array#toSorted() over Array#sort() to avoid mutation
+    // Prefer Array#toSorted() over Array#sort(), which mutates the array
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/no-array-sort
     'unicorn/no-array-sort': [
       'error',
@@ -813,9 +821,9 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-array-find
     'unicorn/prefer-array-find': 'error',
 
-    // Deprecated in oxlint v1.70 — replaced by type-aware @typescript-eslint/prefer-string-starts-ends-with
+    // Prefer startsWith() and endsWith() over regex or slice comparisons
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-string-starts-ends-with
-    'unicorn/prefer-string-starts-ends-with': 'off',
+    'unicorn/prefer-string-starts-ends-with': 'error',
 
     // Prefer .at() for accessing elements by negative index
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-at
@@ -1079,8 +1087,7 @@ export default {
       {
         allowShortCircuit: false,
         allowTernary: false,
-        allowTaggedTemplates: false,
-        ignoreDirectives: false
+        allowTaggedTemplates: false
       }
     ],
 
@@ -1178,10 +1185,7 @@ export default {
 
     // Disallow unnecessarily defining types for simple inferred values
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-inferrable-types
-    '@typescript-eslint/no-inferrable-types': [
-      'error',
-      { ignoreParameters: true }
-    ],
+    '@typescript-eslint/no-inferrable-types': 'error',
 
     // Disallow TypeScript namespaces
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-namespace
@@ -1220,14 +1224,11 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-dynamic-delete
     '@typescript-eslint/no-dynamic-delete': 'error',
 
-    // Disallow void type outside return positions and generics
+    // Disallow void type outside return types and generics
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-invalid-void-type
     '@typescript-eslint/no-invalid-void-type': [
       'error',
-      {
-        allowAsThisParameter: false,
-        allowInGenericTypeArguments: true
-      }
+      { allowAsThisParameter: false }
     ],
 
     // Disallow non-null assertion operator (!)
@@ -1285,13 +1286,12 @@ export default {
         allowFunctionParams: true,
         allowInArrayDestructuring: true,
         allowInObjectDestructuring: true,
-        allowInUsingDeclarations: false,
         enforceInClassFields: false,
         enforceInMethodNames: false
       }
     ],
 
-    // Enforce the u or v flag on regular expressions for proper Unicode handling
+    // Enforce u/v flag on regular expressions for proper Unicode handling
     // https://oxc.rs/docs/guide/usage/linter/rules/eslint/require-unicode-regexp
     'require-unicode-regexp': 'error',
 
@@ -1585,7 +1585,7 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-keyboard-event-key
     'unicorn/prefer-keyboard-event-key': 'error',
 
-    // Prefer querySelector()/querySelectorAll() over getElementById()/getElementsByClassName()
+    // Prefer querySelector over getElementById
     // https://oxc.rs/docs/guide/usage/linter/rules/unicorn/prefer-query-selector
     'unicorn/prefer-query-selector': ['error', { allowWithVariables: false }],
 
@@ -1793,6 +1793,34 @@ export default {
     // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#no-known-value-widening
     'viclafouch/no-known-value-widening': 'error',
 
+    // Require the reason of each disable directive: `// oxlint-disable-next-line <rule> -- <reason>`
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#require-suppression-reason
+    'viclafouch/require-suppression-reason': 'error',
+
+    // Ship zero comments, and disable a rule on one line, never on a whole file: the naming carries the intent
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#comment-policy
+    'viclafouch/comment-policy': 'error',
+
+    // Name a boolean is*, has*, should* or can*
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#boolean-name
+    'viclafouch/boolean-name': 'error',
+
+    // Name a type guard matchIs*, matchAs* or matchHas*
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#boolean-function-name
+    'viclafouch/boolean-function-name': 'error',
+
+    // Put the optional properties of a *Params or *Props type after the required ones
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#optional-last
+    'viclafouch/optional-last': 'error',
+
+    // Name the params object type of a function *Params, instead of an inline type
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#params-type-name
+    'viclafouch/params-type-name': 'error',
+
+    // Destructure the params in the function signature, not in its body
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#destructure-in-signature
+    'viclafouch/destructure-in-signature': 'error',
+
     // Enforce type argument on constructor call, not annotation
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/consistent-generic-constructors
     '@typescript-eslint/consistent-generic-constructors': [
@@ -1865,23 +1893,9 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-floating-promises
     '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true }],
 
-    // Detect Promises in conditions or void callbacks
+    // Forbid a promise where the code expects a boolean or a void callback, such as an async onClick: its rejection goes unhandled
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-misused-promises
-    '@typescript-eslint/no-misused-promises': [
-      'error',
-      {
-        checksConditionals: true,
-        checksSpreads: true,
-        checksVoidReturn: {
-          arguments: true,
-          attributes: true,
-          inheritedMethods: true,
-          properties: true,
-          returns: true,
-          variables: true
-        }
-      }
-    ],
+    '@typescript-eslint/no-misused-promises': 'error',
 
     // Require a .catch() callback to type its error as unknown, as a catch clause of TypeScript does
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/use-unknown-in-catch-callback-variable
@@ -1894,17 +1908,9 @@ export default {
       { allowEmptyReject: true }
     ],
 
-    // Force throw new Error() (type-aware version of no-throw-literal)
+    // Require an Error as a thrown value: any other value carries no stack trace
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/only-throw-error
-    '@typescript-eslint/only-throw-error': [
-      'error',
-      {
-        allow: [],
-        allowRethrowing: true,
-        allowThrowingAny: false,
-        allowThrowingUnknown: false
-      }
-    ],
+    '@typescript-eslint/only-throw-error': 'error',
 
     // Forbid delete on arrays (use splice instead)
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-array-delete
@@ -1930,19 +1936,7 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-nullish-coalescing
     '@typescript-eslint/prefer-nullish-coalescing': [
       'error',
-      {
-        ignoreBooleanCoercion: false,
-        ignoreConditionalTests: true,
-        ignoreIfStatements: false,
-        ignoreMixedLogicalExpressions: false,
-        ignorePrimitives: {
-          bigint: true,
-          boolean: true,
-          number: true,
-          string: true
-        },
-        ignoreTernaryTests: false
-      }
+      { ignorePrimitives: true }
     ],
 
     // Forbid duplicate members in union/intersection types
@@ -1969,12 +1963,9 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-call
     '@typescript-eslint/no-unsafe-call': 'error',
 
-    // Disallow property access on any
+    // Forbid reading a member of an any value
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-member-access
-    '@typescript-eslint/no-unsafe-member-access': [
-      'error',
-      { allowOptionalChaining: false }
-    ],
+    '@typescript-eslint/no-unsafe-member-access': 'error',
 
     // Forbid returning an any value from a function
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-return
@@ -1983,6 +1974,10 @@ export default {
     // Forbid comparing an enum to a value outside it, such as the same enum declared twice
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-enum-comparison
     '@typescript-eslint/no-unsafe-enum-comparison': 'error',
+
+    // Forbid a raw number or string where an enum is expected: use the enum member
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-enum-assignment
+    '@typescript-eslint/no-unsafe-enum-assignment': 'error',
 
     // Forbid an `as` that narrows a type: a type guard proves what the assertion only claims
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-type-assertion
@@ -1996,12 +1991,9 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-type-conversion
     '@typescript-eslint/no-unnecessary-type-conversion': 'error',
 
-    // Detect as/! assertions that don't change the type
+    // Forbid an assertion to the type that the value or its receiver already has
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-type-assertion
-    '@typescript-eslint/no-unnecessary-type-assertion': [
-      'error',
-      { checkLiteralConstAssertions: false, typesToIgnore: [] }
-    ],
+    '@typescript-eslint/no-unnecessary-type-assertion': 'error',
 
     // Forbid a type argument equal to the default of its type parameter
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-type-arguments
@@ -2009,13 +2001,7 @@ export default {
 
     // Forbid comparing a boolean to true or false. A nullable boolean keeps its comparison
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-boolean-literal-compare
-    '@typescript-eslint/no-unnecessary-boolean-literal-compare': [
-      'error',
-      {
-        allowComparingNullableBooleansToTrue: true,
-        allowComparingNullableBooleansToFalse: true
-      }
-    ],
+    '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
 
     // Forbid a template literal that wraps one expression and adds no text
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-template-expression
@@ -2028,149 +2014,6 @@ export default {
     // Forbid unnecessary namespace qualifiers when the name is already in scope
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-qualifier
     '@typescript-eslint/no-unnecessary-qualifier': 'error',
-
-    // Prefer a?.b over a && a.b
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-optional-chain
-    '@typescript-eslint/prefer-optional-chain': [
-      'error',
-      {
-        checkAny: true,
-        checkBigInt: true,
-        checkBoolean: true,
-        checkNumber: true,
-        checkString: true,
-        checkUnknown: true,
-        requireNullish: false,
-        allowPotentiallyUnsafeFixesThatModifyTheReturnTypeIKnowWhatImDoing: false
-      }
-    ],
-
-    // Verify getter/setter type coherence
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/related-getter-setter-pairs
-    '@typescript-eslint/related-getter-setter-pairs': 'error',
-
-    // Disallow awaiting non-Promise values
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/await-thenable
-    '@typescript-eslint/await-thenable': 'error',
-
-    // Detect .toString() on objects that return '[object Object]'
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-base-to-string
-    '@typescript-eslint/no-base-to-string': [
-      'error',
-      {
-        checkUnknown: false,
-        ignoredTypeNames: ['Error', 'RegExp', 'URL', 'URLSearchParams']
-      }
-    ],
-
-    // Prevent using void expression results in confusing locations
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-confusing-void-expression
-    '@typescript-eslint/no-confusing-void-expression': [
-      'error',
-      {
-        ignoreArrowShorthand: true,
-        ignoreVoidOperator: false,
-        ignoreVoidReturningFunctions: false
-      }
-    ],
-
-    // Disallow for...in on arrays (iterates index strings, not values)
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-for-in-array
-    '@typescript-eslint/no-for-in-array': 'error',
-
-    // Detect void operator on expressions already returning void
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-meaningless-void-operator
-    '@typescript-eslint/no-meaningless-void-operator': [
-      'error',
-      { checkNever: false }
-    ],
-
-    // Disallow mixing string and number members in enums
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-mixed-enums
-    '@typescript-eslint/no-mixed-enums': 'error',
-
-    // Detect string | never, any | string (absorbed constituents)
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-redundant-type-constituents
-    '@typescript-eslint/no-redundant-type-constituents': 'error',
-
-    // Detect conditions that are always truthy/falsy based on type
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-condition
-    '@typescript-eslint/no-unnecessary-condition': [
-      'error',
-      { allowConstantLoopConditions: false, checkTypePredicates: true }
-    ],
-
-    // Disallow unary minus on non-numeric types
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unsafe-unary-minus
-    '@typescript-eslint/no-unsafe-unary-minus': 'error',
-
-    // Prefer value! over value as T — conflicts with no-non-null-assertion
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/non-nullable-type-assertion-style
-    '@typescript-eslint/non-nullable-type-assertion-style': 'off',
-
-    // Force return type this instead of class name for chainable methods
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-return-this-type
-    '@typescript-eslint/prefer-return-this-type': 'error',
-
-    // Force async on functions returning Promise — legitimate non-async cases exist
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/promise-function-async
-    '@typescript-eslint/promise-function-async': 'off',
-
-    // Force comparator in .sort() to avoid lexicographic sorting
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/require-array-sort-compare
-    '@typescript-eslint/require-array-sort-compare': [
-      'error',
-      { ignoreStringArrays: false }
-    ],
-
-    // Disallow + between incompatible types (string + number)
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/restrict-plus-operands
-    '@typescript-eslint/restrict-plus-operands': [
-      'error',
-      {
-        allowAny: false,
-        allowBoolean: false,
-        allowNullish: false,
-        allowNumberAndString: false,
-        allowRegExp: false,
-        skipCompoundAssignments: false
-      }
-    ],
-
-    // Disallow interpolating non-stringifiable types in template literals
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/restrict-template-expressions
-    '@typescript-eslint/restrict-template-expressions': [
-      'error',
-      {
-        allowAny: false,
-        allowArray: false,
-        allowBoolean: false,
-        allowNever: false,
-        allowNullish: false,
-        allowNumber: true,
-        allowRegExp: false
-      }
-    ],
-
-    // Force explicit boolean conditions (str !== '' instead of if (str))
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/strict-boolean-expressions
-    '@typescript-eslint/strict-boolean-expressions': [
-      'error',
-      {
-        allowAny: false,
-        allowNullableBoolean: false,
-        allowNullableEnum: false,
-        allowNullableNumber: false,
-        allowNullableObject: true,
-        allowNullableString: false,
-        allowNumber: false,
-        allowString: false
-      }
-    ],
-
-    // Detect unbound methods (arr.forEach(obj.method) loses this)
-    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/unbound-method
-    '@typescript-eslint/unbound-method': ['error', { ignoreStatic: false }],
 
     // Forbid utility types that resolve to {}, for example Omit of every key: {} accepts any non-nullish value
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-generated-empty-object-type
@@ -2206,7 +2049,47 @@ export default {
 
     // The old name of @typescript-eslint/no-empty-object-type, which is on
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-empty-interface
-    '@typescript-eslint/no-empty-interface': 'off'
+    '@typescript-eslint/no-empty-interface': 'off',
+
+    // Force explicit boolean conditions, such as str !== '' instead of if (str)
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/strict-boolean-expressions
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+
+    // Disallow a void expression in a confusing position, such as a returned console.log()
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-confusing-void-expression
+    '@typescript-eslint/no-confusing-void-expression': 'off',
+
+    // Disallow an enum that mixes string and number members
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-mixed-enums
+    '@typescript-eslint/no-mixed-enums': 'off',
+
+    // Disallow + between operands of different types, such as string + number
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/restrict-plus-operands
+    '@typescript-eslint/restrict-plus-operands': 'off',
+
+    // Require the getter and the setter of a property to share one type
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/related-getter-setter-pairs
+    '@typescript-eslint/related-getter-setter-pairs': 'off',
+
+    // Disallow a condition that the types make always truthy or always falsy
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-unnecessary-condition
+    '@typescript-eslint/no-unnecessary-condition': 'off',
+
+    // Prefer a?.b over a && a.b
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-optional-chain
+    '@typescript-eslint/prefer-optional-chain': 'off',
+
+    // Require a this return type on a chainable method, instead of the class name
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/prefer-return-this-type
+    '@typescript-eslint/prefer-return-this-type': 'off',
+
+    // Prefer value! over value as T, which no-non-null-assertion forbids
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/non-nullable-type-assertion-style
+    '@typescript-eslint/non-nullable-type-assertion-style': 'off',
+
+    // Require async on each function that returns a Promise: a plain function may return one
+    // https://oxc.rs/docs/guide/usage/linter/rules/typescript/promise-function-async
+    '@typescript-eslint/promise-function-async': 'off'
   },
   overrides: [
     {

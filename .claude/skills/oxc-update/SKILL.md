@@ -57,6 +57,7 @@ This step is critical. Go through EVERY line of the changelog and cross-referenc
 
 - For each bug fix in the changelog, grep the rule name in `configs/` to confirm whether it's enabled or not.
 - For new options, check the rule's current config in our files to see if the new option is relevant.
+- For a JS plugin API change, grep `Silent until` in `configs/` and check whether the release makes each marked rule report.
 
 ### 4c. Present the full audit report
 
@@ -69,6 +70,7 @@ Present ALL findings in a structured report with these sections:
 5. **Breaking changes** — impact assessment
 6. **oxfmt changes** — features and fixes
 7. **LSP / tooling** — notable changes for the dev experience
+8. **JS plugin API** — each rule marked `Silent until`, and whether the release makes it report
 
 After presenting the full report, ask the user via **AskUserQuestion**: "Ready to start the rule interview?" before proceeding to Step 5.
 
@@ -114,7 +116,7 @@ Order matters: bump versions first, install, then edit configs, then verify.
 
 ### 3. Documentation
 
-- Update `README.md` (config table, usage section, hierarchy, requirements). A version bump updates the `oxlint` and `oxfmt` rows of **Requirements**. A type-aware rule raises the minimum of the `oxlint-tsgolint` row in **Requirements** to the first release that ships it
+- Update `README.md`: a version bump updates the version table of **Installation**, a new peer gets its install line there, and a new config gets its row in **Exports**. A type-aware rule raises the minimum of the `oxlint-tsgolint` row of that table to the first release that ships it
 
 ### 4. Verification (run in parallel)
 

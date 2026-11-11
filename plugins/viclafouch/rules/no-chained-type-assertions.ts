@@ -6,8 +6,7 @@ function matchIsTypeAssertion(node: ESTree.Node): node is TypeAssertion {
   return node.type === 'TSAsExpression' || node.type === 'TSTypeAssertion'
 }
 
-function matchIsConstAssertion(node: TypeAssertion) {
-  const { typeAnnotation } = node
+function matchIsConstAssertion({ typeAnnotation }: TypeAssertion) {
   return (
     typeAnnotation.type === 'TSTypeReference' &&
     typeAnnotation.typeName.type === 'Identifier' &&

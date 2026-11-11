@@ -114,7 +114,7 @@ function matchIsUnappliedReferenceTo(type: ESTree.TSType, name: string) {
   return (
     unwrapped.type === 'TSTypeReference' &&
     getTypeReferenceName(unwrapped) === name &&
-    (unwrapped.typeArguments?.params.length ?? 0) === 0
+    !unwrapped.typeArguments?.params.length
   )
 }
 
@@ -123,6 +123,7 @@ function matchIsEffectivelyEmptyMember(member: ESTree.TSSignature) {
     member.type === 'TSPropertySignature' &&
     member.optional &&
     member.typeAnnotation !== null &&
+    member.typeAnnotation !== undefined &&
     unwrapTransparentType(member.typeAnnotation.typeAnnotation).type ===
       'TSNeverKeyword'
   )
@@ -134,7 +135,8 @@ function matchIsEffectivelyEmptyInterface(
   const [declaration] = declarations
   return (
     declarations.length === 1 &&
-    declaration?.extends.length === 0 &&
+    declaration !== undefined &&
+    declaration.extends.length === 0 &&
     declaration.body.body.every(matchIsEffectivelyEmptyMember)
   )
 }
@@ -145,8 +147,8 @@ function resolveSubstitution(
   resolving: ReadonlySet<string> = new Set()
 ): ESTree.TSType {
   const name = getTypeReferenceName(unwrapTransparentType(type))
-  const substitution = name === null ? undefined : substitutions.get(name)
-  if (name === null || substitution === undefined || resolving.has(name)) {
+  const substitution = name ? substitutions.get(name) : undefined
+  if (!name || !substitution || resolving.has(name)) {
     return type
   }
   return resolveSubstitution(
@@ -254,7 +256,7 @@ function findUnsafeReference(
   resolution: Resolution
 ): UnsafeValue | null {
   const name = getTypeReferenceName(reference)
-  if (name === null) {
+  if (!name) {
     return null
   }
   const { environment, substitutions } = resolution
@@ -296,7 +298,7 @@ function matchIsBroadKey(type: ESTree.TSType, resolution: Resolution): boolean {
     })
   }
   const name = getTypeReferenceName(unwrapped)
-  if (unwrapped.type !== 'TSTypeReference' || name === null) {
+  if (unwrapped.type !== 'TSTypeReference' || !name) {
     return false
   }
   const { environment, substitutions } = resolution
@@ -359,7 +361,7 @@ function classifyAliasTarget(
     return null
   }
   const name = getTypeReferenceName(unwrapped)
-  if (name === null) {
+  if (!name) {
     return null
   }
   const { environment, substitutions } = resolution
@@ -410,7 +412,7 @@ export function classifyWideningTarget(
     return null
   }
   const name = getTypeReferenceName(unwrapped)
-  if (name === null) {
+  if (!name) {
     return null
   }
   if (matchIsTransparentWrapper(name, unwrapped, environment)) {

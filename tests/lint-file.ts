@@ -6,7 +6,7 @@ const ROOT = resolve(import.meta.dirname, '..')
 
 type Diagnostic = { code: string; severity: string; filename: string }
 
-type LintFileParams = { rule?: string; filename: string; code: string }
+type LintFileParams = { filename: string; code: string; rule?: string }
 
 type ProcessOutput = { stdout: string; stderr: string }
 

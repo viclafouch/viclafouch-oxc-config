@@ -3,8 +3,10 @@ import { createLintWorkDir, lintFile } from './lint-file'
 
 const PREFER_TO_BE = 'vitest(prefer-to-be)'
 const REQUIRE_HOOK = 'vitest(require-hook)'
+const NO_WALL_CLOCK = 'viclafouch(no-wall-clock-in-tests)'
 
 const TOP_LEVEL_CALL = "import { run } from 'node:test'\n\nrun()\n"
+const WALL_CLOCK_READING = 'export const startedAt = Date.now()\n'
 const LOOSE_ASSERTION =
   "import { expect, it } from 'vitest'\n\nit('adds', () => {\n  expect(1 + 1).toEqual(2)\n})\n"
 
@@ -44,6 +46,28 @@ describe('vitest config', () => {
       rule: REQUIRE_HOOK,
       filename: 'cli.ts',
       code: TOP_LEVEL_CALL
+    })
+
+    expect(diagnostics).toStrictEqual([])
+  })
+
+  it('fails a wall clock reading in a test file', () => {
+    const diagnostics = lintFile(workDir, {
+      rule: NO_WALL_CLOCK,
+      filename: 'clock.test.ts',
+      code: WALL_CLOCK_READING
+    })
+
+    expect(diagnostics).toStrictEqual([
+      expect.objectContaining({ code: NO_WALL_CLOCK, severity: 'error' })
+    ])
+  })
+
+  it('leaves a wall clock reading in a source file alone', () => {
+    const diagnostics = lintFile(workDir, {
+      rule: NO_WALL_CLOCK,
+      filename: 'clock.ts',
+      code: WALL_CLOCK_READING
     })
 
     expect(diagnostics).toStrictEqual([])

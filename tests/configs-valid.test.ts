@@ -44,11 +44,10 @@ async function validateConfig(
     })
     return ''
   } catch (error: unknown) {
-    // oxlint writes config errors to stdout, not stderr
     if (!matchIsProcessOutput(error)) {
       throw error
     }
-    return error.stdout === '' ? error.stderr : error.stdout
+    return error.stdout || error.stderr
   } finally {
     await unlink(tmpPath).catch(() => {})
   }

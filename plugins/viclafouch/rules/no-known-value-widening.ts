@@ -1,10 +1,10 @@
 import {
   defineRule,
   type ESTree,
-  type Scope,
   type SourceCode,
   type Variable
 } from '@oxlint/plugins'
+import { resolveVariable } from './helpers/ast'
 import { createTypeBindings } from './helpers/type-bindings'
 import {
   classifyWideningTarget,
@@ -33,21 +33,6 @@ const ACCUMULATOR_TARGETS = new Set<WideningTarget>([
 
 function matchIsFunction(node: ESTree.Node): node is FunctionNode {
   return FUNCTION_TYPES.has(node.type)
-}
-
-function resolveVariable(
-  sourceCode: SourceCode,
-  identifier: ESTree.IdentifierReference
-) {
-  let scope: Scope | null = sourceCode.getScope(identifier)
-  while (scope) {
-    const variable = scope.set.get(identifier.name)
-    if (variable) {
-      return variable
-    }
-    scope = scope.upper
-  }
-  return null
 }
 
 function findDeclarator(variable: Variable) {
@@ -129,7 +114,7 @@ function findLocalFunction(sourceCode: SourceCode, callee: ESTree.Expression) {
       ? resolveVariable(sourceCode, unwrapped)
       : null
   const [definition] = variable?.defs ?? []
-  if (variable?.defs.length !== 1 || definition === undefined) {
+  if (!variable || variable.defs.length !== 1 || !definition) {
     return null
   }
   if (definition.type === 'FunctionName' && matchIsFunction(definition.node)) {
@@ -331,7 +316,7 @@ export const noKnownValueWidening = defineRule({
       subject: string
     ) => {
       if (
-        target === null ||
+        !target ||
         (ACCUMULATOR_TARGETS.has(target) && matchIsEmptyObject(expression)) ||
         !matchIsKnownValue(expression)
       ) {

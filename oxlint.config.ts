@@ -17,6 +17,12 @@ export default defineConfig({
   },
   overrides: [
     {
+      files: ['configs/**', 'formatting/**'],
+      rules: {
+        'viclafouch/comment-policy': 'off'
+      }
+    },
+    {
       files: ['tests/**'],
       rules: {
         'import/no-relative-parent-imports': 'off',

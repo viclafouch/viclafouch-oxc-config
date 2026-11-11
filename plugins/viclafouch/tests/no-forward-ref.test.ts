@@ -13,7 +13,7 @@ ruleTester.run('no-forward-ref', noForwardRef, {
   valid: [
     {
       name: 'forwardRef from another package',
-      code: "import { forwardRef } from '@acme/ui'"
+      code: "import { forwardRef } from '@repo/ui'"
     },
     {
       name: 'a type imported from react',
@@ -45,7 +45,7 @@ ruleTester.run('no-forward-ref', noForwardRef, {
     },
     {
       name: 'forwardRef read on a namespace of another package',
-      code: "import * as React from '@acme/ui'\nconst Input = React.forwardRef(render)"
+      code: "import * as React from '@repo/ui'\nconst Input = React.forwardRef(render)"
     },
     {
       name: 'forwardRef read on a local object named React',

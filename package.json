@@ -1,7 +1,7 @@
 {
   "name": "@viclafouch/oxc-config",
-  "version": "1.1.0",
-  "description": "Oxlint and Oxfmt configuration for modern TypeScript, React, Next.js, and React Native projects.",
+  "version": "2.0.0",
+  "description": "Oxlint and Oxfmt configuration for modern TypeScript, React, Next.js, TanStack Start, and React Native projects.",
   "keywords": [
     "config",
     "formatter",
@@ -10,7 +10,10 @@
     "oxc",
     "oxfmt",
     "oxlint",
+    "paraglide",
     "react",
+    "react-native",
+    "tanstack-start",
     "typescript"
   ],
   "homepage": "https://github.com/viclafouch/oxc-config#readme",
@@ -24,7 +27,12 @@
     "url": "git+https://github.com/viclafouch/oxc-config.git"
   },
   "files": [
-    "dist"
+    "dist",
+    "configs",
+    "formatting",
+    "index.ts",
+    "plugins",
+    "!plugins/**/tests"
   ],
   "type": "module",
   "sideEffects": false,
@@ -45,37 +53,47 @@
     "release": "npm publish"
   },
   "dependencies": {
-    "@oxlint/plugins": "~1.88.0",
+    "@oxlint/plugins": "~1.90.0",
     "oxlint-plugin-react-doctor": "^0.9.18"
   },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.5",
+    "@inlang/paraglide-js": "^2.29.3",
     "@tanstack/eslint-plugin-query": "^5.104.3",
-    "@types/node": "^26.6.5",
+    "@tanstack/eslint-plugin-router": "^1.162.0",
+    "@types/node": "^24.19.2",
     "eslint-plugin-playwright": "^2.12.1",
     "eslint-plugin-react-native": "^5.0.0",
     "eslint-plugin-testing-library": "^7.16.2",
-    "eslint-plugin-turbo": "^2.11.9",
-    "oxfmt": "~0.73.0",
-    "oxlint": "~1.88.0",
-    "oxlint-tsgolint": "^7.0.2004",
+    "eslint-plugin-turbo": "^2.11.10",
+    "oxfmt": "~0.75.0",
+    "oxlint": "~1.90.0",
+    "oxlint-tsgolint": "^7.0.2005",
     "publint": "^0.3.25",
-    "tsdown": "^0.23.1",
+    "tsdown": "^0.23.4",
     "typescript": "^7.0.2",
-    "vitest": "^5.0.5"
+    "vitest": "^5.1.0"
   },
   "peerDependencies": {
+    "@inlang/paraglide-js": ">= 2.29",
     "@tanstack/eslint-plugin-query": ">= 5",
+    "@tanstack/eslint-plugin-router": ">= 1.162",
     "eslint-plugin-playwright": ">= 2",
     "eslint-plugin-react-native": ">= 5",
     "eslint-plugin-testing-library": ">= 7",
     "eslint-plugin-turbo": ">= 2",
-    "oxfmt": "~0.73.0",
-    "oxlint": "~1.88.0",
+    "oxfmt": "~0.75.0",
+    "oxlint": "~1.90.0",
     "typescript": ">= 5"
   },
   "peerDependenciesMeta": {
+    "@inlang/paraglide-js": {
+      "optional": true
+    },
     "@tanstack/eslint-plugin-query": {
+      "optional": true
+    },
+    "@tanstack/eslint-plugin-router": {
       "optional": true
     },
     "eslint-plugin-playwright": {
@@ -93,5 +111,8 @@
     "oxfmt": {
       "optional": true
     }
+  },
+  "engines": {
+    "node": ">=24.21"
   }
 }

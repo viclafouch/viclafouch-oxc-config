@@ -1,4 +1,5 @@
 import type { OxlintConfig } from 'oxlint'
+import { VICLAFOUCH_PLUGIN } from './js-plugins/index.ts'
 
 const FUNCTION_COMPONENT_MESSAGE =
   'Type the props parameter instead: `({ label }: ButtonProps) =>`. `FC` adds nothing, see https://github.com/facebook/create-react-app/pull/8177'
@@ -22,10 +23,7 @@ export const restrictedComponentTypes = {
 export default {
   plugins: ['react'],
   jsPlugins: [
-    {
-      name: 'viclafouch',
-      specifier: '@viclafouch/oxc-config/plugins/viclafouch'
-    },
+    VICLAFOUCH_PLUGIN,
     // React Doctor skips a file under a scripts, tools, tooling, cli or bin folder: set settings['react-doctor'].rootDirectory
     {
       name: 'react-doctor',
@@ -126,9 +124,9 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-unescaped-entities
     'react/no-unescaped-entities': 'error',
 
-    // Prevent passing of children as props
+    // TanStack Form passes its render function through children={(field) => ...}
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-children-prop
-    'react/no-children-prop': 'error',
+    'react/no-children-prop': 'off',
 
     // Enforce curly braces or disallow unnecessary curly braces in JSX props and/or children
     // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-curly-brace-presence
@@ -251,7 +249,7 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-find-dom-node
     'react/no-find-dom-node': 'error',
 
-    // Disallow isMounted — removed API
+    // Disallow isMounted, a removed API
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-is-mounted
     'react/no-is-mounted': 'error',
 
@@ -272,7 +270,6 @@ export default {
     'react/forward-ref-uses-ref': 'error',
 
     // Only export components, to keep Fast Refresh (HMR). An object of components such as `{ Root, Item }` counts as one
-    // allowExportNames: the route exports of Next.js, React Router and TanStack Router (`Route`)
     // https://oxc.rs/docs/guide/usage/linter/rules/react/only-export-components
     'react/only-export-components': [
       'error',
@@ -293,8 +290,7 @@ export default {
           'preferredRegion',
           'maxDuration',
           'generateViewport',
-          'viewport',
-          'Route'
+          'viewport'
         ],
         checkJS: false,
         customHOCs: []
@@ -319,9 +315,9 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-multi-comp
     'react/no-multi-comp': ['off', { ignoreStateless: false }],
 
-    // Too many false positives with hook accessors (field.onChange, form.handleSubmit) and third-party component APIs
+    // Name a handler handle* and its prop on*
     // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-handler-names
-    'react/jsx-handler-names': 'off',
+    'react/jsx-handler-names': 'error',
 
     // Disallow JSX prop spreading — too restrictive for wrappers/design systems
     // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-props-no-spreading
@@ -434,7 +430,7 @@ export default {
       }
     ],
 
-    // --- React Compiler family (replaces react/react-compiler, removed in oxlint 1.79) ---
+    // React Compiler family (replaces react/react-compiler, removed in oxlint 1.79)
     // The full compiler pass runs once per file as soon as ONE rule below is
     // enabled, then is shared by the others. Cost is all-or-nothing.
     // None of these rules accept options.
@@ -517,19 +513,9 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/react/unsupported-syntax
     'react/unsupported-syntax': 'error',
 
-    // Disallow string literals in JSX — only for i18n-mandatory projects
+    // Disallow unwrapped string literals in JSX — too noisy without full i18n coverage
     // https://oxc.rs/docs/guide/usage/linter/rules/react/jsx-no-literals
-    'react/jsx-no-literals': [
-      'off',
-      {
-        allowedStrings: [],
-        elementOverrides: {},
-        ignoreProps: false,
-        noAttributeStrings: false,
-        noStrings: false,
-        restrictedAttributes: []
-      }
-    ],
+    'react/jsx-no-literals': 'off',
 
     // Type the props parameter of a component, never the component through `FC`
     // https://oxc.rs/docs/guide/usage/linter/rules/typescript/no-restricted-types
@@ -550,7 +536,11 @@ export default {
     // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#no-forward-ref
     'viclafouch/no-forward-ref': 'error',
 
-    // --- React Doctor: the Effects that the React Compiler rules do not see ---
+    // Keep sibling JSX elements on consecutive lines, with no blank line between them
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#jsx-blank-line
+    'viclafouch/jsx-blank-line': 'error',
+
+    // React Doctor: the Effects that the React Compiler rules do not see
 
     // Disallow an Effect that hands the data of the child to a parent callback
     // https://www.react.doctor/prompts/rules/react-doctor/no-pass-data-to-parent.md
@@ -580,7 +570,7 @@ export default {
     // https://www.react.doctor/prompts/rules/react-doctor/no-derived-state-effect.md
     'react-doctor/no-derived-state-effect': 'off',
 
-    // --- React Doctor: the secrets that ship to the browser ---
+    // React Doctor: the secrets that ship to the browser
 
     // Disallow a secret in a file that ships to the browser
     // https://www.react.doctor/prompts/rules/react-doctor/no-secrets-in-client-code.md

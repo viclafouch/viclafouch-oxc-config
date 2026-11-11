@@ -1,4 +1,6 @@
 import type { OxlintConfig } from 'oxlint'
+import { TEST_FILES } from './globs/index.ts'
+import { VICLAFOUCH_PLUGIN } from './js-plugins/index.ts'
 
 /**
  * React Hooks rules, powered by the React Compiler since oxlint 1.79.0.
@@ -15,6 +17,7 @@ import type { OxlintConfig } from 'oxlint'
  */
 export default {
   plugins: ['react'],
+  jsPlugins: [VICLAFOUCH_PLUGIN],
   rules: {
     // Enforce rules of hooks — unconditional calls, stable order, top level
     // https://oxc.rs/docs/guide/usage/linter/rules/react/hooks
@@ -32,6 +35,18 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/react/no-deriving-state-in-effects
     'react/no-deriving-state-in-effects': 'error',
 
+    // Disallow a `use` function that calls no hook: rename it to a plain function
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#no-hookless-use-function
+    'viclafouch/no-hookless-use-function': 'error',
+
+    // Give useSyncExternalStore a subscribe that registers its listener, never a no-op
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#no-noop-subscribe
+    'viclafouch/no-noop-subscribe': 'error',
+
+    // Derive the next state from the previous one: setCount((previous) => previous + 1), never setCount(count + 1)
+    // https://github.com/viclafouch/oxc-config/tree/main/plugins/viclafouch#functional-update
+    'viclafouch/functional-update': 'error',
+
     // Superseded by react/hooks (React Compiler), off upstream too
     // https://oxc.rs/docs/guide/usage/linter/rules/react/rules-of-hooks
     'react/rules-of-hooks': 'off',
@@ -39,5 +54,14 @@ export default {
     // Superseded by react/exhaustive-effect-dependencies and react/memo-dependencies
     // https://oxc.rs/docs/guide/usage/linter/rules/react/exhaustive-deps
     'react/exhaustive-deps': ['off', { additionalHooks: '' }]
-  }
+  },
+  overrides: [
+    {
+      // A mock keeps the name of the hook it replaces, and calls no hook
+      files: [...TEST_FILES],
+      rules: {
+        'viclafouch/no-hookless-use-function': 'off'
+      }
+    }
+  ]
 } satisfies OxlintConfig

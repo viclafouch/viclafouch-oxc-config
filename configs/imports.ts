@@ -37,15 +37,7 @@ export default {
 
     // Disallow circular imports
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-cycle
-    'import/no-cycle': [
-      'error',
-      {
-        allowUnsafeDynamicCyclicDependency: false,
-        ignoreExternal: false,
-        ignoreTypes: true,
-        maxDepth: 4_294_967_295
-      }
-    ],
+    'import/no-cycle': ['error', { ignoreTypes: true }],
 
     // Disallow a module from importing itself
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-self-import
@@ -75,13 +67,14 @@ export default {
     'import/no-unassigned-import': [
       'error',
       {
-        allow: ['server-only', '**/*.css', '**/*.scss']
+        allow: ['server-only', 'client-only', '**/*.css', '**/*.scss']
       }
     ],
 
-    // Allow namespace imports — Sentry.captureException() is more readable than captureException()
+    // Disallow namespace (wildcard) imports
+    // Radix UI excluded: shadcn convention is import * as XPrimitive from "@radix-ui/react-x"
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-namespace
-    'import/no-namespace': 'off',
+    'import/no-namespace': ['error', { ignore: ['@radix-ui/*'] }],
 
     // Disallow default exports
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-default-export
@@ -115,13 +108,30 @@ export default {
     // https://oxc.rs/docs/guide/usage/linter/rules/import/max-dependencies
     'import/max-dependencies': 'off',
 
-    // Disallow relative parent imports (../) — not all projects have aliases
+    // Disallow relative parent imports (force aliases)
     // https://oxc.rs/docs/guide/usage/linter/rules/import/no-relative-parent-imports
-    'import/no-relative-parent-imports': 'off',
+    'import/no-relative-parent-imports': 'error',
 
-    // File extensions in imports — too dependent on bundler/runtime (Vite, node16, etc.)
+    // Disallow the extension of a script import, and require it on an asset import (styles, images, fonts, JSON)
     // https://oxc.rs/docs/guide/usage/linter/rules/import/extensions
-    'import/extensions': 'off',
+    'import/extensions': [
+      'error',
+      'never',
+      {
+        checkTypeImports: false,
+        ignorePackages: false,
+        pathGroupOverrides: [],
+        pattern: {
+          css: 'always',
+          json: 'always',
+          png: 'always',
+          scss: 'always',
+          svg: 'always',
+          webp: 'always',
+          woff2: 'always'
+        }
+      }
+    ],
 
     // Top-level (import type { T }) when only types, inline (import { type T, value }) when mixed
     // https://oxc.rs/docs/guide/usage/linter/rules/import/consistent-type-specifier-style

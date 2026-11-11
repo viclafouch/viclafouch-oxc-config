@@ -68,7 +68,10 @@ function matchIsContext(
       matchIsCreatedInFile(scope, object.name)
     )
   }
-  return object.property.name.endsWith('Context')
+  return (
+    object.type === 'JSXMemberExpression' &&
+    object.property.name.endsWith('Context')
+  )
 }
 
 function matchIsContextProvider(

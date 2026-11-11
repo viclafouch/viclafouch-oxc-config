@@ -61,8 +61,7 @@ function checkPropsType(
   })
 }
 
-function isMemoCall(node: ESTree.CallExpression) {
-  const { callee } = node
+function isMemoCall({ callee }: ESTree.CallExpression) {
   if (callee.type === 'Identifier') {
     return callee.name === 'memo'
   }
